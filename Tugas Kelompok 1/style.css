@@ -1,0 +1,361 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dff6ff, #f5f0ff);
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+header {
+    text-align: center;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+header p {
+    margin-bottom: 0;
+    color: #666;
+}
+
+.info {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.info h2 {
+    margin-top: 0;
+}
+
+.buah-section {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.buah-section h2 {
+    margin-top: 0;
+}
+
+.buah-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.buah {
+    width: 130px;
+    padding: 15px;
+    background: #f8fbff;
+    border: 2px solid #d9e9ff;
+    border-radius: 16px;
+    text-align: center;
+    cursor: grab;
+    transition: 0.2s;
+    user-select: none;
+}
+
+.buah:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+.buah:active {
+    cursor: grabbing;
+}
+
+.buah-emoji {
+    font-size: 45px;
+    margin-bottom: 8px;
+}
+
+.buah strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.buah span {
+    color: #555;
+}
+
+.timbangan-section {
+    margin-top: 30px;
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+    display: grid;
+    grid-template-columns: 1fr 250px 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.piring-area {
+    text-align: center;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.piring {
+    min-height: 150px;
+    border: 3px dashed #aaa;
+    border-radius: 20px;
+    padding: 15px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 8px;
+
+    background: #fafafa;
+    transition: 0.2s;
+}
+
+.piring.drag-over {
+    background: #e5f5ff;
+    border-color: #2196f3;
+    transform: scale(1.03);
+}
+
+.drop-text {
+    color: #888;
+    font-size: 14px;
+}
+
+.berat {
+    margin-top: 12px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.buah-masuk {
+    font-size: 35px;
+    animation: masuk 0.3s ease;
+}
+
+@keyframes masuk {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.timbangan {
+    height: 300px;
+    position: relative;
+}
+
+.tiang {
+    position: absolute;
+    width: 20px;
+    height: 220px;
+    background: #555;
+    left: 115px;
+    top: 25px;
+    border-radius: 10px;
+}
+
+.batang {
+    position: absolute;
+    width: 240px;
+    height: 18px;
+    background: #333;
+    left: 5px;
+    top: 50px;
+    border-radius: 10px;
+    transform-origin: center;
+    transition: transform 0.7s ease;
+}
+
+.tali {
+    position: absolute;
+    width: 4px;
+    height: 75px;
+    background: #555;
+    top: 10px;
+}
+
+.tali.kiri {
+    left: 20px;
+}
+
+.tali.kanan {
+    right: 20px;
+}
+
+.piring-kiri,
+.piring-kanan {
+    position: absolute;
+    width: 90px;
+    height: 15px;
+    background: #777;
+    border-radius: 50%;
+    top: 80px;
+}
+
+.piring-kiri {
+    left: -23px;
+}
+
+.piring-kanan {
+    right: -23px;
+}
+
+.dasar {
+    position: absolute;
+    width: 180px;
+    height: 25px;
+    background: #444;
+    bottom: 20px;
+    left: 35px;
+    border-radius: 15px;
+}
+
+.input-section {
+    margin-top: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.input-section h2 {
+    margin-top: 0;
+}
+
+input {
+    width: 250px;
+    padding: 13px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #2196f3;
+}
+
+.button-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#tambahKiri {
+    background: #bde7ff;
+}
+
+#tambahKanan {
+    background: #ffd0e1;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.hasil {
+    margin-top: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.hasil h2 {
+    margin-top: 0;
+}
+
+.status-card {
+    padding: 20px;
+    background: #eef7ff;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#statusEmoji {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.selisih {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.reset-button {
+    display: block;
+    margin: 25px auto;
+    background: #555;
+    color: white;
+}
+
+footer {
+    text-align: center;
+    color: #777;
+    padding: 10px;
+}
+
+@media (max-width: 800px) {
+    .timbangan-section {
+        grid-template-columns: 1fr;
+    }
+
+    .timbangan {
+        order: 2;
+    }
+
+    .piring-area:first-child {
+        order: 1;
+    }
+
+    .piring-area:last-child {
+        order: 3;
+    }
+}

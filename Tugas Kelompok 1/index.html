@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timbangan Buah Interaktif</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>⚖️ Timbangan Buah Interaktif</h1>
+            <p>Eksperimen sederhana tentang berat dan keseimbangan</p>
+        </header>
+
+        <section class="info">
+            <h2>🧪 Cara Bermain</h2>
+            <p>
+                Tarik buah ke piring kiri atau kanan untuk melihat
+                perubahan keseimbangan timbangan.
+            </p>
+        </section>
+
+        <section class="buah-section">
+            <h2>🍎 Pilih Buah</h2>
+
+            <div class="buah-container">
+
+                <div class="buah" draggable="true" data-berat="1">
+                    <div class="buah-emoji">🍎</div>
+                    <strong>Apel</strong>
+                    <span>1 kg</span>
+                </div>
+
+                <div class="buah" draggable="true" data-berat="2">
+                    <div class="buah-emoji">🍌</div>
+                    <strong>Pisang</strong>
+                    <span>2 kg</span>
+                </div>
+
+                <div class="buah" draggable="true" data-berat="3">
+                    <div class="buah-emoji">🍊</div>
+                    <strong>Jeruk</strong>
+                    <span>3 kg</span>
+                </div>
+
+                <div class="buah" draggable="true" data-berat="4">
+                    <div class="buah-emoji">🍉</div>
+                    <strong>Semangka</strong>
+                    <span>4 kg</span>
+                </div>
+
+                <div class="buah" draggable="true" data-berat="5">
+                    <div class="buah-emoji">🍇</div>
+                    <strong>Anggur</strong>
+                    <span>5 kg</span>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="timbangan-section">
+
+            <div class="piring-area">
+                <div class="label">KIRI</div>
+
+                <div class="piring" id="areaKiri">
+                    <span class="drop-text">
+                        Tarik buah ke sini
+                    </span>
+                </div>
+
+                <div class="berat">
+                    <span id="beratKiri">0</span> kg
+                </div>
+            </div>
+
+            <div class="timbangan">
+
+                <div class="tiang"></div>
+
+                <div class="batang" id="batang">
+                    <div class="tali kiri"></div>
+                    <div class="tali kanan"></div>
+
+                    <div class="piring-kiri"></div>
+                    <div class="piring-kanan"></div>
+                </div>
+
+                <div class="dasar"></div>
+
+            </div>
+
+            <div class="piring-area">
+                <div class="label">KANAN</div>
+
+                <div class="piring" id="areaKanan">
+                    <span class="drop-text">
+                        Tarik buah ke sini
+                    </span>
+                </div>
+
+                <div class="berat">
+                    <span id="beratKanan">0</span> kg
+                </div>
+            </div>
+
+        </section>
+
+        <section class="input-section">
+
+            <h2>⚙️ Masukkan Berat Sendiri</h2>
+
+            <input
+                type="number"
+                id="inputBerat"
+                min="1"
+                max="20"
+                placeholder="Masukkan berat (kg)"
+            >
+
+            <div class="button-container">
+                <button id="tambahKiri">
+                    ➕ Tambah ke Kiri
+                </button>
+
+                <button id="tambahKanan">
+                    ➕ Tambah ke Kanan
+                </button>
+            </div>
+
+        </section>
+
+        <section class="hasil">
+
+            <h2>📊 Hasil Percobaan</h2>
+
+            <div class="status-card" id="statusCard">
+                <div id="statusEmoji">⚖️</div>
+                <div id="statusText">
+                    Timbangan masih seimbang
+                </div>
+            </div>
+
+            <div class="selisih">
+                Selisih berat:
+                <strong>
+                    <span id="selisih">0</span> kg
+                </strong>
+            </div>
+
+        </section>
+
+        <button class="reset-button" id="resetBtn">
+            🔄 Reset Timbangan
+        </button>
+
+        <footer>
+            <p>Mini Project STEM - Science & Engineering</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
