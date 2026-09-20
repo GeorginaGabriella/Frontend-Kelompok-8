@@ -8,125 +8,288 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- HEADER / NAVIGASI -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#beranda" aria-label="Kopi Nusantara - Beranda">
-        <span class="brand-mark" aria-hidden="true">&#9749;</span>
-        <span>Kopi Nusantara</span>
-      </a>
-      <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">Menu</button>
-      <nav id="main-nav" class="main-nav" aria-label="Navigasi utama">
-        <a class="nav-link is-active" href="#beranda">Beranda</a>
-        <a class="nav-link" href="#menu">Menu</a>
-        <a class="nav-link" href="#cerita">Cerita Kami</a>
-        <a class="nav-link nav-cta" href="#pesan">Pesan Sekarang</a>
-      </nav>
-    </div>
+  <a class="brand" href="#beranda" aria-label="Kopi Nusantara - Beranda">
+    <span class="brand-mark" aria-hidden="true">&#9749;</span>
+    <span>Kopi Nusantara</span>
+  </a>
+  <nav id="main-nav" class="main-nav" aria-label="Navigasi utama">
+    <a class="nav-link is-active" href="#beranda">Beranda</a>
+    <a class="nav-link" href="#menu">Menu</a>
+    <a class="nav-link" href="#cerita">Cerita Kami</a>
+    <a class="nav-link nav-cta" href="#pesan">Pesan Sekarang</a>
+  </nav>
+</div>
   </header>
-
   <main id="beranda">
-    <!-- Hero memperkenalkan identitas kedai dan ajakan utama. -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Kopi lokal, cerita yang dekat</p>
-          <h1>Secangkir hangat untuk <em>hari yang berarti.</em></h1>
-          <p class="hero-intro">Kopi Nusantara adalah kedai kopi rumahan yang menyajikan biji kopi pilihan dari berbagai daerah Indonesia, diracik dengan hati di setiap cangkir.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#menu">Lihat Menu</a>
-            <a class="button button-text" href="#cerita">Kenali kami <span aria-hidden="true">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="hero-image" role="img" aria-label="Animasi kopi Nusantara">
-          <div class="coffee-scene" aria-hidden="true">
-            <span class="coffee-dot dot-satu"></span>
-            <span class="coffee-dot dot-dua"></span>
-            <span class="steam steam-satu"></span>
-            <span class="steam steam-dua"></span>
-            <span class="bubble bubble-one">Ngobrol dulu?</span>
-            <span class="bubble bubble-two">Kopi lokal.</span>
-            <div class="coffee-disc">KN</div>
-          </div>
-          <div class="cup-caption"><strong>KOPI NUSANTARA</strong><span>ROASTED WITH CARE</span></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Tiga kartu menu menjadi konten utama yang mudah dipindai di semua layar. -->
-    <section class="menu-section" id="menu">
-      <div class="container">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Pilihan favorit</p>
-            <h2>Temukan racikanmu</h2>
-          </div>
-          <p class="section-description">Rasa yang akrab, dibuat dari bahan yang kami pilih dengan teliti.</p>
-        </div>
-        <div class="menu-grid">
-          <article class="menu-card">
-            <div class="menu-icon icon-kopi" aria-hidden="true">&#9749;</div>
-            <p class="menu-type">Signature</p>
-            <h3>Kopi Susu Senja</h3>
-            <p>Espresso house blend, susu segar, dan gula aren dengan rasa manis yang seimbang.</p>
-            <strong>Rp 22.000</strong>
-          </article>
-          <article class="menu-card featured-card">
-            <div class="menu-icon icon-v60" aria-hidden="true">V60</div>
-            <p class="menu-type">Single origin</p>
-            <h3>V60 Gayo</h3>
-            <p>Karakter floral dan citrus dari biji Aceh Gayo, diseduh perlahan untuk rasa yang bersih.</p>
-            <strong>Rp 28.000</strong>
-          </article>
-          <article class="menu-card">
-            <div class="menu-icon icon-cokelat" aria-hidden="true">&#10022;</div>
-            <p class="menu-type">Non-coffee</p>
-            <h3>Cokelat Rumah</h3>
-            <p>Cokelat pekat, susu creamy, dan sedikit garam laut untuk teman ngobrol sore.</p>
-            <strong>Rp 20.000</strong>
-          </article>
-        </div>
+<!-- HERO / BANNER -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        Kopi lokal, cerita yang dekat
+      </p>
+      <h1>
+        Secangkir hangat untuk
+        <em>hari yang berarti.</em>
+      </h1>
+      <p class="hero-intro">
+        Kopi Nusantara adalah kedai kopi rumahan yang menyajikan
+        biji kopi pilihan dari berbagai daerah Indonesia, diracik
+        dengan hati di setiap cangkir.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#menu">
+          Lihat Menu
+        </a>
+        <a class="button button-text" href="#cerita">
+          Kenali kami
+          <span aria-hidden="true">&#8594;</span>
+        </a>
       </div>
-    </section>
+    </div>
 
-    <section class="story-section" id="cerita">
-      <div class="container story-grid">
-        <div class="story-badge"><strong>2021</strong><span>Dari rumah,<br>untuk semua.</span><small>CERITA KAMI</small></div>
-        <div>
-          <h2>Tempat kecil untuk jeda yang besar.</h2>
-          <p>Kopi Nusantara dimulai dari dapur rumah dan terus berkembang bersama petani kopi dari berbagai daerah. Selain menyajikan kopi, kami juga ingin ikut membantu kebutuhan petani dan menghargai hasil panen mereka.</p>
-          <a class="button button-text" href="#pesan">Kunjungi kedai <span aria-hidden="true">&#8594;</span></a>
+    <!-- Ilustrasi hero dibuat menggunakan CSS -->
+    <div class="hero-image" role="img" aria-label="Animasi kopi Nusantara">
+      <div class="coffee-scene" aria-hidden="true">
+        <span class="coffee-dot dot-satu"></span>
+        <span class="coffee-dot dot-dua"></span>
+        <span class="steam steam-satu"></span>
+        <span class="steam steam-dua"></span>
+        <span class="bubble bubble-one">
+          Ngobrol dulu?
+        </span>
+        <span class="bubble bubble-two">
+          Kopi lokal.
+        </span>
+        <div class="coffee-disc">
+          KN
         </div>
       </div>
-      <div class="container journey">
-        <p class="eyebrow">Perjalanan kami</p>
-        <div class="journey-list">
-          <article class="journey-item"><strong class="journey-year">2021</strong><p>Semua berawal dari dapur rumah, berbekal alat seadanya dan rasa penasaran soal cara menyeduh kopi yang enak.</p></article>
-          <article class="journey-item"><strong class="journey-year">2022</strong><p>Mulai jalan-jalan dan ngobrol langsung sama para petani lokal. Dari sana baru paham kalau tiap biji kopi punya karakter dan cerita unik dari tanah asalnya.</p></article>
-          <article class="journey-item"><strong class="journey-year">2023</strong><p>Mulai menyisihkan sebagian keuntungan untuk modal pendampingan dan pemenuhan kebutuhan para petani yang selama ini bekerja sama dengan kami.</p></article>
-          <article class="journey-item"><strong class="journey-year">2024 - Sekarang</strong><p>Akhirnya berani buka kedai kecil sendiri. Kami berkomitmen beli hasil panen dengan harga yang layak dan adil buat petani, sambil terus berkembang bareng teman-teman penikmat kopi yang rutin mampir.</p></article>
-        </div>
+      <div class="cup-caption">
+        <strong>KOPI NUSANTARA</strong>
+        <span>ROASTED WITH CARE</span>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="order-section" id="pesan">
-      <div class="container order-inner">
-        <div>
-          <p class="eyebrow">Bawa pulang suasananya</p>
-          <h2>Siap untuk kopi berikutnya?</h2>
-        </div>
-        <a class="button button-light" href="mailto:halo@kopinusantara.example">Hubungi Kami <span aria-hidden="true">&#8594;</span></a>
+<!-- KONTEN UTAMA / MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">
+          Pilihan favorit
+        </p>
+        <h2>
+          Temukan racikanmu
+        </h2>
       </div>
-    </section>
+      <p class="section-description">
+        Rasa yang akrab, dibuat dari bahan yang kami pilih
+        dengan teliti.
+      </p>
+    </div>
+
+    <!-- CSS Grid digunakan pada bagian ini -->
+    <div class="menu-grid">
+      <!-- Kartu menu 1 -->
+      <article class="menu-card">
+        <div class="menu-icon icon-kopi" aria-hidden="true">
+          &#9749;
+        </div>
+        <p class="menu-type">
+          Signature
+        </p>
+        <h3>
+          Kopi Susu Senja
+        </h3>
+        <p>
+          Espresso house blend, susu segar, dan gula aren
+          dengan rasa manis yang seimbang.
+        </p>
+        <strong>
+          Rp 22.000
+        </strong>
+      </article>
+
+      <!-- Kartu menu 2 -->
+      <article class="menu-card featured-card">
+        <div class="menu-icon icon-v60" aria-hidden="true">
+          V60
+        </div>
+        <p class="menu-type">
+          Single origin
+        </p>
+        <h3>
+          V60 Gayo
+        </h3>
+        <p>
+          Karakter floral dan citrus dari biji Aceh Gayo,
+          diseduh perlahan untuk rasa yang bersih.
+        </p>
+        <strong>
+          Rp 28.000
+        </strong>
+      </article>
+
+      <!-- Kartu menu 3 -->
+      <article class="menu-card">
+        <div class="menu-icon icon-cokelat" aria-hidden="true">
+          &#10022;
+        </div>
+        <p class="menu-type">
+          Non-coffee
+        </p>
+        <h3>
+          Cokelat Rumah
+        </h3>
+        <p>
+          Cokelat pekat, susu creamy, dan sedikit garam
+          laut untuk teman ngobrol sore.
+        </p>
+        <strong>
+          Rp 20.000
+        </strong>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- CERITA KAMI -->
+<section class="story-section" id="cerita">
+  <div class="container story-grid">
+    <div class="story-badge">
+      <strong>2021</strong>
+      <span>
+        Dari rumah,<br>
+        untuk semua.
+      </span>
+      <small>
+        CERITA KAMI
+      </small>
+    </div>
+    <div>
+      <h2>
+        Tempat kecil untuk jeda yang besar.
+      </h2>
+      <p>
+        Kopi Nusantara dimulai dari dapur rumah dan terus berkembang
+        bersama petani kopi dari berbagai daerah. Selain menyajikan
+        kopi, kami juga ingin ikut membantu kebutuhan petani dan
+        menghargai hasil panen mereka.
+      </p>
+      <a class="button button-text" href="#pesan">
+        Kunjungi kedai
+        <span aria-hidden="true">&#8594;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bagian perjalanan menggunakan CSS Grid -->
+  <div class="container journey">
+    <p class="eyebrow">
+      Perjalanan kami
+    </p>
+    <div class="journey-list">
+      <article class="journey-item">
+        <strong class="journey-year">
+          2021
+        </strong>
+        <p>
+          Semua berawal dari dapur rumah, berbekal alat seadanya
+          dan rasa penasaran soal cara menyeduh kopi yang enak.
+        </p>
+      </article>
+      <article class="journey-item">
+        <strong class="journey-year">
+          2022
+        </strong>
+        <p>
+          Mulai jalan-jalan dan ngobrol langsung sama para petani
+          lokal. Dari sana baru paham kalau tiap biji kopi punya
+          karakter dan cerita unik dari tanah asalnya.
+        </p>
+      </article>
+      <article class="journey-item">
+        <strong class="journey-year">
+          2023
+        </strong>
+        <p>
+          Mulai menyisihkan sebagian keuntungan untuk modal
+          pendampingan dan pemenuhan kebutuhan para petani yang
+          selama ini bekerja sama dengan kami.
+        </p>
+      </article>
+      <article class="journey-item">
+        <strong class="journey-year">
+          2024 - Sekarang
+        </strong>
+        <p>
+          Akhirnya berani buka kedai kecil sendiri. Kami berkomitmen
+          beli hasil panen dengan harga yang layak dan adil buat
+          petani, sambil terus berkembang bareng teman-teman
+          penikmat kopi yang rutin mampir.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- CALL TO ACTION -->
+<section class="order-section" id="pesan">
+  <div class="container order-inner">
+    <div>
+      <p class="eyebrow">
+        Bawa pulang suasananya
+      </p>
+      <h2>
+        Siap untuk kopi berikutnya?
+      </h2>
+    </div>
+    <a class="button button-light" href="mailto:halo@kopinusantara.example">
+      Hubungi Kami
+      <span aria-hidden="true">&#8594;</span>
+    </a>
+  </div>
+</section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div><a class="brand footer-brand" href="#beranda"><span class="brand-mark" aria-hidden="true">&#9749;</span><span>Kopi Nusantara</span></a><p>Kedai kopi rumahan dari Indonesia.</p></div>
-      <div class="footer-contact"><span>Senin - Minggu, 08.00 - 21.00</span><span>Jl. Pulang Sore No. 12, Jakarta</span></div>
-      <p class="copyright">&copy; <span id="current-year">2026</span> Kopi Nusantara</p>
-    </div>
+<div class="container footer-inner">
+  <div>
+    <a class="brand footer-brand" href="#beranda">
+      <span class="brand-mark" aria-hidden="true">
+        &#9749;
+      </span>
+      <span>
+        Kopi Nusantara
+      </span>
+    </a>
+    <p>
+      Kedai kopi rumahan dari Indonesia.
+    </p>
+  </div>
+  <div class="footer-contact">
+    <span>
+      Senin - Minggu, 08.00 - 21.00
+    </span>
+    <span>
+      Jl. Pulang Sore No. 12, Jakarta
+    </span>
+  </div>
+  <p class="copyright">
+    &copy; 2026 Kopi Nusantara
+  </p>
+</div>
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>

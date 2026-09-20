@@ -1,5 +1,4 @@
 const buah = document.querySelectorAll(".buah");
-
 const areaKiri = document.getElementById("areaKiri");
 const areaKanan = document.getElementById("areaKanan");
 const beratKiriElement = document.getElementById("beratKiri");

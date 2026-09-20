@@ -1,133 +1,327 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kopi Nusantara, kedai kopi rumahan dengan racikan kopi lokal pilihan.">
-  <title>Kopi Nusantara | Kedai Kopi Rumahan</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kopi Nusantara dengan cita rasa khas Indonesia">
+    <title>Kopi Nusantara</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#beranda" aria-label="Kopi Nusantara - Beranda">
-        <span class="brand-mark" aria-hidden="true">&#9749;</span>
-        <span>Kopi Nusantara</span>
-      </a>
-      <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">Menu</button>
-      <nav id="main-nav" class="main-nav" aria-label="Navigasi utama">
-        <a class="nav-link is-active" href="#beranda">Beranda</a>
-        <a class="nav-link" href="#menu">Menu</a>
-        <a class="nav-link" href="#cerita">Cerita Kami</a>
-        <a class="nav-link nav-cta" href="#pesan">Pesan Sekarang</a>
-      </nav>
-    </div>
-  </header>
 
-  <main id="beranda">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Kopi lokal, cerita yang dekat</p>
-          <h1>Secangkir hangat untuk <em>hari yang berarti.</em></h1>
-          <p class="hero-intro">Kopi Nusantara adalah kedai kopi rumahan yang menyajikan biji kopi pilihan dari berbagai daerah Indonesia, diracik dengan hati di setiap cangkir.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#menu">Lihat Menu</a>
-            <a class="button button-text" href="#cerita">Kenali kami <span aria-hidden="true">&#8594;</span></a>
-          </div>
+    <!-- Header dan navigasi -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#home" class="brand">
+                <span class="brand-mark">K</span>
+                Kopi Nusantara
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+                ☰
+            </button>
+            <nav class="main-nav" id="main-nav">
+                <a href="#home" class="nav-link">Beranda</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#story" class="nav-link">Cerita</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#order" class="nav-link nav-cta">Pesan</a>
+            </nav>
         </div>
-        <div class="hero-image" role="img" aria-label="Animasi kopi Nusantara">
-          <div class="coffee-scene" aria-hidden="true">
-            <span class="coffee-dot dot-satu"></span>
-            <span class="coffee-dot dot-dua"></span>
-            <span class="steam steam-satu"></span>
-            <span class="steam steam-dua"></span>
-            <span class="bubble bubble-one">Ngobrol dulu?</span>
-            <span class="bubble bubble-two">Kopi lokal.</span>
-            <div class="coffee-disc">KN</div>
-          </div>
-          <div class="cup-caption"><strong>KOPI NUSANTARA</strong><span>ROASTED WITH CARE</span></div>
-        </div>
-      </div>
-    </section>
+    </header>
+    <main>
 
-  
-    <section class="menu-section" id="menu">
-      <div class="container">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Pilihan favorit</p>
-            <h2>Temukan racikanmu</h2>
-          </div>
-          <p class="section-description">Rasa yang akrab, dibuat dari bahan yang kami pilih dengan teliti.</p>
-        </div>
-        <div class="menu-grid">
-          <article class="menu-card">
-            <div class="menu-icon icon-kopi" aria-hidden="true">&#9749;</div>
-            <p class="menu-type">Signature</p>
-            <h3>Kopi Susu Senja</h3>
-            <p>Espresso house blend, susu segar, dan gula aren dengan rasa manis yang seimbang.</p>
-            <strong>Rp 22.000</strong>
-          </article>
-          <article class="menu-card featured-card">
-            <div class="menu-icon icon-v60" aria-hidden="true">V60</div>
-            <p class="menu-type">Single origin</p>
-            <h3>V60 Gayo</h3>
-            <p>Karakter floral dan citrus dari biji Aceh Gayo, diseduh perlahan untuk rasa yang bersih.</p>
-            <strong>Rp 28.000</strong>
-          </article>
-          <article class="menu-card">
-            <div class="menu-icon icon-cokelat" aria-hidden="true">&#10022;</div>
-            <p class="menu-type">Non-coffee</p>
-            <h3>Cokelat Rumah</h3>
-            <p>Cokelat pekat, susu creamy, dan sedikit garam laut untuk teman ngobrol sore.</p>
-            <strong>Rp 20.000</strong>
-          </article>
-        </div>
-      </div>
-    </section>
+        <!-- Hero atau banner utama -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Kopi Nusantara</p>
+                    <h1>
+                        Rasa Lokal,
+                        <em>Cerita Istimewa.</em>
+                    </h1>
+                    <p class="hero-intro">
+                        Menikmati kopi Indonesia dengan cita rasa khas
+                        dari berbagai daerah Nusantara.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#menu" class="button button-primary">
+                            Lihat Menu <span>→</span>
+                        </a>
+                        <a href="#story" class="button button-text">
+                            Cerita Kami
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="coffee-scene">
+                        <div class="bubble bubble-one">
+                            Nikmat!
+                        </div>
+                        <div class="bubble bubble-two">
+                            Kopi Indonesia
+                        </div>
+                        <div class="steam steam-satu"></div>
+                        <div class="steam steam-dua"></div>
+                        <div class="coffee-disc">
+                            KOPI
+                        </div>
+                    </div>
+                    <div class="cup-caption">
+                        <strong>KOPI NUSANTARA</strong>
+                        <span>RASA DARI INDONESIA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section class="story-section" id="cerita">
-      <div class="container story-grid">
-        <div class="story-badge"><strong>2021</strong><span>Dari rumah,<br>untuk semua.</span><small>CERITA KAMI</small></div>
-        <div>
-          <h2>Tempat kecil untuk jeda yang besar.</h2>
-          <p>Kopi Nusantara dimulai dari dapur rumah dan terus berkembang bersama petani kopi dari berbagai daerah. Selain menyajikan kopi, kami juga ingin ikut membantu kebutuhan petani dan menghargai hasil panen mereka.</p>
-          <a class="button button-text" href="#pesan">Kunjungi kedai <span aria-hidden="true">&#8594;</span></a>
-        </div>
-      </div>
-      <div class="container journey">
-        <p class="eyebrow">Perjalanan kami</p>
-        <div class="journey-list">
-          <article class="journey-item"><strong class="journey-year">2021</strong><p>Semua berawal dari dapur rumah, berbekal alat seadanya dan rasa penasaran soal cara menyeduh kopi yang enak.</p></article>
-          <article class="journey-item"><strong class="journey-year">2022</strong><p>Mulai jalan-jalan dan ngobrol langsung sama para petani lokal. Dari sana baru paham kalau tiap biji kopi punya karakter dan cerita unik dari tanah asalnya.</p></article>
-          <article class="journey-item"><strong class="journey-year">2023</strong><p>Mulai menyisihkan sebagian keuntungan untuk modal pendampingan dan pemenuhan kebutuhan para petani yang selama ini bekerja sama dengan kami.</p></article>
-          <article class="journey-item"><strong class="journey-year">2024 - Sekarang</strong><p>Akhirnya berani buka kedai kecil sendiri. Kami berkomitmen beli hasil panen dengan harga yang layak dan adil buat petani, sambil terus berkembang bareng teman-teman penikmat kopi yang rutin mampir.</p></article>
-        </div>
-      </div>
-    </section>
+        <!-- Bagian menu -->
+        <section class="menu-section" id="menu">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Pilihan Kami</p>
+                        <h2>Menu Kopi Nusantara</h2>
+                    </div>
+                    <p class="section-description">
+                        Pilihan minuman dengan bahan dan cita rasa
+                        yang terinspirasi dari kekayaan Indonesia.
+                    </p>
+                </div>
+                <div class="menu-grid">
+                    <article class="menu-card">
+                        <div class="menu-icon">☕</div>
+                        <p class="menu-type">Favorit</p>
+                        <h3>Kopi Susu Senja</h3>
+                        <p>
+                            Perpaduan kopi, susu, dan rasa manis
+                            yang lembut untuk menemani waktu santai.
+                        </p>
+                        <div class="menu-bottom">
+                            <strong>Rp18.000</strong>
+                            <button class="like-button" type="button">
+                                ♡ Suka
+                                <span class="like-count">0</span>
+                            </button>
+                        </div>
+                    </article>
+                    <article class="menu-card">
+                        <div class="menu-icon icon-v60">V60</div>
+                        <p class="menu-type">Single Origin</p>
+                        <h3>V60 Gayo</h3>
+                        <p>
+                            Kopi Arabika Gayo dengan karakter aroma
+                            yang khas dan rasa yang seimbang.
+                        </p>
+                        <div class="menu-bottom">
+                            <strong>Rp25.000</strong>
+                            <button class="like-button" type="button">
+                                ♡ Suka
+                                <span class="like-count">0</span>
+                            </button>
+                        </div>
+                    </article>
 
-    <section class="order-section" id="pesan">
-      <div class="container order-inner">
-        <div>
-          <p class="eyebrow">Bawa pulang suasananya</p>
-          <h2>Siap untuk kopi berikutnya?</h2>
+                    <article class="menu-card">
+                        <div class="menu-icon">🍫</div>
+                        <p class="menu-type">Non Coffee</p>
+                        <h3>Cokelat Rumah</h3>
+                        <p>
+                            Minuman cokelat lembut dengan rasa manis
+                            yang cocok untuk semua suasana.
+                        </p>
+                        <div class="menu-bottom">
+                            <strong>Rp20.000</strong>
+                            <button class="like-button" type="button">
+                                ♡ Suka
+                                <span class="like-count">0</span>
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian cerita -->
+        <section class="story-section" id="story">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-badge">
+                        <strong>100%</strong>
+                        <span>Inspirasi<br>Nusantara</span>
+                        <small>KOPI INDONESIA</small>
+                    </div>
+                    <div>
+                        <p class="eyebrow">Cerita Kami</p>
+                        <h2>
+                            Dari Nusantara ke dalam
+                            secangkir kopi.
+                        </h2>
+                        <p>
+                            Kopi Nusantara hadir untuk memperkenalkan
+                            kekayaan kopi Indonesia melalui minuman
+                            yang sederhana dan dekat dengan keseharian.
+                        </p>
+                        <p>
+                            Setiap kopi membawa cerita mengenai daerah,
+                            petani, proses pengolahan, dan perjalanan
+                            hingga akhirnya sampai ke dalam cangkir.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Perjalanan kopi -->
+                <div class="journey">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Perjalanan</p>
+                            <h2>Dari biji hingga menjadi kopi.</h2>
+                        </div>
+                    </div>
+                    <div class="journey-list">
+                        <div class="journey-item">
+                            <div class="journey-year">01</div>
+                            <h3>Dipilih</h3>
+                            <p>
+                                Biji kopi dipilih dari berbagai
+                                daerah Indonesia.
+                            </p>
+                        </div>
+                        <div class="journey-item">
+                            <div class="journey-year">02</div>
+                            <h3>Diolah</h3>
+                            <p>
+                                Biji kopi diproses untuk menghasilkan
+                                karakter terbaik.
+                            </p>
+                        </div>
+                        <div class="journey-item">
+                            <div class="journey-year">03</div>
+                            <h3>Disangrai</h3>
+                            <p>
+                                Proses sangrai dilakukan untuk
+                                menghasilkan aroma dan rasa.
+                            </p>
+                        </div>
+                        <div class="journey-item">
+                            <div class="journey-year">04</div>
+                            <h3>Diseduh</h3>
+                            <p>
+                                Kopi diseduh dengan metode yang
+                                sesuai hingga siap dinikmati.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian FAQ -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">FAQ</p>
+                        <h2>Pertanyaan yang Sering Diajukan</h2>
+                    </div>
+                    <p class="section-description">
+                        Temukan jawaban dari pertanyaan yang
+                        sering ditanyakan mengenai Kopi Nusantara.
+                    </p>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            Apa itu Kopi Nusantara?
+                            <span>+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Kopi Nusantara adalah konsep kedai kopi
+                                yang menghadirkan minuman dengan inspirasi
+                                dari berbagai kopi dan cita rasa Indonesia.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            Apa saja menu yang tersedia?
+                            <span>+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Beberapa menu yang tersedia adalah
+                                Kopi Susu Senja, V60 Gayo, dan Cokelat Rumah.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            Dari mana kopi yang digunakan?
+                            <span>+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Kopi yang digunakan terinspirasi dari
+                                berbagai daerah penghasil kopi di Indonesia.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            Apakah tersedia minuman non-kopi?
+                            <span>+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Ya. Salah satu pilihan minuman non-kopi
+                                adalah Cokelat Rumah.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian ajakan pemesanan -->
+        <section class="order-section" id="order">
+            <div class="container order-inner">
+                <div>
+                    <p class="eyebrow">Siap Menikmati?</p>
+                    <h2>
+                        Temukan kopi favoritmu.
+                    </h2>
+                </div>
+                <a href="#menu" class="button button-light">
+                    Lihat Menu <span>→</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <strong class="footer-brand">
+                    Kopi Nusantara
+                </strong>
+                <p>
+                    Rasa lokal, cerita istimewa.
+                </p>
+            </div>
+            <div class="footer-contact">
+                <span>Indonesia</span>
+                <span>Kopi dari Nusantara</span>
+            </div>
+            <div class="copyright">
+                © <span id="current-year"></span> Kopi Nusantara
+            </div>
         </div>
-        <a class="button button-light" href="mailto:halo@kopinusantara.example">Hubungi Kami <span aria-hidden="true">&#8594;</span></a>
-      </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div><a class="brand footer-brand" href="#beranda"><span class="brand-mark" aria-hidden="true">&#9749;</span><span>Kopi Nusantara</span></a><p>Kedai kopi rumahan dari Indonesia.</p></div>
-      <div class="footer-contact"><span>Senin - Minggu, 08.00 - 21.00</span><span>Jl. Pulang Sore No. 12, Jakarta</span></div>
-      <p class="copyright">&copy; <span id="current-year">2026</span> Kopi Nusantara</p>
-    </div>
-  </footer>
-
-  <!-- Impor Library jQuery CDN sesuai PPT Pertemuan 5 -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="script.js"></script>
+    <!-- jQuery CDN resmi -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- JavaScript custom -->
+    <script src="script.js"></script>
 </body>
 </html>
