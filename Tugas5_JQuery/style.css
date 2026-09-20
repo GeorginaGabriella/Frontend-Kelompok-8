@@ -9,7 +9,7 @@
   --brown: #604033;
   --red: #a94e36;
   --gold: #c99a52;
-  --green: #2d5a27; /* Ditambahkan agar var(--green) berfungsi */
+  --green: #2d5a27; 
   --muted: #756960;
   --line: #cdbda7;
 }
@@ -192,7 +192,6 @@ h1 em {
   color: var(--ink);
 }
 
-/* Visual hero bergaya poster kedai lama. */
 .hero-image {
   position: relative;
   min-height: 360px;
