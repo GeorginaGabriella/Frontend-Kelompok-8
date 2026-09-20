@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  // Set tahun otomatis dengan jQuery .text()
   if ($('#current-year').length) {
     $('#current-year').text(new Date().getFullYear());
   }
