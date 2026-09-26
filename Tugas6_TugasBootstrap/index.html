@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kopi Nusantara dengan cita rasa khas Indonesia">
+    <title>Kopi Nusantara</title>
+    <!-- Memuat CSS Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Memuat CSS Kustom -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Komponen 1: Navbar Responsif Bootstrap -->
+    <nav class="navbar navbar-expand-lg sticky-top shadow-sm site-header py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold text-cream" href="#home">
+                <span class="brand-mark me-2">K</span>
+                Kopi Nusantara
+            </a>
+            <button class="navbar-toggler bg-light border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-3">
+                    <li class="nav-item"><a class="nav-link text-cream" href="#home">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link text-cream" href="#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link text-cream" href="#story">Cerita</a></li>
+                    <li class="nav-item"><a class="nav-link text-cream" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link nav-cta text-gold rounded d-inline-block" href="#order">Pesan</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero py-5" id="home">
+            <div class="container py-lg-5">
+                <div class="row align-items-center g-5">
+                    <div class="col-12 col-lg-7 hero-copy text-center text-lg-start">
+                        <p class="eyebrow">Kopi Nusantara</p>
+                        <h1 class="display-4 fw-normal text-dark mb-4">
+                            Rasa Lokal,
+                            <em class="text-red">Cerita Istimewa.</em>
+                        </h1>
+                        <p class="hero-intro mx-auto mx-lg-0 mb-4">
+                            Menikmati kopi Indonesia dengan cita rasa khas dari berbagai daerah Nusantara.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                            <a href="#menu" class="btn button-primary rounded-0 px-4 py-2">Lihat Menu <span>→</span></a>
+                            <a href="#story" class="btn button-text text-dark px-4 py-2">Cerita Kami</a>
+                        </div>
+                    </div>
+                    <!-- Ilustrasi Kustom dipertahankan -->
+                    <div class="col-12 col-lg-5 d-flex justify-content-center">
+                        <div class="hero-image w-100 mx-3 mx-lg-0">
+                            <div class="coffee-scene">
+                                <div class="bubble bubble-one">Nikmat!</div>
+                                <div class="bubble bubble-two">Kopi Indonesia</div>
+                                <div class="steam steam-satu"></div>
+                                <div class="steam steam-dua"></div>
+                                <div class="coffee-disc">KOPI</div>
+                            </div>
+                            <div class="cup-caption mt-3">
+                                <strong>KOPI NUSANTARA</strong>
+                                <span>RASA DARI INDONESIA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Komponen 2: Card Bootstrap untuk Menu -->
+        <section class="py-5" id="menu">
+            <div class="container py-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+                    <div>
+                        <p class="eyebrow text-gold mb-1">Pilihan Kami</p>
+                        <h2 class="display-6 mb-0">Menu Kopi Nusantara</h2>
+                    </div>
+                    <p class="section-description mt-3 mt-md-0 text-muted mb-0">
+                        Pilihan minuman dengan bahan dan cita rasa yang terinspirasi dari kekayaan Indonesia.
+                    </p>
+                </div>
+                
+                <!-- Sistem Grid: 1 Kolom HP (col-12), 2 Kolom Tablet (col-md-6), 3 Kolom Desktop (col-lg-4) -->
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-0 menu-card rounded-0">
+                            <div class="card-body p-4 d-flex flex-column">
+                                <div class="menu-icon mb-3">☕</div>
+                                <p class="menu-type mb-1">Favorit</p>
+                                <h3 class="card-title h4 mb-3">Kopi Susu Senja</h3>
+                                <p class="card-text text-muted flex-grow-1">Perpaduan kopi, susu, dan rasa manis yang lembut untuk menemani waktu santai.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <strong class="text-green h5 mb-0">Rp18.000</strong>
+                                    <button class="like-button" type="button">♡ Suka <span class="like-count">0</span></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-0 menu-card rounded-0">
+                            <div class="card-body p-4 d-flex flex-column">
+                                <div class="menu-icon icon-v60 mb-3">V60</div>
+                                <p class="menu-type mb-1">Single Origin</p>
+                                <h3 class="card-title h4 mb-3">V60 Gayo</h3>
+                                <p class="card-text text-muted flex-grow-1">Kopi Arabika Gayo dengan karakter aroma yang khas dan rasa yang seimbang.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <strong class="text-green h5 mb-0">Rp25.000</strong>
+                                    <button class="like-button" type="button">♡ Suka <span class="like-count">0</span></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-0 menu-card rounded-0">
+                            <div class="card-body p-4 d-flex flex-column">
+                                <div class="menu-icon mb-3">🍫</div>
+                                <p class="menu-type mb-1">Non Coffee</p>
+                                <h3 class="card-title h4 mb-3">Cokelat Rumah</h3>
+                                <p class="card-text text-muted flex-grow-1">Minuman cokelat lembut dengan rasa manis yang cocok untuk semua suasana.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <strong class="text-green h5 mb-0">Rp20.000</strong>
+                                    <button class="like-button" type="button">♡ Suka <span class="like-count">0</span></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian Cerita & Perjalanan -->
+        <section class="story-section py-5" id="story">
+            <div class="container py-4">
+                <div class="row align-items-center g-5">
+                    <div class="col-12 col-lg-4 d-flex justify-content-center">
+                        <div class="story-badge">
+                            <strong>100%</strong>
+                            <span>Inspirasi<br>Nusantara</span>
+                            <small>KOPI INDONESIA</small>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 text-center text-lg-start">
+                        <p class="eyebrow mb-2">Cerita Kami</p>
+                        <h2 class="display-6 mb-4">Dari Nusantara ke dalam secangkir kopi.</h2>
+                        <p class="text-muted mx-auto mx-lg-0" style="max-width: 600px;">Kopi Nusantara hadir untuk memperkenalkan kekayaan kopi Indonesia melalui minuman yang sederhana dan dekat dengan keseharian.</p>
+                        <p class="text-muted mx-auto mx-lg-0" style="max-width: 600px;">Setiap kopi membawa cerita mengenai daerah, petani, proses pengolahan, dan perjalanan hingga akhirnya sampai ke dalam cangkir.</p>
+                    </div>
+                </div>
+
+                <div class="journey mt-5 pt-5 border-top">
+                    <div class="text-center mb-5">
+                        <p class="eyebrow mb-1">Perjalanan</p>
+                        <h2 class="h3">Dari biji hingga menjadi kopi.</h2>
+                    </div>
+                    <div class="row g-4 text-center">
+                        <div class="col-6 col-lg-3 journey-item">
+                            <div class="journey-year">01</div>
+                            <h3 class="h5 mt-3">Dipilih</h3>
+                            <p class="text-muted small">Biji kopi dipilih dari berbagai daerah Indonesia.</p>
+                        </div>
+                        <div class="col-6 col-lg-3 journey-item">
+                            <div class="journey-year">02</div>
+                            <h3 class="h5 mt-3">Diolah</h3>
+                            <p class="text-muted small">Biji kopi diproses untuk menghasilkan karakter terbaik.</p>
+                        </div>
+                        <div class="col-6 col-lg-3 journey-item">
+                            <div class="journey-year">03</div>
+                            <h3 class="h5 mt-3">Disangrai</h3>
+                            <p class="text-muted small">Proses sangrai dilakukan untuk menghasilkan aroma dan rasa.</p>
+                        </div>
+                        <div class="col-6 col-lg-3 journey-item">
+                            <div class="journey-year">04</div>
+                            <h3 class="h5 mt-3">Diseduh</h3>
+                            <p class="text-muted small">Kopi diseduh dengan metode yang sesuai hingga siap dinikmati.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Komponen 3: Accordion Bootstrap untuk FAQ -->
+        <section class="py-5 bg-paper" id="faq">
+            <div class="container py-4">
+                <div class="text-center mb-5">
+                    <p class="eyebrow mb-1">FAQ</p>
+                    <h2 class="display-6">Pertanyaan yang Sering Diajukan</h2>
+                    <p class="text-muted mt-3">Temukan jawaban dari pertanyaan yang sering ditanyakan mengenai Kopi Nusantara.</p>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="accordion accordion-flush" id="faqAccordion">
+                            <div class="accordion-item bg-transparent border-bottom">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-transparent fw-bold text-dark px-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Apa itu Kopi Nusantara?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body px-0 text-muted">
+                                        Kopi Nusantara adalah konsep kedai kopi yang menghadirkan minuman dengan inspirasi dari berbagai kopi dan cita rasa Indonesia.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item bg-transparent border-bottom">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-transparent fw-bold text-dark px-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Apa saja menu yang tersedia?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body px-0 text-muted">
+                                        Beberapa menu yang tersedia adalah Kopi Susu Senja, V60 Gayo, dan Cokelat Rumah.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-transparent border-bottom">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-transparent fw-bold text-dark px-0" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Dari mana kopi yang digunakan?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body px-0 text-muted">
+                                        Kopi yang digunakan terinspirasi dari berbagai daerah penghasil kopi di Indonesia.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Section -->
+        <section class="order-section py-5" id="order">
+            <div class="container">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start">
+                    <div class="mb-4 mb-md-0">
+                        <p class="eyebrow text-gold mb-1">Siap Menikmati?</p>
+                        <h2 class="text-cream mb-0">Temukan kopi favoritmu.</h2>
+                    </div>
+                    <a href="#menu" class="btn button-light rounded-0 px-4 py-2">Lihat Menu <span>→</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer py-5">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-12 col-md-5 text-center text-md-start">
+                    <strong class="text-cream h5 mb-2 d-block">Kopi Nusantara</strong>
+                    <p class="mb-0 text-muted">Rasa lokal, cerita istimewa.</p>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-start text-muted">
+                    <span class="d-block mb-1">Indonesia</span>
+                    <span>Kopi dari Nusantara</span>
+                </div>
+                <div class="col-12 col-md-3 text-center text-md-end text-muted">
+                    © <span id="current-year"></span> Kopi Nusantara
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery CDN (diperlukan untuk fungsi like button) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap JS Bundle (menangani Navbar & Accordion) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript Custom -->
+    <script src="script.js"></script>
+</body>
+</html>
