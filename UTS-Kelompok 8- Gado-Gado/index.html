@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gado-Gado Nusantara - Jelajahi berbagai gado-gado khas Indonesia">
+    <title>Gado-Gado Nusantara</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header dan navigasi -->
+    <header class="header">
+        <div class="container nav-wrapper">
+            <a href="#home" class="logo">
+                <span class="logo-icon">🥜</span>
+                <span>
+                    <strong>Gado-Gado</strong>
+                    <small>NUSANTARA</small>
+                </span>
+            </a>
+
+            <nav class="navbar">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#favorit" class="nav-link">Favorit</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#favorit" class="icon-button favorite-nav" title="Favorit">
+                    <span>♡</span>
+                    <b id="favoriteCounter">0</b>
+                </a>
+
+                <button class="profile-button" id="profileButton" title="Profil">
+                    👤
+                </button>
+
+                <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#favorit">Favorit</a>
+            <a href="#about">About</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="hero-pattern"></div>
+
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <p class="eyebrow">
+                        <span></span>
+                        KULINER KHAS INDONESIA
+                    </p>
+
+                    <h1>
+                        Jelajahi Rasa,
+                        <em>Kenali Nusantara</em>
+                    </h1>
+
+                    <p class="hero-description">
+                        Temukan berbagai macam gado-gado dari berbagai daerah
+                        di Indonesia dengan cita rasa, bahan, dan keunikan yang berbeda.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#menu" class="primary-button">
+                            Jelajahi Menu
+                            <span>→</span>
+                        </a>
+
+                        <a href="#about" class="secondary-button">
+                            Tentang Gado-Gado
+                        </a>
+                    </div>
+
+                    <div class="hero-info">
+                        <div>
+                            <strong>10+</strong>
+                            <span>Menu Nusantara</span>
+                        </div>
+
+                        <div>
+                            <strong>8</strong>
+                            <span>Daerah</span>
+                        </div>
+
+                        <div>
+                            <strong>100%</strong>
+                            <span>Kuliner Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-circle"></div>
+                    <div class="hero-batik batik-top"></div>
+                    <div class="hero-batik batik-bottom"></div>
+
+                    <div class="floating-leaf leaf-one">🌿</div>
+                    <div class="floating-leaf leaf-two">🍃</div>
+                    <div class="floating-peanut peanut-one">🥜</div>
+                    <div class="floating-peanut peanut-two">🥜</div>
+
+                    <div class="hero-food">
+                        <img src="images/hero.png" alt="Gado-Gado Nusantara">
+                    </div>
+
+                    <div class="hero-label">
+                        <span>🍽️</span>
+                        <div>
+                            <strong>Gado-Gado</strong>
+                            <small>Warisan Kuliner Nusantara</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Intro -->
+        <section class="intro-section">
+            <div class="container intro-grid">
+                <div class="intro-image">
+                    <div class="image-frame">
+                        <img src="images/hero.png" alt="Gado-Gado Indonesia">
+                    </div>
+
+                    <div class="intro-stamp">
+                        <span>🇮🇩</span>
+                        <strong>Kuliner</strong>
+                        <small>Nusantara</small>
+                    </div>
+                </div>
+
+                <div class="intro-text">
+                    <p class="section-label">KENALI KULINERNYA</p>
+
+                    <h2>
+                        Satu Hidangan,
+                        <span>Beragam Cerita</span>
+                    </h2>
+
+                    <p>
+                        Gado-gado merupakan hidangan yang memadukan berbagai
+                        sayuran dengan saus kacang. Setiap daerah memiliki
+                        karakteristik dan komponen yang membuatnya berbeda.
+                    </p>
+
+                    <p>
+                        Melalui Gado-Gado Nusantara, kamu dapat mengenal
+                        berbagai variasi gado-gado dari berbagai daerah
+                        Indonesia secara lebih menarik dan interaktif.
+                    </p>
+
+                    <a href="#menu" class="text-button">
+                        Lihat Semua Menu →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu -->
+        <section class="menu-section" id="menu">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">PILIHAN NUSANTARA</p>
+                        <h2>Menu Gado-Gado</h2>
+                    </div>
+
+                    <p>
+                        Temukan gado-gado favoritmu dari berbagai
+                        daerah di Indonesia.
+                    </p>
+                </div>
+
+                <div class="search-filter">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="text" id="cariMenu" placeholder="Cari gado-gado...">
+                        <button id="clearSearch">×</button>
+                    </div>
+
+                    <div class="filter-wrapper">
+                        <span class="filter-title">Filter:</span>
+
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="semua">Semua</button>
+                            <button class="filter-btn" data-filter="betawi">Betawi</button>
+                            <button class="filter-btn" data-filter="sunda">Sunda</button>
+                            <button class="filter-btn" data-filter="jawa">Jawa</button>
+                            <button class="filter-btn" data-filter="lainnya">Lainnya</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-container" id="menuContainer">
+
+                    <!-- Menu Surabaya -->
+                    <article class="menu-card" data-kategori="surabaya" data-group="lainnya" data-name="gado-gado surabaya">
+                        <div class="card-image">
+                            <img src="images/surabaya.png" alt="Gado-Gado Surabaya">
+                            <span class="region-badge">SURABAYA</span>
+                            <button class="favorite-button" data-name="Gado-Gado Surabaya">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAWA TIMUR</span>
+                                <span class="rating">★ 4.8</span>
+                            </div>
+
+                            <h3>Gado-Gado Surabaya</h3>
+
+                            <p>
+                                Sayuran segar dengan lontong, tahu, tempe,
+                                dan saus kacang yang khas.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🍘 Lontong</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Surabaya">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Sederhana -->
+                    <article class="menu-card" data-kategori="sederhana" data-group="lainnya" data-name="gado-gado sederhana">
+                        <div class="card-image">
+                            <img src="images/sederhana.png" alt="Gado-Gado Sederhana">
+                            <span class="region-badge">NUSANTARA</span>
+                            <button class="favorite-button" data-name="Gado-Gado Sederhana">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">TRADISIONAL</span>
+                                <span class="rating">★ 4.7</span>
+                            </div>
+
+                            <h3>Gado-Gado Sederhana</h3>
+
+                            <p>
+                                Pilihan sederhana dengan sayuran rebus,
+                                tahu, tempe, dan saus kacang.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🍘 Tahu</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Sederhana">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Fusilli -->
+                    <article class="menu-card" data-kategori="fusilli" data-group="lainnya" data-name="resep gado-gado fusilli">
+                        <div class="card-image">
+                            <img src="images/fusilli.png" alt="Gado-Gado Fusilli">
+                            <span class="region-badge">MODERN</span>
+                            <button class="favorite-button" data-name="Gado-Gado Fusilli">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">KREASI</span>
+                                <span class="rating">★ 4.6</span>
+                            </div>
+
+                            <h3>Gado-Gado Fusilli</h3>
+
+                            <p>
+                                Kreasi gado-gado dengan tambahan pasta fusilli
+                                yang memberikan sensasi berbeda.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🍝 Fusilli</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Fusilli">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Malang -->
+                    <article class="menu-card" data-kategori="malang" data-group="lainnya" data-name="gado-gado malang">
+                        <div class="card-image">
+                            <img src="images/malang.png" alt="Gado-Gado Malang">
+                            <span class="region-badge">MALANG</span>
+                            <button class="favorite-button" data-name="Gado-Gado Malang">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAWA TIMUR</span>
+                                <span class="rating">★ 4.8</span>
+                            </div>
+
+                            <h3>Gado-Gado Malang</h3>
+
+                            <p>
+                                Perpaduan sayuran, tahu, tempe, dan bahan
+                                pelengkap dengan karakter khas Malang.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🍘 Tahu</span>
+                                <span>🥜 Kacang</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Malang">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Betawi -->
+                    <article class="menu-card" data-kategori="betawi" data-group="betawi" data-name="gado-gado betawi">
+                        <div class="card-image">
+                            <img src="images/betawi.png" alt="Gado-Gado Betawi">
+                            <span class="region-badge">BETAWI</span>
+                            <button class="favorite-button" data-name="Gado-Gado Betawi">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAKARTA</span>
+                                <span class="rating">★ 4.9</span>
+                            </div>
+
+                            <h3>Gado-Gado Betawi</h3>
+
+                            <p>
+                                Sayuran segar dengan lontong, tahu, tempe,
+                                telur, dan saus kacang khas Betawi.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥚 Telur</span>
+                                <span>🥜 Kacang</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Betawi">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Cirebon -->
+                    <article class="menu-card" data-kategori="cirebon" data-group="lainnya" data-name="gado-gado ayam cirebon">
+                        <div class="card-image">
+                            <img src="images/cirebon.png" alt="Gado-Gado Ayam Cirebon">
+                            <span class="region-badge">CIREBON</span>
+                            <button class="favorite-button" data-name="Gado-Gado Ayam Cirebon">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAWA BARAT</span>
+                                <span class="rating">★ 4.7</span>
+                            </div>
+
+                            <h3>Gado-Gado Ayam Cirebon</h3>
+
+                            <p>
+                                Gado-gado dengan tambahan ayam sebagai
+                                pelengkap protein.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🍗 Ayam</span>
+                                <span>🥜 Kacang</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Ayam Cirebon">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Solo -->
+                    <article class="menu-card" data-kategori="jawa" data-group="jawa" data-name="gado-gado solo">
+                        <div class="card-image">
+                            <img src="images/solo.png" alt="Gado-Gado Solo">
+                            <span class="region-badge">SOLO</span>
+                            <button class="favorite-button" data-name="Gado-Gado Solo">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAWA TENGAH</span>
+                                <span class="rating">★ 4.8</span>
+                            </div>
+
+                            <h3>Gado-Gado Solo</h3>
+
+                            <p>
+                                Hidangan sayuran dengan karakter rasa
+                                yang khas dari daerah Solo.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🍘 Lontong</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Solo">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Bangka -->
+                    <article class="menu-card" data-kategori="bangka" data-group="lainnya" data-name="gado-gado bangka">
+                        <div class="card-image">
+                            <img src="images/bangka.png" alt="Gado-Gado Bangka">
+                            <span class="region-badge">BANGKA</span>
+                            <button class="favorite-button" data-name="Gado-Gado Bangka">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">SUMATRA</span>
+                                <span class="rating">★ 4.6</span>
+                            </div>
+
+                            <h3>Gado-Gado Bangka</h3>
+
+                            <p>
+                                Variasi gado-gado dengan cita rasa daerah
+                                Bangka yang khas.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🍘 Tahu</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Bangka">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Padang -->
+                    <article class="menu-card" data-kategori="padang" data-group="lainnya" data-name="gado-gado padang">
+                        <div class="card-image">
+                            <img src="images/padang.png" alt="Gado-Gado Padang">
+                            <span class="region-badge">PADANG</span>
+                            <button class="favorite-button" data-name="Gado-Gado Padang">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">SUMATRA BARAT</span>
+                                <span class="rating">★ 4.7</span>
+                            </div>
+
+                            <h3>Gado-Gado Padang</h3>
+
+                            <p>
+                                Perpaduan sayuran dengan karakter bumbu
+                                yang terinspirasi dari cita rasa Padang.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🌶️ Bumbu</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Padang">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Bali -->
+                    <article class="menu-card" data-kategori="bali" data-group="lainnya" data-name="gado-gado khas bali">
+                        <div class="card-image">
+                            <img src="images/bali.png" alt="Gado-Gado Khas Bali">
+                            <span class="region-badge">BALI</span>
+                            <button class="favorite-button" data-name="Gado-Gado Khas Bali">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">BALI</span>
+                                <span class="rating">★ 4.8</span>
+                            </div>
+
+                            <h3>Gado-Gado Khas Bali</h3>
+
+                            <p>
+                                Kreasi gado-gado dengan sentuhan bahan
+                                dan cita rasa khas Bali.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🌿 Rempah</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Khas Bali">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Menu Sunda -->
+                    <article class="menu-card" data-kategori="sunda" data-group="sunda" data-name="gado-gado sunda">
+                        <div class="card-image">
+                            <img src="images/sunda.png" alt="Gado-Gado Sunda">
+                            <span class="region-badge">SUNDA</span>
+                            <button class="favorite-button" data-name="Gado-Gado Sunda">♡</button>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="card-top">
+                                <span class="category">JAWA BARAT</span>
+                                <span class="rating">★ 4.8</span>
+                            </div>
+
+                            <h3>Gado-Gado Sunda</h3>
+
+                            <p>
+                                Perpaduan sayuran segar dan bumbu kacang
+                                dengan karakter khas Sunda.
+                            </p>
+
+                            <div class="ingredients">
+                                <span>🥬 Sayuran</span>
+                                <span>🥜 Kacang</span>
+                                <span>🌿 Lalapan</span>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="detail-button">Detail</button>
+                                <button class="add-button" data-name="Gado-Gado Sunda">+ Tambah</button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="empty-search" id="emptySearch">
+                    <div>🔎</div>
+                    <h3>Menu tidak ditemukan</h3>
+                    <p>Coba gunakan kata pencarian atau filter yang berbeda.</p>
+                </div>
+
+                <div class="load-info">
+                    <span id="menuCount">11</span> menu tersedia
+                </div>
+            </div>
+        </section>
+
+        <!-- Pilihan Saya -->
+        <section class="choice-section" id="pilihan">
+            <div class="container">
+                <div class="choice-header">
+                    <div>
+                        <p class="section-label">PILIHANMU</p>
+                        <h2>Pilihan Saya</h2>
+                    </div>
+
+                    <div class="choice-counter">
+                        <span id="choiceCounter">0</span>
+                        <small>menu dipilih</small>
+                    </div>
+                </div>
+
+                <div class="choice-box">
+                    <div class="empty-choice" id="pesanKosong">
+                        <div class="empty-icon">🍽️</div>
+                        <h3>Belum ada menu pilihan</h3>
+                        <p>
+                            Klik tombol "+ Tambah" pada menu
+                            untuk memasukkannya ke daftar pilihan.
+                        </p>
+
+                        <a href="#menu" class="primary-button small-button">
+                            Jelajahi Menu
+                        </a>
+                    </div>
+
+                    <ul id="daftarPilihan"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favorit -->
+        <section class="favorite-section" id="favorit">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">MENU FAVORIT</p>
+                        <h2>Yang Kamu Tandai ❤️</h2>
+                    </div>
+
+                    <p>
+                        Simpan gado-gado yang menarik perhatianmu
+                        dengan menekan ikon hati.
+                    </p>
+                </div>
+
+                <div class="favorite-box" id="favoriteBox">
+                    <div class="empty-favorite" id="emptyFavorite">
+                        <div>♡</div>
+                        <h3>Belum ada favorit</h3>
+                        <p>
+                            Tekan ikon hati pada menu yang ingin kamu tandai.
+                        </p>
+                    </div>
+
+                    <div class="favorite-list" id="favoriteList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about-section" id="about">
+            <div class="container about-grid">
+                <div class="about-content">
+                    <p class="section-label">TENTANG KAMI</p>
+
+                    <h2>
+                        Mengenal Gado-Gado,
+                        <span>Mengenal Indonesia</span>
+                    </h2>
+
+                    <p>
+                        Gado-Gado Nusantara merupakan website katalog interaktif
+                        yang memperkenalkan berbagai pilihan gado-gado dari
+                        beberapa daerah di Indonesia.
+                    </p>
+
+                    <p>
+                        Website ini dibuat untuk memberikan pengalaman
+                        eksplorasi kuliner yang sederhana, informatif,
+                        dan interaktif.
+                    </p>
+
+                    <div class="about-features">
+                        <div>
+                            <span>🌿</span>
+                            <strong>Beragam Daerah</strong>
+                            <p>Kenali variasi dari berbagai wilayah.</p>
+                        </div>
+
+                        <div>
+                            <span>🥜</span>
+                            <strong>Cita Rasa</strong>
+                            <p>Setiap menu memiliki karakter berbeda.</p>
+                        </div>
+
+                        <div>
+                            <span>❤️</span>
+                            <strong>Interaktif</strong>
+                            <p>Pilih dan tandai menu favoritmu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-visual">
+                    <div class="batik-circle"></div>
+
+                    <div class="about-card">
+                        <span>🇮🇩</span>
+                        <strong>Rasa Indonesia</strong>
+                        <p>
+                            Beragam rasa dalam satu perjalanan
+                            kuliner Nusantara.
+                        </p>
+                    </div>
+
+                    <div class="about-food">
+                        <img src="images/hero.png" alt="Kuliner Gado-Gado">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#home" class="logo footer-logo">
+                    <span class="logo-icon">🥜</span>
+                    <span>
+                        <strong>Gado-Gado</strong>
+                        <small>NUSANTARA</small>
+                    </span>
+                </a>
+
+                <p>Jelajahi rasa, kenali Nusantara.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Navigasi</h4>
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#favorit">Favorit</a>
+                <a href="#about">About</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Fitur</h4>
+                <a href="#menu">Search</a>
+                <a href="#menu">Filter</a>
+                <a href="#favorit">Favorit</a>
+                <a href="#pilihan">Pilihan Saya</a>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Gado-Gado Nusantara</h4>
+                <p>
+                    Website kuliner interaktif untuk
+                    mengenal keberagaman gado-gado Indonesia.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Gado-Gado Nusantara. Project UTS Frontend.</p>
+        </div>
+    </footer>
+
+    <!-- Modal detail menu -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="detail-modal">
+            <button class="modal-close" id="detailClose">×</button>
+
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+            </div>
+
+            <div class="modal-content">
+                <span class="modal-region" id="modalRegion">NUSANTARA</span>
+
+                <h2 id="modalTitle">Gado-Gado</h2>
+
+                <div class="modal-rating">
+                    <span>★★★★★</span>
+                    <strong id="modalRating">4.8</strong>
+                </div>
+
+                <p id="modalDescription">
+                    Informasi mengenai menu gado-gado.
+                </p>
+
+                <div class="modal-ingredients">
+                    <h4>Komponen Menu</h4>
+                    <div id="modalIngredients"></div>
+                </div>
+
+                <button class="primary-button modal-add" id="modalAdd">
+                    + Tambahkan ke Pilihan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal profil -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="profile-modal">
+            <button class="modal-close" id="profileClose">×</button>
+
+            <div class="profile-icon">👤</div>
+
+            <p class="section-label">PROFIL</p>
+
+            <h2>Pengunjung</h2>
+
+            <p>
+                Selamat datang di Gado-Gado Nusantara.
+                Jelajahi menu dan tandai gado-gado favoritmu.
+            </p>
+
+            <div class="profile-stats">
+                <div>
+                    <strong id="profileFavorite">0</strong>
+                    <span>Favorit</span>
+                </div>
+
+                <div>
+                    <strong id="profileChoice">0</strong>
+                    <span>Pilihan</span>
+                </div>
+            </div>
+
+            <a href="#menu" class="primary-button" id="profileExplore">
+                Jelajahi Menu
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast notifikasi -->
+    <div class="toast" id="toast">
+        <span>✓</span>
+        <p id="toastMessage">Menu berhasil ditambahkan.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
