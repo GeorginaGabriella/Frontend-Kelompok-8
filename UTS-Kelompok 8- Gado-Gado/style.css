@@ -39,7 +39,6 @@ img {
     margin: 0 auto;
 }
 
-/* Header */
 .header {
     position: sticky;
     top: 0;
@@ -558,7 +557,6 @@ img {
     margin-top: 12px;
 }
 
-/* Menu */
 .menu-section {
     padding: 110px 0;
     background: #f3ead3;
@@ -1063,7 +1061,6 @@ img {
     font-size: 17px;
 }
 
-/* About */
 .about-section {
     padding: 110px 0;
     background: #f3ead3;
@@ -1180,7 +1177,6 @@ img {
     line-height: 1.5;
 }
 
-/* Footer */
 .footer {
     background: #202f1d;
     color: white;
@@ -1259,7 +1255,6 @@ img {
     font-size: 10px;
 }
 
-/* FAQ */
 .faq-section {
     padding: 90px 0;
     background: #edf0e3;
@@ -1311,7 +1306,6 @@ img {
     line-height: 1.8;
 }
 
-/* Modal */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -1729,7 +1723,6 @@ img {
     font: 700 10px "DM Sans", sans-serif;
 }
 
-/* Profile Modal */
 .profile-modal {
     width: min(390px, 100%);
     background: #fffdf8;
@@ -1789,7 +1782,6 @@ img {
     font-size: 9px;
 }
 
-/* Toast */
 .toast {
     position: fixed;
     z-index: 3000;
@@ -1830,7 +1822,6 @@ img {
     font-size: 11px;
 }
 
-/* Responsive */
 @media (max-width: 992px) {
     .navbar {
         gap: 20px;
@@ -2200,4 +2191,140 @@ img {
         right: 15px;
         bottom: 15px;
     }
+}
+
+#authModal {
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-modal {
+    width: 430px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background: #fffdf7;
+    border-radius: 24px;
+    padding: 40px;
+
+    position: relative;
+}
+
+.auth-modal h2 {
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.auth-description {
+    margin-bottom: 25px;
+}
+
+#loginForm,
+#registerForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#loginForm label,
+#registerForm label {
+    display: block;
+    width: 100%;
+    margin-bottom: 7px;
+}
+
+#loginForm input,
+#registerForm input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+    margin-bottom: 17px;
+
+    border: 1px solid #ded8c9;
+    border-radius: 12px;
+
+    background: #f8f5ea;
+
+    font-size: 14px;
+}
+
+.auth-submit {
+    display: block;
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+}
+
+.auth-switch {
+    display: block;
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 22px;
+}
+
+.auth-error {
+    display: block;
+    width: 100%;
+
+    margin: 0 0 10px;
+
+    color: #b42318;
+}
+
+@media (max-width: 600px) {
+
+    .auth-modal {
+        width: 92%;
+        padding: 30px 22px;
+    }
+}
+
+.profile-modal .primary-button,
+.profile-modal .logout-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#profileExplore {
+    text-align: center;
+    margin-top: 25px;
+}
+
+#logoutButton {
+    display: block;
+    width: 100%;
+
+    margin-top: 12px;
+    padding: 14px 20px;
+
+    border: 1px solid #c65d12;
+    border-radius: 30px;
+
+    background: transparent;
+    color: #c65d12;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#logoutButton:hover {
+    background: #c65d12;
+    color: white;
 }

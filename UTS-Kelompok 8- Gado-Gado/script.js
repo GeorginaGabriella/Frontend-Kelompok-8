@@ -21,7 +21,6 @@ $(document).ready(function () {
         localStorage.setItem("gadoGadoChoices", JSON.stringify(choices));
     }
 
-    // Data menu
     const menuData = {
         "Gado-Gado Surabaya": {
             image: "images/surabaya.png",
@@ -244,7 +243,6 @@ $(document).ready(function () {
         $("#adminAboutDescription").val(siteContent.aboutDescription);
     }
 
-    // Menampilkan notifikasi
     function showToast(message) {
         $("#toastMessage").text(message);
         $("#toast").addClass("show");
@@ -254,7 +252,6 @@ $(document).ready(function () {
         }, 2200);
     }
 
-    // Memperbarui jumlah favorit dan pilihan
     function updateCounters() {
         $("#favoriteCounter").text(favorites.length);
         $("#choiceCounter").text(choices.length);
@@ -262,7 +259,6 @@ $(document).ready(function () {
         $("#profileChoice").text(choices.length);
     }
 
-    // Memperbarui tombol favorit
     function updateFavoriteButtons() {
         $(".favorite-button").each(function () {
             let name = $(this).data("name");
@@ -277,7 +273,6 @@ $(document).ready(function () {
         });
     }
 
-    // Menampilkan daftar favorit
     function renderFavorites() {
         $("#favoriteList").empty();
 
@@ -313,7 +308,6 @@ $(document).ready(function () {
         updateCounters();
     }
 
-    // Menampilkan daftar pilihan
     function renderChoices() {
         $("#daftarPilihan").empty();
 
@@ -342,7 +336,6 @@ $(document).ready(function () {
         updateCounters();
     }
 
-    // Menjalankan pencarian dan filter
     function applyFilter() {
         let keyword = $("#cariMenu").val().toLowerCase();
         let visibleCount = 0;
@@ -371,7 +364,6 @@ $(document).ready(function () {
         }
     }
 
-    // Filter menu
     $(".filter-btn").on("click", function () {
         $(".filter-btn").removeClass("active");
         $(this).addClass("active");
@@ -381,7 +373,6 @@ $(document).ready(function () {
         applyFilter();
     });
 
-    // Pencarian menu
     $("#cariMenu").on("keyup", function () {
         if ($(this).val().length > 0) {
             $("#clearSearch").show();
@@ -392,7 +383,6 @@ $(document).ready(function () {
         applyFilter();
     });
 
-    // Menghapus pencarian
     $("#clearSearch").on("click", function () {
         $("#cariMenu").val("");
         $(this).hide();
@@ -401,7 +391,6 @@ $(document).ready(function () {
         $("#cariMenu").focus();
     });
 
-    // Menambah dan menghapus favorit
     $(".favorite-button").on("click", function () {
         let name = $(this).data("name");
 
@@ -421,7 +410,6 @@ $(document).ready(function () {
         persistUserLists();
     });
 
-    // Menambahkan menu ke pilihan
     $(".add-button").on("click", function () {
         let name = $(this).data("name");
 
@@ -441,7 +429,6 @@ $(document).ready(function () {
         });
     });
 
-    // Menghapus menu dari pilihan
     $("#daftarPilihan").on("click", ".hapus", function () {
         let name = $(this).data("name");
 
@@ -454,7 +441,6 @@ $(document).ready(function () {
         showToast(name + " berhasil dihapus.");
     });
 
-    // Menghapus favorit dari daftar
     $("#favoriteList").on("click", ".remove-favorite", function () {
         let name = $(this).data("name");
 
@@ -469,7 +455,6 @@ $(document).ready(function () {
         showToast(name + " dihapus dari favorit.");
     });
 
-    // Membuka detail menu
     $(".detail-button").on("click", function () {
         let name = $(this).closest(".menu-card").find("h3").text();
         let menu = menuData[name];
@@ -502,7 +487,7 @@ $(document).ready(function () {
         $("body").css("overflow", "hidden");
     });
 
-    // Menutup modal detail
+
     $("#detailClose").on("click", function () {
         $("#detailModal").removeClass("show");
         $("body").css("overflow", "");
@@ -515,7 +500,6 @@ $(document).ready(function () {
         }
     });
 
-    // Menambahkan menu dari modal
     $("#modalAdd").on("click", function () {
         if (!currentMenu) {
             return;
@@ -536,31 +520,264 @@ $(document).ready(function () {
         showToast(currentMenu + " ditambahkan ke Pilihan Saya.");
     });
 
-    // Membuka profil
-    $("#profileButton").on("click", function () {
-        $("#profileModal").addClass("show");
+const adminAccount = {
+    name: "Administrator",
+    username: "admin",
+    password: "admin123",
+    role: "admin"
+};
+
+function getAccounts() {
+    return JSON.parse(localStorage.getItem("gadoGadoAccounts") || "[]");
+}
+
+function getCurrentUser() {
+    return JSON.parse(localStorage.getItem("gadoGadoCurrentUser") || "null");
+}
+
+function setCurrentUser(user) {
+    const loginUser = {
+        name: user.name,
+        username: user.username,
+        role: user.role
+    };
+
+    localStorage.setItem(
+        "gadoGadoCurrentUser",
+        JSON.stringify(loginUser)
+    );
+
+    updateLoginUI();
+}
+
+function updateLoginUI() {
+    const user = getCurrentUser();
+
+    if (!user) {
+        $("#adminOpen").hide();
+        $("#profileButton").attr("title", "Login / Register");
+        return;
+    }
+
+    $("#profileName").text(user.name);
+    $("#profileUsername").text("@" + user.username);
+    $("#profileRole").text(user.role.toUpperCase());
+
+    if (user.role === "admin") {
+        $("#adminOpen").show();
+    } else {
+        $("#adminOpen").hide();
+    }
+}
+
+$("#profileButton").on("click", function () {
+    const user = getCurrentUser();
+
+    // Belum login -> tampilkan login
+    if (!user) {
+        $("#loginSection").show();
+        $("#registerSection").hide();
+
+        $("#authModal").addClass("show");
         $("body").css("overflow", "hidden");
+
+        return;
+    }
+
+    $("#profileName").text(user.name);
+    $("#profileUsername").text("@" + user.username);
+    $("#profileRole").text(user.role.toUpperCase());
+
+    $("#profileModal").addClass("show");
+    $("body").css("overflow", "hidden");
+});
+
+$("#authClose").on("click", function () {
+    $("#authModal").removeClass("show");
+    $("body").css("overflow", "");
+});
+
+$("#authModal").on("click", function (event) {
+    if ($(event.target).is("#authModal")) {
+        $("#authModal").removeClass("show");
+        $("body").css("overflow", "");
+    }
+});
+
+$("#showRegister").on("click", function () {
+    $("#loginSection").hide();
+    $("#registerSection").show();
+
+    $("#loginError").text("");
+});
+
+$("#showLogin").on("click", function () {
+    $("#registerSection").hide();
+    $("#loginSection").show();
+
+    $("#registerError").text("");
+});
+
+$("#registerForm").on("submit", function (event) {
+    event.preventDefault();
+
+    const name = $("#registerName").val().trim();
+    const username = $("#registerUsername")
+        .val()
+        .trim()
+        .toLowerCase();
+
+    const password = $("#registerPassword").val();
+    const confirmPassword = $("#registerConfirmPassword").val();
+
+    $("#registerError").text("");
+
+    if (!name || !username || !password || !confirmPassword) {
+        $("#registerError").text("Semua data harus diisi.");
+        return;
+    }
+
+    if (password.length < 6) {
+        $("#registerError").text("Password minimal 6 karakter.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        $("#registerError").text("Konfirmasi password tidak sama.");
+        return;
+    }
+
+    if (username === "admin") {
+        $("#registerError").text("Username sudah digunakan.");
+        return;
+    }
+
+    const accounts = getAccounts();
+
+    const sudahAda = accounts.some(function (account) {
+        return account.username.toLowerCase() === username;
     });
 
-    // Menutup profil
-    $("#profileClose").on("click", function () {
+    if (sudahAda) {
+        $("#registerError").text("Username sudah digunakan.");
+        return;
+    }
+
+    const newUser = {
+        name: name,
+        username: username,
+        password: password,
+        role: "user"
+    };
+
+    accounts.push(newUser);
+
+    localStorage.setItem(
+        "gadoGadoAccounts",
+        JSON.stringify(accounts)
+    );
+
+    $("#registerForm")[0].reset();
+
+    $("#registerSection").hide();
+    $("#loginSection").show();
+
+    $("#loginUsername").val(username);
+
+    showToast("Register berhasil. Silakan login.");
+});
+
+$("#loginForm").on("submit", function (event) {
+    event.preventDefault();
+
+    const username = $("#loginUsername")
+        .val()
+        .trim()
+        .toLowerCase();
+
+    const password = $("#loginPassword").val();
+
+    $("#loginError").text("");
+
+    if (!username || !password) {
+        $("#loginError").text("Username dan password harus diisi.");
+        return;
+    }
+
+    let foundUser = null;
+
+    if (
+        username === adminAccount.username &&
+        password === adminAccount.password
+    ) {
+        foundUser = adminAccount;
+    } else {
+        const accounts = getAccounts();
+
+        foundUser = accounts.find(function (account) {
+            return (
+                account.username.toLowerCase() === username &&
+                account.password === password
+            );
+        });
+    }
+
+    if (!foundUser) {
+        $("#loginError").text("Username atau password salah.");
+        return;
+    }
+
+    setCurrentUser(foundUser);
+
+    $("#loginForm")[0].reset();
+
+    $("#authModal").removeClass("show");
+    $("body").css("overflow", "");
+
+    if (foundUser.role === "admin") {
+        showToast("Login sebagai Admin berhasil.");
+    } else {
+        showToast("Selamat datang, " + foundUser.name + "!");
+    }
+});
+
+$("#profileClose").on("click", function () {
+    $("#profileModal").removeClass("show");
+    $("body").css("overflow", "");
+});
+
+$("#profileModal").on("click", function (event) {
+    if ($(event.target).is("#profileModal")) {
         $("#profileModal").removeClass("show");
         $("body").css("overflow", "");
-    });
+    }
+});
 
-    $("#profileModal").on("click", function (event) {
-        if ($(event.target).is("#profileModal")) {
-            $("#profileModal").removeClass("show");
-            $("body").css("overflow", "");
-        }
-    });
+$("#profileExplore").on("click", function () {
+    $("#profileModal").removeClass("show");
+    $("body").css("overflow", "");
+});
 
-    $("#profileExplore").on("click", function () {
-        $("#profileModal").removeClass("show");
-        $("body").css("overflow", "");
-    });
+$("#logoutButton").on("click", function () {
+    localStorage.removeItem("gadoGadoCurrentUser");
+
+    $("#profileModal").removeClass("show");
+    $("body").css("overflow", "");
+
+    updateLoginUI();
+
+    showToast("Berhasil logout.");
+});
+
+updateLoginUI();
 
     $("#adminOpen").on("click", function () {
+         const user = getCurrentUser();
+
+    if (!user || user.role !== "admin") {
+        showToast("Akses hanya untuk Admin.");
+        return;
+    }
         $("#adminModal").addClass("show");
         $("body").css("overflow", "hidden");
         $("#adminMenuSelect").empty();
@@ -656,7 +873,6 @@ $(document).ready(function () {
         showToast("Favorit Saya berhasil dikosongkan.");
     });
 
-    // Membuka menu mobile
     $("#menuToggle").on("click", function () {
         $("#mobileNav").toggleClass("show");
     });
@@ -665,7 +881,6 @@ $(document).ready(function () {
         $("#mobileNav").removeClass("show");
     });
 
-    // Menandai navigasi sesuai posisi halaman
     $(window).on("scroll", function () {
         let currentPosition = $(window).scrollTop();
 

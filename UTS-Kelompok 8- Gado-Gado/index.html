@@ -40,7 +40,7 @@
                     <b id="favoriteCounter">0</b>
                 </a>
 
-                <button class="profile-button" id="profileButton" title="Profil">
+                <button class="profile-button" id="profileButton" title="Login / Profil">
                     👤
                 </button>
 
@@ -845,39 +845,217 @@
         </div>
     </div>
 
-    <!-- Modal profil -->
-    <div class="modal-overlay" id="profileModal">
-        <div class="profile-modal">
-            <button class="modal-close" id="profileClose">×</button>
+   <!-- Login dan Register -->
 
-            <div class="profile-icon">👤</div>
+<div class="modal-overlay" id="authModal">
 
-            <p class="section-label">PROFIL</p>
+    <div class="auth-modal">
 
-            <h2>Pengunjung</h2>
+        <button class="modal-close" id="authClose" type="button">
+            ×
+        </button>
 
-            <p>
-                Selamat datang di Gado-Gado Nusantara.
-                Jelajahi menu dan tandai gado-gado favoritmu.
+        <!-- Login -->
+        <div id="loginSection">
+
+            <p class="section-label">AKUN</p>
+
+            <h2>Login</h2>
+
+            <p class="auth-description">
+                Masuk ke akun Gado-Gado Nusantara.
             </p>
 
-            <div class="profile-stats">
-                <div>
-                    <strong id="profileFavorite">0</strong>
-                    <span>Favorit</span>
-                </div>
+            <form id="loginForm">
 
-                <div>
-                    <strong id="profileChoice">0</strong>
-                    <span>Pilihan</span>
-                </div>
+                <label for="loginUsername">Username</label>
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Masukkan username"
+                    required
+                >
+
+                <label for="loginPassword">Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Masukkan password"
+                    required
+                >
+
+                <p class="auth-error" id="loginError"></p>
+
+                <button
+                    type="submit"
+                    class="primary-button auth-submit"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Belum punya akun?
+
+                <button type="button" id="showRegister">
+                    Register
+                </button>
+            </p>
+
+        </div>
+
+
+        <!-- Register -->
+        <div id="registerSection" style="display: none;">
+
+            <p class="section-label">DAFTAR AKUN</p>
+
+            <h2>Register</h2>
+
+            <p class="auth-description">
+                Buat akun baru untuk menggunakan website.
+            </p>
+
+            <form id="registerForm">
+
+                <label for="registerName">Nama</label>
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Masukkan nama"
+                    required
+                >
+
+                <label for="registerUsername">Username</label>
+
+                <input
+                    type="text"
+                    id="registerUsername"
+                    placeholder="Buat username"
+                    required
+                >
+
+                <label for="registerPassword">Password</label>
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Minimal 6 karakter"
+                    required
+                >
+
+                <label for="registerConfirmPassword">
+                    Konfirmasi Password
+                </label>
+
+                <input
+                    type="password"
+                    id="registerConfirmPassword"
+                    placeholder="Ulangi password"
+                    required
+                >
+
+                <p class="auth-error" id="registerError"></p>
+
+                <button
+                    type="submit"
+                    class="primary-button auth-submit"
+                >
+                    Register
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Sudah punya akun?
+
+                <button type="button" id="showLogin">
+                    Login
+                </button>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Profil Setelah Login -->
+
+<div class="modal-overlay" id="profileModal">
+
+    <div class="profile-modal">
+
+        <button
+            class="modal-close"
+            id="profileClose"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="profile-icon">
+            👤
+        </div>
+
+        <p class="section-label">
+            PROFIL
+        </p>
+
+        <h2 id="profileName">
+            User
+        </h2>
+
+        <p id="profileUsername">
+            @username
+        </p>
+
+        <span
+            class="role-badge"
+            id="profileRole"
+        >
+            User
+        </span>
+
+        <div class="profile-stats">
+
+            <div>
+                <strong id="profileFavorite">0</strong>
+                <span>Favorit</span>
             </div>
 
-            <a href="#menu" class="primary-button" id="profileExplore">
-                Jelajahi Menu
-            </a>
+            <div>
+                <strong id="profileChoice">0</strong>
+                <span>Pilihan</span>
+            </div>
+
         </div>
+
+        <a
+            href="#menu"
+            class="primary-button"
+            id="profileExplore"
+        >
+            Jelajahi Menu
+        </a>
+
+        <button
+            type="button"
+            class="logout-button"
+            id="logoutButton"
+        >
+            Logout
+        </button>
+
     </div>
+
+</div>
+
 
     <div class="modal-overlay admin-overlay" id="adminModal">
         <section class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
