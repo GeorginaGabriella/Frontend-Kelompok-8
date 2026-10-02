@@ -4,6 +4,23 @@ $(document).ready(function () {
     let choices = [];
     let currentMenu = null;
 
+    function loadSavedNames(key) {
+        try {
+            const savedNames = JSON.parse(localStorage.getItem(key) || "[]");
+            return Array.isArray(savedNames) ? savedNames : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    favorites = loadSavedNames("gadoGadoFavorites");
+    choices = loadSavedNames("gadoGadoChoices");
+
+    function persistUserLists() {
+        localStorage.setItem("gadoGadoFavorites", JSON.stringify(favorites));
+        localStorage.setItem("gadoGadoChoices", JSON.stringify(choices));
+    }
+
     // Data menu
     const menuData = {
         "Gado-Gado Surabaya": {
@@ -84,6 +101,148 @@ $(document).ready(function () {
             ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌿 Lalapan", "🍘 Tahu"]
         }
     };
+
+    const menuMarketData = {
+        "Gado-Gado Surabaya": { price: "Rp 15.000–25.000", location: "Surabaya, Jawa Timur", condiments: "Bumbu kacang, bawang putih, cabai, petis, jeruk limau", benefits: "Sayuran menyediakan serat; kacang dan tahu menyumbang protein nabati." },
+        "Gado-Gado Sederhana": { price: "Rp 12.000–20.000", location: "Jakarta dan kota-kota Indonesia", condiments: "Bumbu kacang, bawang putih, cabai, gula merah, air asam jawa", benefits: "Sayuran beragam memberi serat dan mikronutrien; tahu atau tempe menambah protein nabati." },
+        "Gado-Gado Fusilli": { price: "Rp 20.000–32.000", location: "Kawasan kuliner modern di kota besar", condiments: "Bumbu kacang, bawang putih, cabai, kecap manis, jeruk limau", benefits: "Sayuran memberi serat, sementara fusilli menjadi sumber energi dari karbohidrat." },
+        "Gado-Gado Malang": { price: "Rp 15.000–25.000", location: "Malang, Jawa Timur", condiments: "Bumbu kacang, bawang putih, cabai, gula merah, air asam jawa", benefits: "Sayuran menyumbang serat dan tahu atau tempe menyediakan protein nabati." },
+        "Gado-Gado Betawi": { price: "Rp 18.000–30.000", location: "Pasar Santa dan kawasan kuliner Jakarta", condiments: "Bumbu kacang, bawang putih, cabai, gula merah, air asam jawa", benefits: "Sayuran menyediakan serat; telur dan kacang menyumbang protein." },
+        "Gado-Gado Ayam Cirebon": { price: "Rp 20.000–32.000", location: "Cirebon, Jawa Barat", condiments: "Bumbu kacang, bawang putih, cabai, kecap manis, jeruk limau", benefits: "Sayuran memberi serat dan ayam menjadi sumber protein hewani." },
+        "Gado-Gado Solo": { price: "Rp 15.000–25.000", location: "Solo, Jawa Tengah", condiments: "Bumbu kacang, bawang putih, cabai, gula merah, air asam jawa", benefits: "Sayuran memberi serat; kacang dan tahu menyumbang protein nabati." },
+        "Gado-Gado Bangka": { price: "Rp 15.000–25.000", location: "Pangkalpinang dan wilayah Bangka Belitung", condiments: "Bumbu kacang, bawang putih, cabai, gula merah, jeruk kunci", benefits: "Sayuran menyediakan serat dan kacang menjadi sumber protein nabati." },
+        "Gado-Gado Padang": { price: "Rp 15.000–27.000", location: "Padang, Sumatra Barat", condiments: "Bumbu kacang, bawang putih, cabai, jeruk nipis, rempah", benefits: "Sayuran menyumbang serat; kacang dan tahu menambah protein nabati." },
+        "Gado-Gado Khas Bali": { price: "Rp 18.000–30.000", location: "Denpasar dan kawasan kuliner Bali", condiments: "Bumbu kacang, bawang putih, cabai, kencur, jeruk limau", benefits: "Sayuran memberi serat dan rempah memberi karakter rasa tanpa mengubah manfaat dasarnya." },
+        "Gado-Gado Sunda": { price: "Rp 15.000–25.000", location: "Bandung dan wilayah Jawa Barat", condiments: "Bumbu kacang, bawang putih, cabai, kencur, jeruk limau", benefits: "Sayuran segar memberi serat; kacang dan tahu menyumbang protein nabati." }
+    };
+
+    Object.keys(menuData).forEach(function (name) {
+        Object.assign(menuData[name], menuMarketData[name]);
+    });
+
+    const defaultContent = {
+        heroDescription: $(".hero-description").text().trim(),
+        aboutDescription: $("#aboutDescription").text().trim()
+    };
+    const defaultFaqs = [
+        { question: "Apa itu gado-gado?", answer: "Gado-gado adalah hidangan Indonesia berisi sayuran dan pelengkap yang disajikan dengan saus kacang." },
+        { question: "Berapa kisaran harga satu porsi?", answer: "Harga bervariasi menurut daerah dan pelengkap. Lihat kisaran indikatif pada detail masing-masing menu." },
+        { question: "Bagaimana mencari penjual di dekat saya?", answer: "Buka detail menu dan pilih tombol lokasi untuk melihat hasil pencarian penjual di Google Maps." }
+    ];
+    let savedAdminData = {};
+
+    try {
+        savedAdminData = JSON.parse(localStorage.getItem("gadoGadoAdminData") || "{}");
+    } catch (error) {
+        savedAdminData = {};
+    }
+
+    if (savedAdminData.menus) {
+        Object.keys(savedAdminData.menus).forEach(function (name) {
+            if (menuData[name]) {
+                Object.assign(menuData[name], savedAdminData.menus[name]);
+            }
+        });
+    }
+
+    let siteContent = Object.assign({}, defaultContent, savedAdminData.content || {});
+    let faqs = Array.isArray(savedAdminData.faqs) ? savedAdminData.faqs : defaultFaqs;
+    let editingMenuName = Object.keys(menuData)[0];
+
+    function persistAdminData() {
+        localStorage.setItem("gadoGadoAdminData", JSON.stringify({
+            menus: menuData,
+            content: siteContent,
+            faqs: faqs
+        }));
+        renderAdminDashboard();
+    }
+
+    function renderAdminDashboard() {
+        $("#adminMenuCount").text(Object.keys(menuData).length);
+        $("#adminChoiceCount").text(choices.length);
+        $("#adminFavoriteCount").text(favorites.length);
+
+        const choiceList = $("#adminChoiceList").empty();
+        const favoriteList = $("#adminFavoriteList").empty();
+        const menuList = $("#adminMenuList").empty();
+
+        Object.keys(menuData).forEach(function (name) {
+            $("<li>").text(name).appendTo(menuList);
+        });
+
+        choices.forEach(function (name) {
+            $("<li>").text(name).appendTo(choiceList);
+        });
+
+        favorites.forEach(function (name) {
+            $("<li>").text(name).appendTo(favoriteList);
+        });
+
+        $("#adminEmptyChoices").toggle(choices.length === 0);
+        $("#adminEmptyFavorites").toggle(favorites.length === 0);
+    }
+
+    function renderFaqs() {
+        const faqList = $("#faqList").empty();
+
+        faqs.forEach(function (faq) {
+            const item = $("<details>").addClass("faq-item");
+            $("<summary>").text(faq.question).appendTo(item);
+            $("<p>").text(faq.answer).appendTo(item);
+            faqList.append(item);
+        });
+
+        const adminFaqList = $("#adminFaqList").empty();
+        faqs.forEach(function (faq, index) {
+            const row = $("<div>").addClass("admin-faq-row");
+            const text = $("<span>").text(faq.question);
+            const remove = $("<button>", { type: "button", "data-index": index, "aria-label": "Hapus FAQ" }).text("Hapus");
+            row.append(text, remove);
+            adminFaqList.append(row);
+        });
+    }
+
+    function renderMenuCards() {
+        $(".menu-card").each(function () {
+            const card = $(this);
+            const name = card.find("h3").text();
+            const menu = menuData[name];
+
+            if (!menu) {
+                return;
+            }
+
+            card.find(".card-content > p").text(menu.description);
+            const ingredients = card.find(".ingredients").empty();
+            menu.ingredients.slice(0, 3).forEach(function (ingredient) {
+                $("<span>").text(ingredient).appendTo(ingredients);
+            });
+        });
+    }
+
+    function loadAdminMenu(name) {
+        const menu = menuData[name];
+
+        if (!menu) {
+            return;
+        }
+
+        editingMenuName = name;
+        $("#adminMenuDescription").val(menu.description);
+        $("#adminMenuPrice").val(menu.price);
+        $("#adminMenuLocation").val(menu.location);
+        $("#adminMenuIngredients").val(menu.ingredients.join(", "));
+        $("#adminMenuCondiments").val(menu.condiments);
+        $("#adminMenuBenefits").val(menu.benefits);
+    }
+
+    function applySiteContent() {
+        $(".hero-description").text(siteContent.heroDescription);
+        $("#aboutDescription").text(siteContent.aboutDescription);
+        $("#adminHeroDescription").val(siteContent.heroDescription);
+        $("#adminAboutDescription").val(siteContent.aboutDescription);
+    }
 
     // Menampilkan notifikasi
     function showToast(message) {
@@ -259,6 +418,7 @@ $(document).ready(function () {
 
         updateFavoriteButtons();
         renderFavorites();
+        persistUserLists();
     });
 
     // Menambahkan menu ke pilihan
@@ -272,6 +432,7 @@ $(document).ready(function () {
 
         choices.push(name);
         renderChoices();
+        persistUserLists();
 
         showToast(name + " ditambahkan ke Pilihan Saya.");
 
@@ -289,6 +450,7 @@ $(document).ready(function () {
         });
 
         renderChoices();
+        persistUserLists();
         showToast(name + " berhasil dihapus.");
     });
 
@@ -302,6 +464,7 @@ $(document).ready(function () {
 
         updateFavoriteButtons();
         renderFavorites();
+        persistUserLists();
 
         showToast(name + " dihapus dari favorit.");
     });
@@ -323,13 +486,16 @@ $(document).ready(function () {
         $("#modalTitle").text(name);
         $("#modalRating").text(menu.rating);
         $("#modalDescription").text(menu.description);
+        $("#modalPrice").text(menu.price);
+        $("#modalLocation").text(menu.location);
+        $("#modalLocationLink").attr("href", "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("penjual " + name + " " + menu.location));
+        $("#modalCondiments").text(menu.condiments);
+        $("#modalBenefits").text(menu.benefits);
 
         $("#modalIngredients").empty();
 
         menu.ingredients.forEach(function (ingredient) {
-            $("#modalIngredients").append(
-                "<span>" + ingredient + "</span>"
-            );
+            $("<span>").text(ingredient).appendTo("#modalIngredients");
         });
 
         $("#detailModal").addClass("show");
@@ -362,6 +528,7 @@ $(document).ready(function () {
 
         choices.push(currentMenu);
         renderChoices();
+        persistUserLists();
 
         $("#detailModal").removeClass("show");
         $("body").css("overflow", "");
@@ -393,6 +560,102 @@ $(document).ready(function () {
         $("body").css("overflow", "");
     });
 
+    $("#adminOpen").on("click", function () {
+        $("#adminModal").addClass("show");
+        $("body").css("overflow", "hidden");
+        $("#adminMenuSelect").empty();
+
+        Object.keys(menuData).forEach(function (name) {
+            $("<option>").val(name).text(name).appendTo("#adminMenuSelect");
+        });
+
+        $("#adminMenuSelect").val(editingMenuName);
+        loadAdminMenu(editingMenuName);
+        applySiteContent();
+        renderFaqs();
+        renderAdminDashboard();
+    });
+
+    function closeAdmin() {
+        $("#adminModal").removeClass("show");
+        $("body").css("overflow", "");
+    }
+
+    $("#adminClose").on("click", closeAdmin);
+    $("#adminModal").on("click", function (event) {
+        if ($(event.target).is("#adminModal")) {
+            closeAdmin();
+        }
+    });
+
+    $("#adminMenuSelect").on("change", function () {
+        loadAdminMenu($(this).val());
+    });
+
+    $("#adminSaveContent").on("click", function () {
+        siteContent.heroDescription = $("#adminHeroDescription").val().trim();
+        siteContent.aboutDescription = $("#adminAboutDescription").val().trim();
+        applySiteContent();
+        persistAdminData();
+        showToast("Konten utama berhasil disimpan.");
+    });
+
+    $("#adminSaveMenu").on("click", function () {
+        const menu = menuData[editingMenuName];
+        menu.description = $("#adminMenuDescription").val().trim();
+        menu.price = $("#adminMenuPrice").val().trim();
+        menu.location = $("#adminMenuLocation").val().trim();
+        menu.ingredients = $("#adminMenuIngredients").val().split(",").map(function (item) {
+            return item.trim();
+        }).filter(Boolean);
+        menu.condiments = $("#adminMenuCondiments").val().trim();
+        menu.benefits = $("#adminMenuBenefits").val().trim();
+
+        renderMenuCards();
+        persistAdminData();
+        showToast("Informasi menu berhasil disimpan.");
+    });
+
+    $("#adminAddFaq").on("click", function () {
+        const question = $("#adminFaqQuestion").val().trim();
+        const answer = $("#adminFaqAnswer").val().trim();
+
+        if (!question || !answer) {
+            showToast("Isi pertanyaan dan jawaban FAQ terlebih dahulu.");
+            return;
+        }
+
+        faqs.push({ question: question, answer: answer });
+        $("#adminFaqQuestion, #adminFaqAnswer").val("");
+        renderFaqs();
+        persistAdminData();
+        showToast("FAQ berhasil ditambahkan.");
+    });
+
+    $("#adminFaqList").on("click", "button", function () {
+        faqs.splice(Number($(this).data("index")), 1);
+        renderFaqs();
+        persistAdminData();
+        showToast("FAQ berhasil dihapus.");
+    });
+
+    $("#adminClearChoices").on("click", function () {
+        choices = [];
+        renderChoices();
+        persistUserLists();
+        renderAdminDashboard();
+        showToast("Pilihan Saya berhasil dikosongkan.");
+    });
+
+    $("#adminClearFavorites").on("click", function () {
+        favorites = [];
+        updateFavoriteButtons();
+        renderFavorites();
+        persistUserLists();
+        renderAdminDashboard();
+        showToast("Favorit Saya berhasil dikosongkan.");
+    });
+
     // Membuka menu mobile
     $("#menuToggle").on("click", function () {
         $("#mobileNav").toggleClass("show");
@@ -421,6 +684,10 @@ $(document).ready(function () {
     renderChoices();
     renderFavorites();
     updateFavoriteButtons();
+    applySiteContent();
+    renderMenuCards();
+    renderFaqs();
+    renderAdminDashboard();
     updateCounters();
     applyFilter();
 });

@@ -31,6 +31,7 @@
                 <a href="#menu" class="nav-link">Menu</a>
                 <a href="#favorit" class="nav-link">Favorit</a>
                 <a href="#about" class="nav-link">About</a>
+                <a href="#faq" class="nav-link">FAQ</a>
             </nav>
 
             <div class="nav-actions">
@@ -54,6 +55,7 @@
             <a href="#menu">Menu</a>
             <a href="#favorit">Favorit</a>
             <a href="#about">About</a>
+            <a href="#faq">FAQ</a>
         </div>
     </header>
 
@@ -675,7 +677,7 @@
                         <span>Mengenal Indonesia</span>
                     </h2>
 
-                    <p>
+                    <p id="aboutDescription">
                         Gado-Gado Nusantara merupakan website katalog interaktif
                         yang memperkenalkan berbagai pilihan gado-gado dari
                         beberapa daerah di Indonesia.
@@ -727,6 +729,17 @@
             </div>
         </section>
 
+        <section class="faq-section" id="faq">
+            <div class="container faq-layout">
+                <div class="faq-heading">
+                    <p class="section-label">YANG SERING DITANYAKAN</p>
+                    <h2>Kenali sebelum <span>menjelajah</span></h2>
+                    <p>Informasi singkat tentang menu, harga, dan cara menemukan penjual.</p>
+                </div>
+                <div class="faq-list" id="faqList"></div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -766,6 +779,7 @@
                     Website kuliner interaktif untuk
                     mengenal keberagaman gado-gado Indonesia.
                 </p>
+                <button class="admin-open" id="adminOpen" type="button">⚙ Kelola Konten</button>
             </div>
         </div>
 
@@ -800,6 +814,28 @@
                 <div class="modal-ingredients">
                     <h4>Komponen Menu</h4>
                     <div id="modalIngredients"></div>
+                </div>
+
+                <div class="modal-facts">
+                    <div>
+                        <span>Harga pasaran</span>
+                        <strong id="modalPrice"></strong>
+                        <small>Perkiraan per porsi; dapat berbeda menurut penjual dan lokasi.</small>
+                    </div>
+                    <div>
+                        <span>Kondimen</span>
+                        <p id="modalCondiments"></p>
+                    </div>
+                    <div>
+                        <span>Manfaat Makanan</span>
+                        <p id="modalBenefits"></p>
+                        <small>Informasi umum bahan, bukan klaim medis.</small>
+                    </div>
+                    <div>
+                        <span>Area penjual</span>
+                        <p id="modalLocation"></p>
+                        <a class="map-link" id="modalLocationLink" href="#" target="_blank" rel="noopener noreferrer">Cari di Google Maps ↗</a>
+                    </div>
                 </div>
 
                 <button class="primary-button modal-add" id="modalAdd">
@@ -841,6 +877,107 @@
                 Jelajahi Menu
             </a>
         </div>
+    </div>
+
+    <div class="modal-overlay admin-overlay" id="adminModal">
+        <section class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+            <button class="modal-close" id="adminClose" type="button" aria-label="Tutup panel admin">×</button>
+            <header class="admin-header">
+                <p class="section-label">PENGELOLAAN WEBSITE</p>
+                <h2 id="adminTitle">Admin Konten</h2>
+                <p>Kelola katalog dan pantau data pengunjung yang tersimpan di browser ini.</p>
+                <small>Mode demo frontend: tidak memakai akun admin atau database server.</small>
+            </header>
+
+            <section class="admin-dashboard" aria-label="Ringkasan data">
+                <div class="admin-stat-row">
+                    <div class="admin-stat">
+                        <span>Menu tersedia</span>
+                        <strong id="adminMenuCount">0</strong>
+                    </div>
+                    <div class="admin-stat">
+                        <span>Pilihan Saya</span>
+                        <strong id="adminChoiceCount">0</strong>
+                    </div>
+                    <div class="admin-stat">
+                        <span>Favorit Saya</span>
+                        <strong id="adminFavoriteCount">0</strong>
+                    </div>
+                </div>
+
+                <div class="admin-data-grid">
+                    <div class="admin-data-panel">
+                        <div class="admin-data-heading">
+                            <h3>Katalog menu</h3>
+                            <span>Data menu</span>
+                        </div>
+                        <ul id="adminMenuList"></ul>
+                    </div>
+                    <div class="admin-data-panel">
+                        <div class="admin-data-heading">
+                            <h3>Pilihan Saya</h3>
+                            <button id="adminClearChoices" type="button">Kosongkan</button>
+                        </div>
+                        <p class="admin-empty-state" id="adminEmptyChoices">Belum ada menu pilihan tersimpan.</p>
+                        <ul id="adminChoiceList"></ul>
+                    </div>
+                    <div class="admin-data-panel">
+                        <div class="admin-data-heading">
+                            <h3>Favorit Saya</h3>
+                            <button id="adminClearFavorites" type="button">Kosongkan</button>
+                        </div>
+                        <p class="admin-empty-state" id="adminEmptyFavorites">Belum ada menu favorit tersimpan.</p>
+                        <ul id="adminFavoriteList"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-grid">
+                <form class="admin-panel" onsubmit="return false">
+                    <h3>Konten utama</h3>
+                    <label for="adminHeroDescription">Deskripsi halaman depan</label>
+                    <textarea id="adminHeroDescription" rows="3"></textarea>
+                    <label for="adminAboutDescription">Tentang Gado-Gado Nusantara</label>
+                    <textarea id="adminAboutDescription" rows="4"></textarea>
+                    <button class="primary-button admin-save" id="adminSaveContent" type="button">Simpan konten</button>
+                </form>
+
+                <form class="admin-panel" onsubmit="return false">
+                    <h3>Informasi menu</h3>
+                    <label for="adminMenuSelect">Pilih variasi</label>
+                    <select id="adminMenuSelect"></select>
+                    <label for="adminMenuDescription">Deskripsi</label>
+                    <textarea id="adminMenuDescription" rows="3"></textarea>
+                    <div class="admin-fields-two">
+                        <div>
+                            <label for="adminMenuPrice">Kisaran harga</label>
+                            <input id="adminMenuPrice" type="text">
+                        </div>
+                        <div>
+                            <label for="adminMenuLocation">Area penjual</label>
+                            <input id="adminMenuLocation" type="text">
+                        </div>
+                    </div>
+                    <label for="adminMenuIngredients">Komponen (pisahkan dengan koma)</label>
+                    <input id="adminMenuIngredients" type="text">
+                    <label for="adminMenuCondiments">Kondimen</label>
+                    <textarea id="adminMenuCondiments" rows="2"></textarea>
+                    <label for="adminMenuBenefits">Manfaat bahan</label>
+                    <textarea id="adminMenuBenefits" rows="2"></textarea>
+                    <button class="primary-button admin-save" id="adminSaveMenu" type="button">Simpan informasi menu</button>
+                </form>
+
+                <div class="admin-panel admin-faq-panel">
+                    <h3>FAQ</h3>
+                    <label for="adminFaqQuestion">Pertanyaan baru</label>
+                    <input id="adminFaqQuestion" type="text" placeholder="Tulis pertanyaan">
+                    <label for="adminFaqAnswer">Jawaban</label>
+                    <textarea id="adminFaqAnswer" rows="3" placeholder="Tulis jawaban"></textarea>
+                    <button class="secondary-button admin-save" id="adminAddFaq" type="button">＋ Tambah FAQ</button>
+                    <div id="adminFaqList"></div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- Toast notifikasi -->

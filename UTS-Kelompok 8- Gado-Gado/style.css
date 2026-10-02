@@ -1233,6 +1233,21 @@ img {
     line-height: 1.7;
 }
 
+.admin-open {
+    margin-top: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    color: #fff;
+    padding: 9px 12px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.admin-open:hover {
+    background: #c65d12;
+    border-color: #c65d12;
+}
+
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -1242,6 +1257,58 @@ img {
 .footer-bottom p {
     color: rgba(255, 255, 255, 0.45);
     font-size: 10px;
+}
+
+/* FAQ */
+.faq-section {
+    padding: 90px 0;
+    background: #edf0e3;
+}
+
+.faq-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.faq-heading h2 {
+    margin: 13px 0;
+    color: #31572c;
+    font: 700 38px/1.15 "Playfair Display", serif;
+}
+
+.faq-heading h2 span {
+    color: #c65d12;
+}
+
+.faq-heading > p:last-child {
+    color: #6f716b;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.faq-list {
+    border-top: 1px solid rgba(49, 87, 44, 0.2);
+}
+
+.faq-item {
+    padding: 18px 3px;
+    border-bottom: 1px solid rgba(49, 87, 44, 0.2);
+}
+
+.faq-item summary {
+    color: #31572c;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.faq-item p {
+    margin-top: 12px;
+    color: #696d64;
+    font-size: 12px;
+    line-height: 1.8;
 }
 
 /* Modal */
@@ -1270,7 +1337,7 @@ img {
     display: grid;
     grid-template-columns: 0.85fr 1fr;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
     animation: modalIn 0.3s ease;
 }
 
@@ -1347,8 +1414,8 @@ img {
 
 .modal-content > p {
     color: #6f716b;
-    line-height: 1.7;
-    font-size: 13px;
+    line-height: 1.75;
+    font-size: 15px;
 }
 
 .modal-ingredients {
@@ -1358,7 +1425,7 @@ img {
 .modal-ingredients h4 {
     color: #31572c;
     margin-bottom: 10px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 #modalIngredients {
@@ -1369,14 +1436,297 @@ img {
 
 #modalIngredients span {
     background: #f3ead3;
-    padding: 8px 10px;
+    padding: 9px 11px;
     border-radius: 8px;
-    font-size: 10px;
+    font-size: 12px;
     color: #555;
 }
 
 .modal-add {
     border: none;
+}
+
+.modal-facts {
+    display: grid;
+    gap: 13px;
+    margin: 22px 0;
+}
+
+.modal-facts > div {
+    padding: 12px 14px;
+    background: #f5f0e3;
+    border-left: 3px solid #c65d12;
+}
+
+.modal-facts span {
+    display: block;
+    margin-bottom: 7px;
+    color: #8a5a34;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.modal-facts strong,
+.modal-facts p {
+    color: #3e4638;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.modal-facts strong {
+    display: block;
+    font-size: 18px;
+}
+
+.modal-facts small {
+    display: block;
+    margin-top: 7px;
+    color: #77796f;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.map-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #31572c;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Admin */
+.admin-overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+}
+
+.admin-modal {
+    width: min(1050px, 100%);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    position: relative;
+    padding: 35px;
+    background: #f8f5ea;
+    border-top: 5px solid #c65d12;
+    animation: modalIn 0.25s ease;
+}
+
+.admin-header {
+    max-width: 680px;
+    padding: 5px 45px 22px 0;
+}
+
+.admin-header h2 {
+    margin: 7px 0;
+    color: #31572c;
+    font: 700 32px/1.2 "Playfair Display", serif;
+}
+
+.admin-header > p:not(.section-label) {
+    color: #656b60;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.admin-header small {
+    display: block;
+    margin-top: 8px;
+    color: #9a5b2f;
+    font-size: 10px;
+}
+
+.admin-dashboard {
+    margin-bottom: 20px;
+}
+
+.admin-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.admin-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #31572c;
+    color: #fff;
+}
+
+.admin-stat:nth-child(2) {
+    background: #b65a26;
+}
+
+.admin-stat:nth-child(3) {
+    background: #526b49;
+}
+
+.admin-stat span {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.admin-stat strong {
+    font: 700 25px/1 "Playfair Display", serif;
+}
+
+.admin-data-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.admin-data-panel {
+    min-width: 0;
+    padding: 15px;
+    background: #fffdf8;
+    border: 1px solid rgba(49, 87, 44, 0.14);
+}
+
+.admin-data-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e6dd;
+}
+
+.admin-data-heading h3 {
+    color: #31572c;
+    font-size: 12px;
+}
+
+.admin-data-heading span {
+    color: #74786d;
+    font-size: 9px;
+}
+
+.admin-data-heading button {
+    border: 0;
+    background: transparent;
+    color: #a6462a;
+    font: 700 9px "DM Sans", sans-serif;
+    cursor: pointer;
+}
+
+.admin-data-panel ul {
+    max-height: 150px;
+    overflow: auto;
+    list-style: none;
+}
+
+.admin-data-panel li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eff0e9;
+    color: #53594f;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.admin-empty-state {
+    padding-top: 10px;
+    color: #85887f;
+    font-size: 10px;
+}
+
+.admin-empty-state[style*="display: none"] + ul {
+    padding-top: 0;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+.admin-panel {
+    min-width: 0;
+    padding: 20px;
+    background: #fffdf8;
+    border: 1px solid rgba(49, 87, 44, 0.14);
+}
+
+.admin-panel h3 {
+    margin-bottom: 15px;
+    color: #31572c;
+    font: 700 18px "Playfair Display", serif;
+}
+
+.admin-panel label {
+    display: block;
+    margin: 12px 0 6px;
+    color: #555b50;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid #d9ddcf;
+    border-radius: 3px;
+    background: #fff;
+    color: #343b31;
+    font: 12px/1.5 "DM Sans", sans-serif;
+}
+
+.admin-panel textarea {
+    resize: vertical;
+}
+
+.admin-panel input:focus,
+.admin-panel select:focus,
+.admin-panel textarea:focus {
+    outline: 2px solid rgba(198, 93, 18, 0.28);
+    border-color: #c65d12;
+}
+
+.admin-fields-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.admin-save {
+    margin-top: 15px;
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.admin-faq-panel {
+    grid-column: 1 / -1;
+}
+
+.admin-faq-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e6dd;
+    color: #555b50;
+    font-size: 11px;
+}
+
+.admin-faq-row button {
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    color: #a6462a;
+    font: 700 10px "DM Sans", sans-serif;
 }
 
 /* Profile Modal */
@@ -1613,6 +1963,11 @@ img {
         grid-template-columns: 1fr;
     }
 
+    .faq-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
     .detail-modal {
         grid-template-columns: 1fr;
     }
@@ -1624,6 +1979,23 @@ img {
 
     .modal-content {
         padding: 30px;
+    }
+
+    .admin-modal {
+        max-height: calc(100vh - 24px);
+        padding: 24px 18px;
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-data-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-faq-panel {
+        grid-column: auto;
     }
 }
 
@@ -1703,7 +2075,8 @@ img {
     .menu-section,
     .choice-section,
     .favorite-section,
-    .about-section {
+    .about-section,
+    .faq-section {
         padding: 75px 0;
     }
 
@@ -1764,6 +2137,29 @@ img {
 
     .about-visual {
         height: 360px;
+    }
+
+    .admin-fields-two {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .admin-panel {
+        padding: 15px;
+    }
+
+    .admin-stat {
+        align-items: flex-start;
+        flex-direction: column-reverse;
+        padding: 11px;
+    }
+
+    .admin-stat span {
+        font-size: 9px;
+    }
+
+    .admin-stat strong {
+        font-size: 22px;
     }
 
     .batik-circle {
