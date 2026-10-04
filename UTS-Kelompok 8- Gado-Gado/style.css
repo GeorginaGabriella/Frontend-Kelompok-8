@@ -2268,10 +2268,25 @@ img {
 .auth-switch {
     display: block;
     width: 100%;
-
     text-align: center;
+    margin-top: 28px;
+    color: #3d4038;
+}
 
-    margin-top: 22px;
+.auth-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 5px;
+    color: #2f5d2f;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
 }
 
 .auth-error {
