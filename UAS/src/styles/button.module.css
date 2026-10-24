@@ -1,0 +1,91 @@
+/* Button.module.css - Bab IX Module CSS & Poin 10-11 Reusable Button */
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #31572c;
+  color: #ffffff;
+  padding: 13px 22px;
+  border-radius: 100px;
+  border: 1px solid #31572c;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.primary:hover {
+  background-color: #213f1e;
+  border-color: #213f1e;
+  transform: translateY(-2px);
+}
+
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #ffffff;
+  color: #31572c;
+  padding: 13px 22px;
+  border-radius: 100px;
+  border: 1px solid rgba(49, 87, 44, 0.22);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.secondary:hover {
+  background-color: #31572c;
+  color: #ffffff;
+}
+
+.outline {
+  border: 1px solid #31572c;
+  color: #31572c;
+  background: transparent;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.outline:hover {
+  background-color: #31572c;
+  color: #ffffff;
+}
+
+.danger {
+  border: none;
+  background-color: #c65d12;
+  color: #ffffff;
+  padding: 8px 13px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.danger:hover {
+  background-color: #a64b0c;
+}
+
+.sm {
+  padding: 9px 16px;
+  font-size: 11px;
+}
+
+.md {
+  padding: 13px 22px;
+  font-size: 13px;
+}
+
+.lg {
+  padding: 15px 28px;
+  font-size: 14px;
+}
