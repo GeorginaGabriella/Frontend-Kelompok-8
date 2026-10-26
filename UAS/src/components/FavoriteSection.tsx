@@ -10,9 +10,6 @@ interface FavoriteSectionProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional FavoriteSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function FavoriteSection({
   favorites,
   menus,

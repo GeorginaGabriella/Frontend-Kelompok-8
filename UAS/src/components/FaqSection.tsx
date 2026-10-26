@@ -13,9 +13,6 @@ interface FaqAccordionItemProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional FaqAccordionItem (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export function FaqAccordionItem({
   question,
   answer,
@@ -29,9 +26,6 @@ export function FaqAccordionItem({
   );
 }
 
-/**
- * Komponen Fungsional FaqSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function FaqSection({ faqs, children }: FaqSectionProps) {
   return (
     <SectionContainer

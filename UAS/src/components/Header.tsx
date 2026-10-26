@@ -20,9 +20,6 @@ const navItems = [
   { id: "faq", label: "FAQ", href: "/#faq" },
 ];
 
-/**
- * Komponen Fungsional Header (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function Header({
   activeSection = "home",
   favoriteCount,

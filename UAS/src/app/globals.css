@@ -183,7 +183,6 @@ img {
     display: none;
 }
 
-/* Hero */
 .hero {
     min-height: 680px;
     position: relative;
@@ -853,7 +852,6 @@ img {
     font-size: 13px;
 }
 
-/* Choice */
 .choice-section {
     padding: 100px 0;
     background: #31572c;
@@ -1500,7 +1498,6 @@ img {
     text-underline-offset: 3px;
 }
 
-/* Admin */
 .admin-overlay {
     align-items: flex-start;
     overflow-y: auto;
@@ -2484,12 +2481,7 @@ img {
     }
 }
 
-
-/* ============================================================================
- * UAS Next.js Extensions: Dynamic Page & Role Badge
- * ============================================================================ */
-
-.role-badge {
+/* UAS Next.js Extensions: Dynamic Page & Role Badge */.role-badge {
     display: inline-block;
     margin-top: 8px;
     padding: 5px 14px;
@@ -2546,3 +2538,4 @@ img {
         padding: 28px 22px;
     }
 }
+

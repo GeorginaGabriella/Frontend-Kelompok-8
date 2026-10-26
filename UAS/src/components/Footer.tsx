@@ -8,9 +8,6 @@ interface FooterProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional Footer (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function Footer({
   currentUser,
   onOpenAdmin,

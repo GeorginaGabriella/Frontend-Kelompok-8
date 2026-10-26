@@ -8,9 +8,6 @@ interface ChoiceSectionProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional ChoiceSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function ChoiceSection({
   choices,
   onRemoveChoice,

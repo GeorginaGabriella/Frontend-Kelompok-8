@@ -7,9 +7,6 @@ interface IntroSectionProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional IntroSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function IntroSection({
   title = "Satu Hidangan,",
   highlight = "Beragam Cerita",

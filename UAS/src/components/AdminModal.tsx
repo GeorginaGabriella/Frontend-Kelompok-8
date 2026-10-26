@@ -22,9 +22,6 @@ interface AdminModalProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional AdminModal (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function AdminModal({
   isOpen,
   onClose,

@@ -3,10 +3,6 @@ import Link from "next/link";
 import styles from "@/styles/button.module.css";
 import { ButtonProps } from "@/types";
 
-/**
- * Komponen Fungsional Reusable Button (Poin 10 & Poin 11: Functional Component, Props & Children)
- * Mendukung CSS Module (button.module.css), prop `label`, maupun `children`.
- */
 export default function Button({
   label,
   variant = "primary",

@@ -1,10 +1,6 @@
 import React from "react";
 import { MenuCardProps } from "@/types";
 
-/**
- * Komponen Fungsional MenuCard (Poin 10 & Poin 11: Functional Component, Props & Children)
- * Menerima data menu, status favorit, serta callback melalui Props dan mendukung `children`.
- */
 export default function MenuCard({
   menu,
   isFavorite,

@@ -3,10 +3,6 @@
 import React from "react";
 import { ModalWrapperProps } from "@/types";
 
-/**
- * Komponen Fungsional ModalWrapper (Poin 10 & Poin 11: Props & Children)
- * Menyediakan overlay dialog modal dan merender isi modal melalui prop `children`.
- */
 export default function ModalWrapper({
   isOpen,
   onClose,

@@ -7,9 +7,6 @@ interface AboutSectionProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional FeatureCard (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export function FeatureCard({
   icon,
   title,
@@ -25,9 +22,6 @@ export function FeatureCard({
   );
 }
 
-/**
- * Komponen Fungsional AboutSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function AboutSection({
   aboutDescription,
   children,

@@ -62,7 +62,6 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, [toastVisible]);
 
-  // Load saved data from localStorage on mount
   useEffect(() => {
     try {
       const savedFavs = JSON.parse(
@@ -107,11 +106,9 @@ export default function HomePage() {
         setFaqs(savedAdmin.faqs);
       }
     } catch {
-      // Ignore storage parse errors
     }
   }, []);
 
-  // Scroll spy for active nav link
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -131,7 +128,6 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when any modal is open
   useEffect(() => {
     const anyModalOpen =
       Boolean(selectedMenu) ||

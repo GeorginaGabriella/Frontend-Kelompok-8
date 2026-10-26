@@ -14,9 +14,6 @@ interface ProfileModalProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional ProfileModal (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function ProfileModal({
   isOpen,
   onClose,

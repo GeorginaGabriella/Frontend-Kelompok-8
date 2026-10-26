@@ -7,9 +7,6 @@ interface HeroSectionProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional StatBadge (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export function StatBadge({ value, label, children }: StatBadgeProps) {
   return (
     <div>
@@ -19,9 +16,6 @@ export function StatBadge({ value, label, children }: StatBadgeProps) {
   );
 }
 
-/**
- * Komponen Fungsional HeroSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function HeroSection({
   heroDescription,
   children,

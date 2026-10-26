@@ -13,10 +13,6 @@ interface DetailModalProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional DetailModal (Poin 10 & Poin 11: Functional Component, Props & Children)
- * Menggunakan ModalWrapper dengan `children` untuk merender detail menu.
- */
 export default function DetailModal({
   menu,
   onClose,

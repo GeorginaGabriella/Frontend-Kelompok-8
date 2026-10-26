@@ -23,9 +23,6 @@ const filterOptions: Array<{ value: FilterGroup; label: string }> = [
   { value: "lainnya", label: "Lainnya" },
 ];
 
-/**
- * Komponen Fungsional MenuSection (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function MenuSection({
   menus,
   favorites,

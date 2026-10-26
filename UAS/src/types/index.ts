@@ -46,11 +46,6 @@ export interface SavedAdminData {
   content?: Partial<SiteContent>;
   faqs?: FaqItem[];
 }
-
-/* ============================================================================
- * Poin 11: Next.js Props & Children Interfaces
- * ============================================================================ */
-
 export interface SectionContainerProps {
   id?: string;
   className?: string;

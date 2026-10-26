@@ -8,10 +8,6 @@ export const metadata: Metadata = {
     "Gado-Gado Nusantara - Jelajahi berbagai gado-gado khas Indonesia dengan Next.js Functional Components, Props & Children.",
 };
 
-/**
- * RootLayout Next.js App Router (Poin 9 & Poin 11: Instalasi Next.js, Props & Children)
- * Menerima prop `children` bertipe React.ReactNode untuk merender seluruh halaman.
- */
 export default function RootLayout({
   children,
 }: Readonly<{

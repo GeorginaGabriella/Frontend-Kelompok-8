@@ -1,10 +1,6 @@
 import React from "react";
 import { SectionHeadingProps } from "@/types";
 
-/**
- * Komponen Fungsional SectionHeading (Poin 10 & Poin 11: Props & Children)
- * Menampilkan label, judul section, dan deskripsi atau konten tambahan melalui `children`.
- */
 export default function SectionHeading({
   label,
   title,

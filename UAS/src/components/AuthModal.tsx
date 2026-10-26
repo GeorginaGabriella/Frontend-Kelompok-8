@@ -15,9 +15,6 @@ interface AuthModalProps {
   children?: React.ReactNode;
 }
 
-/**
- * Komponen Fungsional AuthModal (Poin 10 & Poin 11: Functional Component, Props & Children)
- */
 export default function AuthModal({
   isOpen,
   onClose,
