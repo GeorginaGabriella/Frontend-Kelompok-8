@@ -47,7 +47,6 @@ export default function Footer({
           <a href="/#menu">Filter</a>
           <a href="/#favorit">Favorit</a>
           <a href="/#pilihan">Pilihan Saya</a>
-          <a href="/#cuaca">Cuaca Kuliner</a>
         </div>
 
         <div className="footer-contact">

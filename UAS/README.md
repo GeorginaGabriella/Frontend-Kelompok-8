@@ -5,7 +5,7 @@ Proyek ini merupakan hasil konversi proyek UTS **Gado-Gado Nusantara** (Kelompok
 1. **Poin 9 — Instalasi Next.js**: Arsitektur project Next.js 14 App Router (`src/app`, `src/components`, `src/styles`, `src/data`, `src/types`, `public/images`).
 2. **Poin 10 — Next.js: Functional Component**: Dekomposisi halaman monolitik UTS menjadi 15+ komponen fungsional React/Next.js yang modular dan reusable.
 3. **Poin 11 — Next.js: Props & Children**: Penerapan komunikasi antar-komponen menggunakan TypeScript `Props` dan komposisi tata letak/kontainer menggunakan `children` (`React.ReactNode`).
-4. **Bab IX–XI Modul Praktikum**: Mencakup navigasi halaman (`/`, `/about`), Dynamic Routing (`/menu/[slug]`), Global CSS (`globals.css`), Module CSS (`button.module.css`), serta API Service Next.js (`actions.ts` & `/api/menus`) untuk pengecekan cuaca daerah asal kuliner Gado-Gado.
+4. **Bab IX–XI Modul Praktikum**: Mencakup navigasi halaman (`/`, `/about`), Dynamic Routing (`/menu/[slug]`), Global CSS (`globals.css`), Module CSS (`button.module.css`), serta API katalog menu (`/api/menus`).
 
 ---
 
@@ -19,7 +19,6 @@ UAS/
 │   ├── app/                        # Next.js App Router
 │   │   ├── layout.tsx              # RootLayout dengan prop { children }
 │   │   ├── page.tsx                # Halaman utama Gado-Gado Nusantara
-│   │   ├── actions.ts              # Server Action WeatherSearch (Bab XI API Service)
 │   │   ├── globals.css             # Global CSS (Bab IX)
 │   │   ├── not-found.tsx           # Halaman 404 kustom
 │   │   ├── about/
@@ -39,7 +38,6 @@ UAS/
 │   │   ├── ChoiceSection.tsx       # Daftar "Pilihan Saya"
 │   │   ├── FavoriteSection.tsx     # Daftar "Yang Kamu Tandai ❤️"
 │   │   ├── AboutSection.tsx        # Seksi tentang kami & FeatureCard
-│   │   ├── WeatherSection.tsx      # Widget cek cuaca kota kuliner (Bab XI)
 │   │   ├── FaqSection.tsx          # Daftar pertanyaan umum (FAQ)
 │   │   ├── Footer.tsx              # Footer & akses panel Admin Konten
 │   │   ├── DetailModal.tsx         # Modal detail menu lengkap
@@ -56,8 +54,7 @@ UAS/
 │   ├── data/
 │   │   └── gadoGadoData.ts         # Data 11 menu Gado-Gado Nusantara, FAQ, & akun Admin
 │   └── types/
-│       ├── index.ts                # Definisi tipe data & interface Props/Children
-│       └── weather.ts              # Interface data cuaca (Bab XI)
+│       └── index.ts                # Definisi tipe data & interface Props/Children
 ├── package.json
 ├── tsconfig.json
 └── next.config.mjs

@@ -8,7 +8,6 @@ import MenuSection from "@/components/MenuSection";
 import ChoiceSection from "@/components/ChoiceSection";
 import FavoriteSection from "@/components/FavoriteSection";
 import AboutSection from "@/components/AboutSection";
-import WeatherSection from "@/components/WeatherSection";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import DetailModal from "@/components/DetailModal";
@@ -316,7 +315,6 @@ export default function HomePage() {
           onRemoveFavorite={handleRemoveFavorite}
         />
         <AboutSection aboutDescription={siteContent.aboutDescription} />
-        <WeatherSection defaultCity="Jakarta" />
         <FaqSection faqs={faqs} />
       </main>
 

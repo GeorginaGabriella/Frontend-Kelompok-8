@@ -147,9 +147,6 @@ export default function MenuDetailPage({
                 <Button href="/#menu" variant="primary">
                   Pilih di Katalog Utama
                 </Button>
-                <Button href="/#cuaca" variant="secondary">
-                  Cek Cuaca {menu.city}
-                </Button>
               </div>
             </div>
           </div>

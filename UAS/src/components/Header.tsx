@@ -17,7 +17,6 @@ const navItems = [
   { id: "menu", label: "Menu", href: "/#menu" },
   { id: "favorit", label: "Favorit", href: "/#favorit" },
   { id: "about", label: "About", href: "/#about" },
-  { id: "cuaca", label: "Cuaca Daerah", href: "/#cuaca" },
   { id: "faq", label: "FAQ", href: "/#faq" },
 ];
 
