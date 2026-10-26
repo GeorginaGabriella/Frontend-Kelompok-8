@@ -1,47 +1,63 @@
-# Gado-Gado Nusantara
+# Gado-Gado Nusantara — Proyek UAS Pemrograman Front-End (Next.js)
 
-**Gado-Gado Nusantara** adalah aplikasi web katalog dan eksplorasi kuliner interaktif yang memperkenalkan keanekaragaman gado-gado khas dari berbagai daerah di Indonesia. Aplikasi ini dibangun dengan arsitektur web modern berbasis **Next.js** dan **TypeScript** dengan antarmuka yang responsif, interaktif, dan ramah pengguna.
+Proyek ini merupakan hasil konversi proyek UTS **Gado-Gado Nusantara** (Kelompok 8) dari arsitektur statis (**HTML, CSS, dan jQuery**) menjadi aplikasi web modern berbasis **Next.js 14 (App Router) & TypeScript** sesuai materi pembelajaran **Poin 9–11** serta **Modul Praktikum Bab IX–XI**:
 
----
-
-## Fitur Utama
-
-- **Katalog Menu Nusantara**: Menampilkan 11 variasi gado-gado autentik dari berbagai daerah seperti Betawi, Surabaya, Solo, Sunda, Padang, Bali, Malang, Cirebon, Bangka, hingga kreasi modern.
-- **Pencarian & Filter Interaktif**: Cari menu berdasarkan nama atau saring berdasarkan kategori wilayah (Betawi, Sunda, Jawa, Lainnya).
-- **Detail Menu & Rute Dinamis**: Menampilkan rincian bahan/komponen, kisaran harga, kondimen, manfaat nutrisi, serta tautan langsung lokasi di Google Maps.
-- **Pilihan Saya**: Pengunjung dapat memilih menu-menu yang ingin dipesan atau dicatat dalam daftar pilihan terorganisir.
-- **Favorit**: Tandai menu favorit menggunakan ikon hati untuk kemudahan akses sewaktu-waktu.
-- **Sistem Autentikasi & Akun**: Dukungan login, registrasi akun pengguna baru, serta profil pengguna yang tersimpan di browser (*localStorage*).
-- **Panel Admin Konten**: Pengelolaan deskripsi situs, data informasi menu, dan manajemen FAQ secara langsung.
-- **Informasi Cuaca Daerah Kuliner**: Fitur pengecekan kondisi cuaca kota asal kuliner untuk memudahkan perencanaan wisata kuliner.
+1. **Poin 9 — Instalasi Next.js**: Arsitektur project Next.js 14 App Router (`src/app`, `src/components`, `src/styles`, `src/data`, `src/types`, `public/images`).
+2. **Poin 10 — Next.js: Functional Component**: Dekomposisi halaman monolitik UTS menjadi 15+ komponen fungsional React/Next.js yang modular dan reusable.
+3. **Poin 11 — Next.js: Props & Children**: Penerapan komunikasi antar-komponen menggunakan TypeScript `Props` dan komposisi tata letak/kontainer menggunakan `children` (`React.ReactNode`).
+4. **Bab IX–XI Modul Praktikum**: Mencakup navigasi halaman (`/`, `/about`), Dynamic Routing (`/menu/[slug]`), Global CSS (`globals.css`), Module CSS (`button.module.css`), serta API Service Next.js (`actions.ts` & `/api/menus`) untuk pengecekan cuaca daerah asal kuliner Gado-Gado.
 
 ---
 
-## Struktur Folder Proyek
+## Struktur Folder Project (Poin 9)
 
 ```text
 UAS/
 ├── public/
-│   └── images/                     # Aset gambar katalog gado-gado & hero
+│   └── images/                     # Aset gambar 11 variasi Gado-Gado & Hero
 ├── src/
-│   ├── app/                        # Direktori App Router
-│   │   ├── layout.tsx              # Root Layout global
-│   │   ├── page.tsx                # Halaman utama katalog
-│   │   ├── actions.ts              # Server Action pencarian cuaca daerah
-│   │   ├── globals.css             # Penataan gaya visual global
+│   ├── app/                        # Next.js App Router
+│   │   ├── layout.tsx              # RootLayout dengan prop { children }
+│   │   ├── page.tsx                # Halaman utama Gado-Gado Nusantara
+│   │   ├── actions.ts              # Server Action WeatherSearch (Bab XI API Service)
+│   │   ├── globals.css             # Global CSS (Bab IX)
 │   │   ├── not-found.tsx           # Halaman 404 kustom
 │   │   ├── about/
-│   │   │   └── page.tsx            # Halaman Tentang Gado-Gado Nusantara
+│   │   │   └── page.tsx            # Halaman rute /about
 │   │   ├── menu/
 │   │   │   └── [slug]/
-│   │   │       └── page.tsx        # Halaman rute dinamis detail menu
+│   │   │       └── page.tsx        # Dynamic Route detail menu (/menu/[slug])
 │   │   └── api/
 │   │       └── menus/
-│   │           └── route.ts        # Endpoint API data menu
-│   ├── components/                 # Komponen antarmuka pengguna (UI)
-│   ├── styles/                     # CSS Modules komponen
-│   ├── data/                       # Data statis katalog & FAQ
-│   └── types/                      # Definisi tipe data TypeScript
+│   │           └── route.ts        # Endpoint API katalog menu (/api/menus)
+│   ├── components/                 # Functional Components (Poin 10 & Poin 11)
+│   │   ├── Header.tsx              # Navigasi utama, badge favorit, & menu mobile
+│   │   ├── HeroSection.tsx         # Hero banner & StatBadge functional component
+│   │   ├── IntroSection.tsx        # Seksi pengantar cerita kuliner
+│   │   ├── MenuSection.tsx         # Pencarian, filter kategori, & grid menu
+│   │   ├── MenuCard.tsx            # Kartu setiap variasi Gado-Gado
+│   │   ├── ChoiceSection.tsx       # Daftar "Pilihan Saya"
+│   │   ├── FavoriteSection.tsx     # Daftar "Yang Kamu Tandai ❤️"
+│   │   ├── AboutSection.tsx        # Seksi tentang kami & FeatureCard
+│   │   ├── WeatherSection.tsx      # Widget cek cuaca kota kuliner (Bab XI)
+│   │   ├── FaqSection.tsx          # Daftar pertanyaan umum (FAQ)
+│   │   ├── Footer.tsx              # Footer & akses panel Admin Konten
+│   │   ├── DetailModal.tsx         # Modal detail menu lengkap
+│   │   ├── AuthModal.tsx           # Modal Login & Register pengguna/admin
+│   │   ├── ProfileModal.tsx        # Modal profil pengguna aktif
+│   │   ├── AdminModal.tsx          # Modal pengelolaan konten & menu (Admin)
+│   │   ├── Toast.tsx               # Notifikasi pop-up (Toast)
+│   │   ├── Button.tsx              # Komponen tombol reusable (CSS Module + Props & Children)
+│   │   ├── ModalWrapper.tsx        # Komponen pembungkus modal (Props & Children)
+│   │   ├── SectionContainer.tsx    # Komponen pembungkus section (Props & Children)
+│   │   └── SectionHeading.tsx      # Komponen judul section (Props & Children)
+│   ├── styles/
+│   │   └── button.module.css       # CSS Module untuk komponen Button (Bab IX)
+│   ├── data/
+│   │   └── gadoGadoData.ts         # Data 11 menu Gado-Gado Nusantara, FAQ, & akun Admin
+│   └── types/
+│       ├── index.ts                # Definisi tipe data & interface Props/Children
+│       └── weather.ts              # Interface data cuaca (Bab XI)
 ├── package.json
 ├── tsconfig.json
 └── next.config.mjs
@@ -49,22 +65,21 @@ UAS/
 
 ---
 
-## Cara Menjalankan Proyek
+## Cara Menjalankan Project
 
-1. **Pasang Dependensi**:
+1. **Instal dependensi**:
    ```bash
    npm install
    ```
 
-2. **Jalankan Server Pengembangan**:
+2. **Jalankan server development**:
    ```bash
    npm run dev
    ```
 
-3. **Buka di Peramban**:
-   Akses `http://localhost:3000` (atau port yang ditunjukkan di terminal).
+3. **Buka di browser**:
+   Akses `http://localhost:3000`
 
-4. **Kredensial Demo Admin**:
+4. **Akun Demo Admin** (untuk membuka fitur **⚙ Kelola Konten** di Footer):
    - **Username**: `admin`
    - **Password**: `admin123`
-   *(Login dengan akun admin untuk mengakses tombol **⚙ Kelola Konten** pada bagian footer).*
