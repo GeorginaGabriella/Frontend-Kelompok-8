@@ -2,10 +2,10 @@
 
 Proyek ini merupakan hasil konversi proyek UTS **Gado-Gado Nusantara** (Kelompok 8) dari arsitektur statis (**HTML, CSS, dan jQuery**) menjadi aplikasi web modern berbasis **Next.js 14 (App Router) & TypeScript**:
 
-1. Instalasi Next.js**: Arsitektur project Next.js 14 App Router (`src/app`, `src/components`, `src/styles`, `src/data`, `src/types`, `public/images`).
-2. Next.js: Functional Component**: Dekomposisi halaman monolitik UTS menjadi 15+ komponen fungsional React/Next.js yang modular dan reusable.
-3. Next.js: Props & Children**: Penerapan komunikasi antar-komponen menggunakan TypeScript `Props` dan komposisi tata letak/kontainer menggunakan `children` (`React.ReactNode`).
-4. Modul Praktikum**: Mencakup navigasi halaman (`/`, `/about`), Dynamic Routing (`/menu/[slug]`), Global CSS (`globals.css`), Module CSS (`button.module.css`), serta API katalog menu (`/api/menus`).
+1. **Instalasi Next.js**: Arsitektur project Next.js 14 App Router (`src/app`, `src/components`, `src/styles`, `src/data`, `src/types`, `public/images`).
+2. **Next.js: Functional Component**: Dekomposisi halaman monolitik UTS menjadi 15+ komponen fungsional React/Next.js yang modular dan reusable.
+3. **Next.js: Props & Children**: Penerapan komunikasi antar-komponen menggunakan TypeScript `Props` dan komposisi tata letak/kontainer menggunakan `children` (`React.ReactNode`).
+4. **Modul Praktikum**: Mencakup navigasi halaman (`/`, `/about`), Dynamic Routing (`/menu/[slug]`), Global CSS (`globals.css`), Module CSS (`button.module.css`), serta API katalog menu (`/api/menus`).
 
 ---
 
