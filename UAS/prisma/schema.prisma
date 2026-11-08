@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  username String @unique
+  password String
+  role     String @default("user")
+
+  @@map("users")
+}
+
+model Menu {
+  id   Int    @id @default(autoincrement())
+  slug String @unique
+  name String
+  data String
+
+  @@map("menus")
+}
+
+model Favorite {
+  id       Int    @id @default(autoincrement())
+  username String
+  menuName String @map("menu_name")
+
+  @@unique([username, menuName])
+  @@map("favorites")
+}
+
+model Choice {
+  id       Int    @id @default(autoincrement())
+  username String
+  menuName String @map("menu_name")
+
+  @@unique([username, menuName])
+  @@map("choices")
+}
+
+model Faq {
+  id       Int    @id @default(autoincrement())
+  question String
+  answer   String
+
+  @@map("faqs")
+}
+
+model SiteContent {
+  id               Int    @id @default(1)
+  heroDescription  String @map("hero_description")
+  aboutDescription String @map("about_description")
+
+  @@map("site_content")
+}

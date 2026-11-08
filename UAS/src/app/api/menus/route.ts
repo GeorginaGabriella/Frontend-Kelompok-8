@@ -1,33 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  seedDatabase();
+  try {
+    await seedDatabase();
 
-  const rows = db.prepare(`
-    SELECT data FROM menus ORDER BY id ASC
-  `).all() as { data: string }[];
+    const rows = await prisma.menu.findMany({
+      select: { data: true },
+      orderBy: { id: "asc" },
+    });
 
-  const menus = rows.map((row) => JSON.parse(row.data));
+    const menus = rows.map((row) => JSON.parse(row.data));
 
-  return NextResponse.json({
-    total: menus.length,
-    menus
-  });
+    return NextResponse.json({
+      total: menus.length,
+      menus,
+    });
+  } catch (error) {
+    console.error("Menus GET error:", error);
+
+    return NextResponse.json(
+      { error: "Gagal mengambil menu." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(request: NextRequest) {
   try {
     const { name, updated } = await request.json();
 
-    const row = db.prepare(`
-      SELECT slug, data FROM menus WHERE name = ?
-    `).get(name) as
-      | { slug: string; data: string }
-      | undefined;
+    if (
+      typeof name !== "string" ||
+      !name.trim() ||
+      !updated ||
+      typeof updated !== "object" ||
+      Array.isArray(updated)
+    ) {
+      return NextResponse.json(
+        { error: "Data menu tidak valid." },
+        { status: 400 }
+      );
+    }
+
+    const row = await prisma.menu.findFirst({
+      where: { name },
+      select: {
+        slug: true,
+        data: true,
+      },
+    });
 
     if (!row) {
       return NextResponse.json(
@@ -39,17 +64,21 @@ export async function PUT(request: NextRequest) {
     const oldMenu = JSON.parse(row.data);
     const newMenu = { ...oldMenu, ...updated };
 
-    db.prepare(`
-      UPDATE menus
-      SET name = ?, data = ?
-      WHERE slug = ?
-    `).run(newMenu.name, JSON.stringify(newMenu), row.slug);
+    await prisma.menu.update({
+      where: { slug: row.slug },
+      data: {
+        name: newMenu.name,
+        data: JSON.stringify(newMenu),
+      },
+    });
 
     return NextResponse.json({
       message: "Menu berhasil diperbarui.",
-      menu: newMenu
+      menu: newMenu,
     });
-  } catch {
+  } catch (error) {
+    console.error("Menus PUT error:", error);
+
     return NextResponse.json(
       { error: "Gagal memperbarui menu." },
       { status: 500 }

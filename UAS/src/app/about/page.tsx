@@ -59,7 +59,6 @@ export default function AboutPage() {
           </p>
         </IntroSection>
       </main>
-
       <Footer />
     </>
   );
