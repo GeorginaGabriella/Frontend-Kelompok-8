@@ -1,64 +1,110 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  seedDatabase();
+  try {
+    await seedDatabase();
 
-  const users = db.prepare(`
-    SELECT name, username, password, role
-    FROM users
-  `).all();
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        role: true,
+      },
+    });
 
-  return NextResponse.json({ users });
+    return NextResponse.json({ users });
+  } catch (error) {
+    console.error("Auth GET error:", error);
+
+    return NextResponse.json(
+      { error: "Gagal mengambil data user." },
+      { status: 500 }
+    );
+  }
 }
 
+// Register dan Login
 export async function POST(request: NextRequest) {
-  seedDatabase();
-
   try {
+    await seedDatabase();
+
     const body = await request.json();
     const { action, name, username, password } = body;
 
+    if (
+      typeof username !== "string" ||
+      typeof password !== "string" ||
+      !username.trim() ||
+      !password
+    ) {
+      return NextResponse.json(
+        { error: "Username dan password harus diisi." },
+        { status: 400 }
+      );
+    }
+
+    const normalizedUsername = username.trim().toLowerCase();
+
+    // REGISTER
     if (action === "register") {
-      if (!name || !username || !password || password.length < 6) {
+      if (typeof name !== "string" || !name.trim()) {
         return NextResponse.json(
-          { error: "Data register tidak valid." },
+          { error: "Nama harus diisi." },
           { status: 400 }
         );
       }
 
-      const existing = db.prepare(
-        "SELECT id FROM users WHERE username = ?"
-      ).get(username.toLowerCase());
+      if (password.length < 6) {
+        return NextResponse.json(
+          { error: "Password minimal 6 karakter." },
+          { status: 400 }
+        );
+      }
 
-      if (existing) {
+      const existingUser = await prisma.user.findUnique({
+        where: { username: normalizedUsername },
+        select: { id: true },
+      });
+
+      if (existingUser) {
         return NextResponse.json(
           { error: "Username sudah digunakan." },
           { status: 409 }
         );
       }
 
-      db.prepare(`
-        INSERT INTO users (name, username, password, role)
-        VALUES (?, ?, ?, 'user')
-      `).run(name.trim(), username.toLowerCase(), password);
+      await prisma.user.create({
+        data: {
+          name: name.trim(),
+          username: normalizedUsername,
+          password,
+          role: "user",
+        },
+      });
 
       return NextResponse.json({
-        message: "Register berhasil."
+        message: "Register berhasil.",
       });
     }
 
+    // LOGIN
     if (action === "login") {
-      const user = db.prepare(`
-        SELECT name, username, password, role
-        FROM users
-        WHERE username = ? AND password = ?
-      `).get(username.toLowerCase(), password) as
-        | { name: string; username: string; password: string; role: string }
-        | undefined;
+      const user = await prisma.user.findFirst({
+        where: {
+          username: normalizedUsername,
+          password,
+        },
+        select: {
+          name: true,
+          username: true,
+          role: true,
+        },
+      });
 
       if (!user) {
         return NextResponse.json(
@@ -67,22 +113,18 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({
-        user: {
-          name: user.name,
-          username: user.username,
-          role: user.role
-        }
-      });
+      return NextResponse.json({ user });
     }
 
     return NextResponse.json(
-      { error: "Action tidak dikenal." },
+      { error: "Action tidak dikenali." },
       { status: 400 }
     );
-  } catch {
+  } catch (error) {
+    console.error("Auth POST error:", error);
+
     return NextResponse.json(
-      { error: "Terjadi kesalahan pada server." },
+      { error: "Terjadi kesalahan pada proses autentikasi." },
       { status: 500 }
     );
   }
