@@ -1,44 +1,62 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
-  const username =
-    request.nextUrl.searchParams.get("username") || "guest";
+  try {
+    const username =
+      request.nextUrl.searchParams.get("username") || "guest";
 
-  const rows = db.prepare(`
-    SELECT menu_name
-    FROM choices
-    WHERE username = ?
-  `).all(username) as { menu_name: string }[];
+    const rows = await prisma.choice.findMany({
+      where: { username },
+      select: { menuName: true },
+    });
 
-  return NextResponse.json({
-    choices: rows.map((item) => item.menu_name)
-  });
+    return NextResponse.json({
+      choices: rows.map((item) => item.menuName),
+    });
+  } catch (error) {
+    console.error("Choices GET error:", error);
+
+    return NextResponse.json(
+      { error: "Gagal mengambil pilihan." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const { username = "guest", menu_name } =
-      await request.json();
+    const { username = "guest", menu_name } = await request.json();
 
-    if (!menu_name) {
+    if (typeof menu_name !== "string" || !menu_name.trim()) {
       return NextResponse.json(
         { error: "Nama menu harus diisi." },
         { status: 400 }
       );
     }
 
-    db.prepare(`
-      INSERT OR IGNORE INTO choices (username, menu_name)
-      VALUES (?, ?)
-    `).run(username, menu_name);
+    await prisma.choice.upsert({
+      where: {
+        username_menuName: {
+          username,
+          menuName: menu_name,
+        },
+      },
+      update: {},
+      create: {
+        username,
+        menuName: menu_name,
+      },
+    });
 
     return NextResponse.json({
-      message: "Menu berhasil ditambahkan."
+      message: "Menu berhasil ditambahkan.",
     });
-  } catch {
+  } catch (error) {
+    console.error("Choices POST error:", error);
+
     return NextResponse.json(
       { error: "Gagal menyimpan pilihan." },
       { status: 500 }
@@ -48,24 +66,24 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const { username = "guest", menu_name } =
-      await request.json();
+    const { username = "guest", menu_name } = await request.json();
 
     if (menu_name) {
-      db.prepare(`
-        DELETE FROM choices
-        WHERE username = ? AND menu_name = ?
-      `).run(username, menu_name);
+      await prisma.choice.deleteMany({
+        where: { username, menuName: menu_name },
+      });
     } else {
-      db.prepare(`
-        DELETE FROM choices WHERE username = ?
-      `).run(username);
+      await prisma.choice.deleteMany({
+        where: { username },
+      });
     }
 
     return NextResponse.json({
-      message: "Pilihan berhasil dihapus."
+      message: "Pilihan berhasil dihapus.",
     });
-  } catch {
+  } catch (error) {
+    console.error("Choices DELETE error:", error);
+
     return NextResponse.json(
       { error: "Gagal menghapus pilihan." },
       { status: 500 }
