@@ -1,21 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
-  const username =
-    request.nextUrl.searchParams.get("username") || "guest";
+  try {
+    const username =
+      request.nextUrl.searchParams.get("username") || "guest";
 
-  const rows = db.prepare(`
-    SELECT menu_name
-    FROM favorites
-    WHERE username = ?
-  `).all(username) as { menu_name: string }[];
+    const rows = await prisma.favorite.findMany({
+      where: { username },
+      select: { menuName: true },
+    });
 
-  return NextResponse.json({
-    favorites: rows.map((item) => item.menu_name)
-  });
+    return NextResponse.json({
+      favorites: rows.map((item) => item.menuName),
+    });
+  } catch (error) {
+    console.error("Favorites GET error:", error);
+
+    return NextResponse.json(
+      { error: "Gagal mengambil favorit." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -30,15 +38,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    db.prepare(`
-      INSERT OR IGNORE INTO favorites (username, menu_name)
-      VALUES (?, ?)
-    `).run(username, menu_name);
+    await prisma.favorite.upsert({
+      where: {
+        username_menuName: {
+          username,
+          menuName: menu_name,
+        },
+      },
+      update: {},
+      create: {
+        username,
+        menuName: menu_name,
+      },
+    });
 
     return NextResponse.json({
-      message: "Favorit berhasil ditambahkan."
+      message: "Favorit berhasil ditambahkan.",
     });
-  } catch {
+  } catch (error) {
+    console.error("Favorites POST error:", error);
+
     return NextResponse.json(
       { error: "Gagal menyimpan favorit." },
       { status: 500 }
@@ -52,20 +71,24 @@ export async function DELETE(request: NextRequest) {
       await request.json();
 
     if (menu_name) {
-      db.prepare(`
-        DELETE FROM favorites
-        WHERE username = ? AND menu_name = ?
-      `).run(username, menu_name);
+      await prisma.favorite.deleteMany({
+        where: {
+          username,
+          menuName: menu_name,
+        },
+      });
     } else {
-      db.prepare(`
-        DELETE FROM favorites WHERE username = ?
-      `).run(username);
+      await prisma.favorite.deleteMany({
+        where: { username },
+      });
     }
 
     return NextResponse.json({
-      message: "Favorit berhasil dihapus."
+      message: "Favorit berhasil dihapus.",
     });
-  } catch {
+  } catch (error) {
+    console.error("Favorites DELETE error:", error);
+
     return NextResponse.json(
       { error: "Gagal menghapus favorit." },
       { status: 500 }
