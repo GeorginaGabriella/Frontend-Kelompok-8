@@ -1,7 +1,5 @@
 "use client";
-
 import React, { useCallback, useEffect, useState } from "react";
-
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import IntroSection from "@/components/IntroSection";
@@ -63,7 +61,7 @@ export default function HomePage() {
   const getUsername = () =>
     currentUser?.username || "guest";
 
-  const loadPersonalData = async (username: string) => {
+  const loadPersonalData = useCallback(async (username: string) => {
     try {
       const [favResponse, choiceResponse] = await Promise.all([
         fetch(
@@ -75,7 +73,7 @@ export default function HomePage() {
       ]);
 
       if (!favResponse.ok || !choiceResponse.ok) {
-        throw new Error("Gagal mengambil data pengguna.");
+        throw new Error("Gagal mengambil data personal.");
       }
 
       const favData = await favResponse.json();
@@ -87,7 +85,7 @@ export default function HomePage() {
       console.error(error);
       showToast("Gagal memuat data favorit dan pilihan.");
     }
-  };
+  }, [showToast]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -150,7 +148,7 @@ export default function HomePage() {
     };
 
     loadData();
-  }, [showToast]);
+  }, [showToast, loadPersonalData]);
 
   useEffect(() => {
     if (!toastVisible) return;
