@@ -1,20 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  seedDatabase();
+  try {
+    await seedDatabase();
 
-  const content = db.prepare(`
-    SELECT hero_description AS heroDescription,
-           about_description AS aboutDescription
-    FROM site_content
-    WHERE id = 1
-  `).get();
+    const content = await prisma.siteContent.findUnique({
+      where: { id: 1 },
+      select: {
+        heroDescription: true,
+        aboutDescription: true,
+      },
+    });
 
-  return NextResponse.json({ content });
+    return NextResponse.json({ content });
+  } catch (error) {
+    console.error("Content GET error:", error);
+
+    return NextResponse.json(
+      { error: "Gagal mengambil konten." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(request: NextRequest) {
@@ -22,19 +32,35 @@ export async function PUT(request: NextRequest) {
     const { heroDescription, aboutDescription } =
       await request.json();
 
-    db.prepare(`
-      INSERT INTO site_content
-      (id, hero_description, about_description)
-      VALUES (1, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        hero_description = excluded.hero_description,
-        about_description = excluded.about_description
-    `).run(heroDescription, aboutDescription);
+    if (
+      typeof heroDescription !== "string" ||
+      typeof aboutDescription !== "string"
+    ) {
+      return NextResponse.json(
+        { error: "Data konten tidak valid." },
+        { status: 400 }
+      );
+    }
+
+    await prisma.siteContent.upsert({
+      where: { id: 1 },
+      update: {
+        heroDescription,
+        aboutDescription,
+      },
+      create: {
+        id: 1,
+        heroDescription,
+        aboutDescription,
+      },
+    });
 
     return NextResponse.json({
-      message: "Konten berhasil diperbarui."
+      message: "Konten berhasil diperbarui.",
     });
-  } catch {
+  } catch (error) {
+    console.error("Content PUT error:", error);
+
     return NextResponse.json(
       { error: "Gagal memperbarui konten." },
       { status: 500 }
