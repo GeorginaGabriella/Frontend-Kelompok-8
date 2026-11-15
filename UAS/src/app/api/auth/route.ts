@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
+import { createSessionToken } from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
+
+const COOKIE_NAME = "gadoGadoSession";
 
 export async function GET() {
   try {
@@ -28,7 +31,6 @@ export async function GET() {
   }
 }
 
-// Register dan Login
 export async function POST(request: NextRequest) {
   try {
     await seedDatabase();
@@ -50,7 +52,6 @@ export async function POST(request: NextRequest) {
 
     const normalizedUsername = username.trim().toLowerCase();
 
-    // REGISTER
     if (action === "register") {
       if (typeof name !== "string" || !name.trim()) {
         return NextResponse.json(
@@ -92,7 +93,6 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // LOGIN
     if (action === "login") {
       const user = await prisma.user.findFirst({
         where: {
@@ -113,7 +113,21 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({ user });
+      const response = NextResponse.json({ user });
+
+      response.cookies.set(
+        COOKIE_NAME,
+        createSessionToken(user.username),
+        {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          path: "/",
+          maxAge: 60 * 60 * 8,
+        }
+      );
+
+      return response;
     }
 
     return NextResponse.json(
@@ -128,4 +142,20 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function DELETE() {
+  const response = NextResponse.json({
+    message: "Logout berhasil.",
+  });
+
+  response.cookies.set(COOKIE_NAME, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+
+  return response;
 }
