@@ -7,16 +7,18 @@ import {
 } from "@/data/gadoGadoData";
 
 export async function seedDatabase() {
-  for (const menu of initialMenus) {
-    await prisma.menu.upsert({
-      where: { slug: menu.slug },
-      update: {},
-      create: {
-        slug: menu.slug,
-        name: menu.name,
-        data: JSON.stringify(menu),
-      },
-    });
+  const menuCount = await prisma.menu.count();
+
+  if (menuCount === 0) {
+    for (const menu of initialMenus) {
+      await prisma.menu.create({
+        data: {
+          slug: menu.slug,
+          name: menu.name,
+          data: JSON.stringify(menu),
+        },
+      });
+    }
   }
 
   for (const faq of defaultFaqs) {
@@ -36,12 +38,16 @@ export async function seedDatabase() {
 
   await prisma.user.upsert({
     where: { username: adminAccount.username },
-    update: {},
+    update: {
+      name: adminAccount.name,
+      password: adminAccount.password!,
+      role: "admin",
+    },
     create: {
       name: adminAccount.name,
       username: adminAccount.username,
       password: adminAccount.password!,
-      role: adminAccount.role,
+      role: "admin",
     },
   });
 
