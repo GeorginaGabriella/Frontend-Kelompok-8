@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import ModalWrapper from "./ModalWrapper";
 import { UserAccount } from "@/types";
 
@@ -41,11 +42,8 @@ export default function ProfileModal({
       {user && (
         <>
           <div className="profile-icon">👤</div>
-
           <p className="section-label">PROFIL</p>
-
           <h2 id="profileName">{user.name}</h2>
-
           <p id="profileUsername">@{user.username}</p>
 
           <span className="role-badge" id="profileRole">
@@ -57,7 +55,6 @@ export default function ProfileModal({
               <strong id="profileFavorite">{favoriteCount}</strong>
               <span>Favorit</span>
             </div>
-
             <div>
               <strong id="profileChoice">{choiceCount}</strong>
               <span>Pilihan</span>
@@ -65,6 +62,18 @@ export default function ProfileModal({
           </div>
 
           {children}
+
+          {user.role === "admin" && (
+            <Link
+              href="/admin"
+              className="admin-profile-button"
+              onClick={onClose}
+            >
+              <span>▦</span>
+              Dashboard Admin
+              <span className="admin-profile-arrow">→</span>
+            </Link>
+          )}
 
           <a
             href="#menu"

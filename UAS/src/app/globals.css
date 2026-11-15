@@ -2539,3 +2539,25 @@ img {
     }
 }
 
+.admin-profile-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 50px;
+  background: #244b35;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.admin-profile-button:hover {
+  background: #193827;
+  transform: translateY(-1px);
+}

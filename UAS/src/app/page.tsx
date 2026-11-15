@@ -1,5 +1,7 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+
+import { useCallback, useEffect, useState } from "react";
+
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import IntroSection from "@/components/IntroSection";
@@ -12,7 +14,6 @@ import Footer from "@/components/Footer";
 import DetailModal from "@/components/DetailModal";
 import AuthModal from "@/components/AuthModal";
 import ProfileModal from "@/components/ProfileModal";
-import AdminModal from "@/components/AdminModal";
 import Toast from "@/components/Toast";
 
 import {
@@ -45,12 +46,9 @@ export default function HomePage() {
 
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
-  const [adminModalOpen, setAdminModalOpen] = useState(false);
 
   const [activeSection, setActiveSection] = useState("home");
-  const [toastMessage, setToastMessage] = useState(
-    "Menu berhasil ditambahkan."
-  );
+  const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
 
   const showToast = useCallback((message: string) => {
@@ -58,97 +56,102 @@ export default function HomePage() {
     setToastVisible(true);
   }, []);
 
-  const getUsername = () =>
-    currentUser?.username || "guest";
-
-  const loadPersonalData = useCallback(async (username: string) => {
-    try {
-      const [favResponse, choiceResponse] = await Promise.all([
-        fetch(
-          `/api/favorites?username=${encodeURIComponent(username)}`
-        ),
-        fetch(
-          `/api/choices?username=${encodeURIComponent(username)}`
-        ),
-      ]);
-
-      if (!favResponse.ok || !choiceResponse.ok) {
-        throw new Error("Gagal mengambil data personal.");
-      }
-
-      const favData = await favResponse.json();
-      const choiceData = await choiceResponse.json();
-
-      setFavorites(favData.favorites || []);
-      setChoices(choiceData.choices || []);
-    } catch (error) {
-      console.error(error);
-      showToast("Gagal memuat data favorit dan pilihan.");
-    }
-  }, [showToast]);
-
-  useEffect(() => {
-    const loadData = async () => {
+  const loadPersonalData = useCallback(
+    async (username: string) => {
       try {
-        const [
-          menuResponse,
-          contentResponse,
-          faqResponse,
-          authResponse,
-        ] = await Promise.all([
-          fetch("/api/menus"),
-          fetch("/api/content"),
-          fetch("/api/faqs"),
-          fetch("/api/auth"),
+        const [favResponse, choiceResponse] = await Promise.all([
+          fetch(
+            `/api/favorites?username=${encodeURIComponent(username)}`
+          ),
+          fetch(
+            `/api/choices?username=${encodeURIComponent(username)}`
+          ),
         ]);
 
-        if (
-          !menuResponse.ok ||
-          !contentResponse.ok ||
-          !faqResponse.ok ||
-          !authResponse.ok
-        ) {
-          throw new Error("Gagal mengambil data database.");
+        if (!favResponse.ok || !choiceResponse.ok) {
+          throw new Error("Gagal mengambil data personal.");
         }
 
-        const menuData = await menuResponse.json();
-        const contentData = await contentResponse.json();
-        const faqData = await faqResponse.json();
-        const authData = await authResponse.json();
+        const favData = await favResponse.json();
+        const choiceData = await choiceResponse.json();
 
-        setMenus(menuData.menus || initialMenus);
-        setSiteContent(
-          contentData.content || defaultSiteContent
-        );
-        setFaqs(
-          (faqData.faqs || defaultFaqs).map(
-            ({ question, answer }: FaqItem) => ({
-              question,
-              answer,
-            })
-          )
-        );
-        setAccounts(authData.users || []);
-
-        const savedUser = localStorage.getItem(
-          "gadoGadoCurrentUser"
-        );
-
-        if (savedUser) {
-          const user = JSON.parse(savedUser);
-          setCurrentUser(user);
-          await loadPersonalData(user.username);
-        } else {
-          await loadPersonalData("guest");
-        }
+        setFavorites(favData.favorites || []);
+        setChoices(choiceData.choices || []);
       } catch (error) {
         console.error(error);
-        showToast("Gagal menghubungkan ke database SQLite.");
+        showToast("Gagal memuat data favorit dan pilihan.");
       }
-    };
+    },
+    [showToast]
+  );
 
-    loadData();
-  }, [showToast, loadPersonalData]);
+  const loadMainData = useCallback(async () => {
+    try {
+      const [
+        menuResponse,
+        contentResponse,
+        faqResponse,
+        authResponse,
+      ] = await Promise.all([
+        fetch("/api/menus"),
+        fetch("/api/content"),
+        fetch("/api/faqs"),
+        fetch("/api/auth"),
+      ]);
+
+      if (
+        !menuResponse.ok ||
+        !contentResponse.ok ||
+        !faqResponse.ok ||
+        !authResponse.ok
+      ) {
+        throw new Error("Gagal mengambil data database.");
+      }
+
+      const menuData = await menuResponse.json();
+      const contentData = await contentResponse.json();
+      const faqData = await faqResponse.json();
+      const authData = await authResponse.json();
+
+      setMenus(menuData.menus || initialMenus);
+      setSiteContent(contentData.content || defaultSiteContent);
+
+      setFaqs(
+        (faqData.faqs || defaultFaqs).map(
+          ({ question, answer }: FaqItem) => ({
+            question,
+            answer,
+          })
+        )
+      );
+
+      setAccounts(authData.users || []);
+
+      const savedUser = localStorage.getItem("gadoGadoCurrentUser");
+
+      if (savedUser) {
+        try {
+          const user: UserAccount = JSON.parse(savedUser);
+
+          setCurrentUser(user);
+          await loadPersonalData(user.username);
+        } catch {
+          localStorage.removeItem("gadoGadoCurrentUser");
+          setCurrentUser(null);
+          await loadPersonalData("guest");
+        }
+      } else {
+        await loadPersonalData("guest");
+      }
+    } catch (error) {
+      console.error(error);
+      showToast("Gagal menghubungkan ke database SQLite.");
+    }
+  }, [loadPersonalData, showToast]);
+
+  useEffect(() => {
+    loadMainData();
+  }, [loadMainData]);
 
   useEffect(() => {
     if (!toastVisible) return;
@@ -166,10 +169,10 @@ export default function HomePage() {
       const sections = document.querySelectorAll("section[id]");
 
       sections.forEach((section) => {
-        const el = section as HTMLElement;
-        const top = el.offsetTop - 130;
-        const bottom = top + el.offsetHeight;
-        const id = el.getAttribute("id");
+        const element = section as HTMLElement;
+        const top = element.offsetTop - 130;
+        const bottom = top + element.offsetHeight;
+        const id = element.getAttribute("id");
 
         if (id && scrollY >= top && scrollY < bottom) {
           setActiveSection(id);
@@ -181,28 +184,25 @@ export default function HomePage() {
       passive: true,
     });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
     const anyModalOpen =
       Boolean(selectedMenu) ||
       authModalOpen ||
-      profileModalOpen ||
-      adminModalOpen;
+      profileModalOpen;
 
     document.body.style.overflow = anyModalOpen ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [
-    selectedMenu,
-    authModalOpen,
-    profileModalOpen,
-    adminModalOpen,
-  ]);
+  }, [selectedMenu, authModalOpen, profileModalOpen]);
 
+  // FAVORIT
   const handleToggleFavorite = async (name: string) => {
     try {
       const exists = favorites.includes(name);
@@ -213,18 +213,18 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: getUsername(),
+          username: currentUser?.username || "guest",
           menu_name: name,
         }),
       });
 
       if (!response.ok) throw new Error();
 
-      const next = exists
-        ? favorites.filter((item) => item !== name)
-        : [...favorites, name];
-
-      setFavorites(next);
+      setFavorites((previous) =>
+        exists
+          ? previous.filter((item) => item !== name)
+          : [...previous, name]
+      );
 
       showToast(
         exists
@@ -244,15 +244,15 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: getUsername(),
+          username: currentUser?.username || "guest",
           menu_name: name,
         }),
       });
 
       if (!response.ok) throw new Error();
 
-      setFavorites((prev) =>
-        prev.filter((item) => item !== name)
+      setFavorites((previous) =>
+        previous.filter((item) => item !== name)
       );
 
       showToast(`${name} dihapus dari favorit.`);
@@ -261,6 +261,7 @@ export default function HomePage() {
     }
   };
 
+  // PILIHAN SAYA
   const handleAddChoice = async (name: string) => {
     if (choices.includes(name)) {
       showToast(`${name} sudah ada di Pilihan Saya.`);
@@ -274,14 +275,14 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: getUsername(),
+          username: currentUser?.username || "guest",
           menu_name: name,
         }),
       });
 
       if (!response.ok) throw new Error();
 
-      setChoices((prev) => [...prev, name]);
+      setChoices((previous) => [...previous, name]);
       showToast(`${name} ditambahkan ke Pilihan Saya.`);
 
       document.getElementById("pilihan")?.scrollIntoView({
@@ -300,15 +301,15 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: getUsername(),
+          username: currentUser?.username || "guest",
           menu_name: name,
         }),
       });
 
       if (!response.ok) throw new Error();
 
-      setChoices((prev) =>
-        prev.filter((item) => item !== name)
+      setChoices((previous) =>
+        previous.filter((item) => item !== name)
       );
 
       showToast(`${name} berhasil dihapus.`);
@@ -317,6 +318,7 @@ export default function HomePage() {
     }
   };
 
+  // BUKA PROFIL
   const handleProfileButtonClick = () => {
     if (!currentUser) {
       setAuthModalOpen(true);
@@ -325,6 +327,7 @@ export default function HomePage() {
     }
   };
 
+  // REGISTER
   const handleRegisterAccount = async (newUser: UserAccount) => {
     try {
       const response = await fetch("/api/auth", {
@@ -357,6 +360,7 @@ export default function HomePage() {
     }
   };
 
+  // LOGIN
   const handleLoginSuccess = (user: UserAccount) => {
     const sessionUser: UserAccount = {
       name: user.name,
@@ -371,165 +375,29 @@ export default function HomePage() {
       JSON.stringify(sessionUser)
     );
 
+    setAuthModalOpen(false);
+
     loadPersonalData(sessionUser.username);
+
+    showToast(
+      sessionUser.role === "admin"
+        ? "Login admin berhasil. Buka profil untuk Dashboard Admin."
+        : "Berhasil login."
+    );
   };
 
-  const handleLogout = () => {
+  // LOGOUT
+  const handleLogout = async () => {
     localStorage.removeItem("gadoGadoCurrentUser");
 
     setCurrentUser(null);
     setFavorites([]);
     setChoices([]);
+    setProfileModalOpen(false);
 
-    loadPersonalData("guest");
+    await loadPersonalData("guest");
 
-    showToast("Berhasil logout.");
-  };
-
-  const handleOpenAdmin = () => {
-    if (!currentUser || currentUser.role !== "admin") {
-      showToast("Akses hanya untuk Admin.");
-      return;
-    }
-
-    setAdminModalOpen(true);
-  };
-
-  const handleSaveSiteContent = async (
-    newContent: SiteContent
-  ) => {
-    try {
-      const response = await fetch("/api/content", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newContent),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setSiteContent(newContent);
-      showToast("Konten berhasil diperbarui.");
-    } catch {
-      showToast("Gagal menyimpan konten.");
-    }
-  };
-
-  const handleSaveMenu = async (
-    name: string,
-    updated: Partial<MenuItem>
-  ) => {
-    try {
-      const response = await fetch("/api/menus", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, updated }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setMenus((prev) =>
-        prev.map((item) =>
-          item.name === name ? { ...item, ...updated } : item
-        )
-      );
-
-      showToast("Menu berhasil diperbarui.");
-    } catch {
-      showToast("Gagal menyimpan menu.");
-    }
-  };
-
-  const handleAddFaq = async (faq: FaqItem) => {
-    try {
-      const response = await fetch("/api/faqs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(faq),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setFaqs((prev) => [...prev, faq]);
-      showToast("FAQ berhasil ditambahkan.");
-    } catch {
-      showToast("Gagal menambahkan FAQ.");
-    }
-  };
-
-  const handleRemoveFaq = async (index: number) => {
-    const faq = faqs[index];
-
-    if (!faq) return;
-
-    try {
-      const response = await fetch("/api/faqs", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question: faq.question,
-        }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setFaqs((prev) =>
-        prev.filter((_, idx) => idx !== index)
-      );
-
-      showToast("FAQ berhasil dihapus.");
-    } catch {
-      showToast("Gagal menghapus FAQ.");
-    }
-  };
-
-  const handleClearChoices = async () => {
-    try {
-      const response = await fetch("/api/choices", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: getUsername(),
-        }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setChoices([]);
-      showToast("Pilihan Saya berhasil dikosongkan.");
-    } catch {
-      showToast("Gagal menghapus pilihan.");
-    }
-  };
-
-  const handleClearFavorites = async () => {
-    try {
-      const response = await fetch("/api/favorites", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: getUsername(),
-        }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setFavorites([]);
-      showToast("Favorit Saya berhasil dikosongkan.");
-    } catch {
-      showToast("Gagal menghapus favorit.");
-    }
+    showToast("Kamu berhasil logout.");
   };
 
   return (
@@ -574,10 +442,7 @@ export default function HomePage() {
         <FaqSection faqs={faqs} />
       </main>
 
-      <Footer
-        currentUser={currentUser}
-        onOpenAdmin={handleOpenAdmin}
-      />
+      <Footer />
 
       <DetailModal
         menu={selectedMenu}
@@ -601,23 +466,6 @@ export default function HomePage() {
         favoriteCount={favorites.length}
         choiceCount={choices.length}
         onLogout={handleLogout}
-      />
-
-      <AdminModal
-        isOpen={adminModalOpen}
-        onClose={() => setAdminModalOpen(false)}
-        menus={menus}
-        choices={choices}
-        favorites={favorites}
-        siteContent={siteContent}
-        faqs={faqs}
-        onSaveSiteContent={handleSaveSiteContent}
-        onSaveMenu={handleSaveMenu}
-        onAddFaq={handleAddFaq}
-        onRemoveFaq={handleRemoveFaq}
-        onClearChoices={handleClearChoices}
-        onClearFavorites={handleClearFavorites}
-        onShowToast={showToast}
       />
 
       <Toast

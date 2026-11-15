@@ -1,18 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { UserAccount } from "@/types";
 
 interface FooterProps {
-  currentUser?: UserAccount | null;
-  onOpenAdmin?: () => void;
   children?: React.ReactNode;
 }
 
-export default function Footer({
-  currentUser,
-  onOpenAdmin,
-  children,
-}: FooterProps) {
+export default function Footer({ children }: FooterProps) {
   return (
     <footer className="footer">
       <div className="container footer-content">
@@ -52,21 +45,13 @@ export default function Footer({
             Website kuliner interaktif berbasis Next.js untuk mengenal
             keberagaman gado-gado Indonesia.
           </p>
-          {currentUser?.role === "admin" && onOpenAdmin && (
-            <button
-              className="admin-open"
-              id="adminOpen"
-              type="button"
-              onClick={onOpenAdmin}
-            >
-              ⚙ Kelola Konten
-            </button>
-          )}
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 Gado-Gado Nusantara. Project UAS Frontend (Next.js).</p>
+        <p>
+          © 2026 Gado-Gado Nusantara. Project UAS Frontend (Next.js).
+        </p>
       </div>
     </footer>
   );
