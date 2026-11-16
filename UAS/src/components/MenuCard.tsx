@@ -1,4 +1,5 @@
 import React from "react";
+import { formatRupiah, parsePriceLabel } from "@/lib/order";
 import { MenuCardProps } from "@/types";
 
 export default function MenuCard({
@@ -7,9 +8,14 @@ export default function MenuCard({
   onToggleFavorite,
   onOpenDetail,
   onAddChoice,
+  onAddToCart,
   children,
 }: MenuCardProps) {
-  const displayedIngredients = menu.ingredients.slice(0, 3);
+  const displayedIngredients = menu.cardIngredients?.length
+    ? menu.cardIngredients.slice(0, 3)
+    : menu.ingredients.slice(0, 3);
+
+  const unitPrice = parsePriceLabel(menu.price);
 
   return (
     <article
@@ -40,12 +46,17 @@ export default function MenuCard({
 
         <h3>{menu.name}</h3>
 
-        <p>{menu.description}</p>
+        <p>{menu.shortDescription || menu.description}</p>
 
         <div className="ingredients">
           {displayedIngredients.map((item) => (
             <span key={item}>{item}</span>
           ))}
+        </div>
+
+        <div className="card-price">
+          <strong>{formatRupiah(unitPrice)}</strong>
+          <small>/ porsi</small>
         </div>
 
         {children}
@@ -58,15 +69,28 @@ export default function MenuCard({
           >
             Detail
           </button>
+
           <button
             type="button"
             className="add-button"
             data-name={menu.name}
             onClick={() => onAddChoice(menu.name)}
           >
-            + Tambah
+            + Pilihan
           </button>
         </div>
+
+        {onAddToCart && (
+          <button
+            type="button"
+            className="cart-button"
+            data-slug={menu.slug}
+            onClick={() => onAddToCart(menu)}
+          >
+            <span aria-hidden="true">🛒</span>
+            Tambah ke Keranjang
+          </button>
+        )}
       </div>
     </article>
   );

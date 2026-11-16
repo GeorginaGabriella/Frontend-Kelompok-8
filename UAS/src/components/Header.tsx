@@ -7,8 +7,10 @@ import { UserAccount } from "@/types";
 interface HeaderProps {
   activeSection?: string;
   favoriteCount: number;
+  cartCount?: number;
   currentUser: UserAccount | null;
   onProfileClick: () => void;
+  onCartClick?: () => void;
   children?: React.ReactNode;
 }
 
@@ -17,14 +19,17 @@ const navItems = [
   { id: "menu", label: "Menu", href: "/#menu" },
   { id: "favorit", label: "Favorit", href: "/#favorit" },
   { id: "about", label: "About", href: "/#about" },
+  { id: "customer-service", label: "Customer Service", href: "/#customer-service" },
   { id: "faq", label: "FAQ", href: "/#faq" },
 ];
 
 export default function Header({
   activeSection = "home",
   favoriteCount,
+  cartCount = 0,
   currentUser,
   onProfileClick,
+  onCartClick,
   children,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -63,6 +68,19 @@ export default function Header({
             <span>♡</span>
             <b id="favoriteCounter">{favoriteCount}</b>
           </a>
+
+          {onCartClick && (
+            <button
+              type="button"
+              className="icon-button cart-nav"
+              id="cartButton"
+              title="Keranjang pesanan"
+              onClick={onCartClick}
+            >
+              <span>🛒</span>
+              <b id="cartCounter">{cartCount}</b>
+            </button>
+          )}
 
           <button
             type="button"
