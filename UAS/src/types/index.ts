@@ -1,6 +1,13 @@
 import React from "react";
 
-export type FilterGroup = "semua" | "betawi" | "sunda" | "jawa" | "lainnya";
+export type FilterGroup =
+  | "semua"
+  | "betawi"
+  | "sunda"
+  | "jawa"
+  | "minuman"
+  | "dessert"
+  | "lainnya";
 
 export interface MenuItem {
   slug: string;
