@@ -20,6 +20,8 @@ const filterOptions: Array<{ value: FilterGroup; label: string }> = [
   { value: "betawi", label: "Betawi" },
   { value: "sunda", label: "Sunda" },
   { value: "jawa", label: "Jawa" },
+  { value: "minuman", label: "Minuman Tradisional" },
+  { value: "dessert", label: "Dessert" },
   { value: "lainnya", label: "Lainnya" },
 ];
 
