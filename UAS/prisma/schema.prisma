@@ -59,3 +59,52 @@ model SiteContent {
 
   @@map("site_content")
 }
+
+model Order {
+  id             Int      @id @default(autoincrement())
+  orderCode      String   @unique @map("order_code")
+  username       String   @default("guest")
+  recipient      String
+  phone          String
+  address        String
+  city           String   @default("")
+  postalCode     String   @default("") @map("postal_code")
+  note           String   @default("")
+  items          String
+  subtotal       Int      @default(0)
+  discountCode   String   @default("") @map("discount_code")
+  discountAmount Int      @default(0) @map("discount_amount")
+  shippingCost   Int      @default(0) @map("shipping_cost")
+  total          Int      @default(0)
+  status         String   @default("baru")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("orders")
+}
+
+model DiscountCode {
+  id           Int     @id @default(autoincrement())
+  code         String  @unique
+  label        String
+  type         String  @default("percent")
+  value        Int     @default(0)
+  minSpend     Int     @default(0) @map("min_spend")
+  maxDiscount  Int     @default(0) @map("max_discount")
+  freeShipping Boolean @default(false) @map("free_shipping")
+  active       Boolean @default(true)
+
+  @@map("discount_codes")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  name      String
+  topic     String   @default("Umum")
+  rating    Int      @default(5)
+  message   String
+  reply     String   @default("")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("comments")
+}
