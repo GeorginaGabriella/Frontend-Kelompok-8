@@ -1,158 +1,88 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { PromoBannerProps } from "@/types";
+import { MenuItem } from "@/types";
+import { isSideMenu } from "@/data/gadoGadoData";
+import { ArrowRight, Star } from "lucide-react";
 
-/**
- * Sliding banner promo yang bergeser otomatis.
- * - Berganti sendiri setiap `interval` milidetik.
- * - Berhenti saat kursor berada di atas banner atau saat tab tidak aktif.
- * - Bisa digeser manual lewat panah dan titik indikator.
- */
+interface PromoBannerProps {
+  menus: MenuItem[];
+  onOpenDetail: (menu: MenuItem) => void;
+}
+
 export default function PromoBanner({
-  slides,
-  interval = 4500,
-  onUseCode,
-  children,
+  menus,
+  onOpenDetail,
 }: PromoBannerProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-
-  const total = slides.length;
-
-  const goTo = useCallback(
-    (index: number) => {
-      if (total === 0) return;
-      setActiveIndex(((index % total) + total) % total);
-    },
-    [total]
-  );
-
-  const goNext = useCallback(() => {
-    goTo(activeIndex + 1);
-  }, [activeIndex, goTo]);
-
-  const goPrevious = useCallback(() => {
-    goTo(activeIndex - 1);
-  }, [activeIndex, goTo]);
-
-  // Banner geser otomatis.
-  useEffect(() => {
-    if (paused || total <= 1) return;
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((previous) => (previous + 1) % total);
-    }, interval);
-
-    return () => window.clearInterval(timer);
-  }, [paused, total, interval]);
-
-  if (total === 0) return null;
+  const recommendations = menus
+    .filter((menu) => !isSideMenu(menu))
+    .slice(0, 3);
 
   return (
-    <section className="promo-banner-section" aria-label="Banner promo">
+    <section className="recommendation-section">
       <div className="container">
-        <div
-          className="promo-banner"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-          onTouchStart={(event) => {
-            touchStartX.current = event.touches[0]?.clientX ?? null;
-          }}
-          onTouchEnd={(event) => {
-            const start = touchStartX.current;
-            const end = event.changedTouches[0]?.clientX ?? null;
-
-            if (start !== null && end !== null) {
-              const distance = end - start;
-
-              if (Math.abs(distance) > 45) {
-                if (distance < 0) goNext();
-                else goPrevious();
-              }
-            }
-
-            touchStartX.current = null;
-          }}
-        >
-          <div
-            className="promo-track"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-          >
-            {slides.map((slide, index) => (
-              <article
-                key={slide.id}
-                className={`promo-slide promo-${slide.accent}`}
-                aria-hidden={index !== activeIndex}
-              >
-                <div className="promo-slide-text">
-                  <span className="promo-eyebrow">{slide.eyebrow}</span>
-                  <h3>{slide.title}</h3>
-                  <p>{slide.description}</p>
-
-                  <div className="promo-actions">
-                    <button
-                      type="button"
-                      className="promo-cta"
-                      onClick={() => onUseCode?.(slide.code)}
-                    >
-                      {slide.ctaLabel}
-                      <span aria-hidden="true">→</span>
-                    </button>
-
-                    <span className="promo-code">
-                      KODE: <strong>{slide.code}</strong>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="promo-slide-image">
-                  <div className="promo-glow" />
-                  <img src={slide.image} alt={slide.title} />
-                </div>
-              </article>
-            ))}
+        <div className="recommendation-heading">
+          <div>
+            <span>REKOMENDASI KAMI</span>
+            <h2>
+              Menu <strong>Favorit</strong>
+            </h2>
+            <p>
+              Temukan pilihan gado-gado Nusantara
+              yang wajib kamu coba.
+            </p>
           </div>
 
-          <button
-            type="button"
-            className="promo-arrow promo-arrow-prev"
-            aria-label="Banner sebelumnya"
-            onClick={goPrevious}
-          >
-            ‹
-          </button>
-
-          <button
-            type="button"
-            className="promo-arrow promo-arrow-next"
-            aria-label="Banner berikutnya"
-            onClick={goNext}
-          >
-            ›
-          </button>
-
-          <div className="promo-dots" role="tablist" aria-label="Pilih banner">
-            {slides.map((slide, index) => (
-              <button
-                key={slide.id}
-                type="button"
-                role="tab"
-                aria-selected={index === activeIndex}
-                aria-label={`Banner ${index + 1}`}
-                className={`promo-dot ${
-                  index === activeIndex ? "active" : ""
-                }`.trim()}
-                onClick={() => goTo(index)}
-              />
-            ))}
-          </div>
+          <a href="#menu" className="recommendation-link">
+            Lihat Semua Menu <ArrowRight size={17} />
+          </a>
         </div>
 
-        {children}
+        <div className="recommendation-grid">
+          {recommendations.map((menu) => (
+            <article
+              className="recommendation-card"
+              key={menu.slug}
+            >
+              <button
+                type="button"
+                className="recommendation-image"
+                onClick={() => onOpenDetail(menu)}
+                aria-label={`Lihat ${menu.name}`}
+              >
+                <img src={menu.image} alt={menu.name} />
+                <span className="recommendation-tag">
+                  PILIHAN FAVORIT
+                </span>
+              </button>
+
+              <div className="recommendation-info">
+                <div>
+                  <span className="recommendation-category">
+                    {menu.categoryLabel}
+                  </span>
+                  <h3>{menu.name}</h3>
+                  <p>{menu.shortDescription}</p>
+                </div>
+
+                <div className="recommendation-bottom">
+                  <strong>{menu.price}</strong>
+                  <span className="recommendation-rating">
+                    <Star size={15} fill="currentColor" />
+                    {menu.rating}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  className="recommendation-button"
+                  onClick={() => onOpenDetail(menu)}
+                >
+                  Lihat Detail <ArrowRight size={16} />
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

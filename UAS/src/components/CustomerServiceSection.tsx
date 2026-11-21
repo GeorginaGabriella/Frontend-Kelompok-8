@@ -1,234 +1,167 @@
 "use client";
 
-import React, { FormEvent, useEffect, useState } from "react";
-import SectionContainer from "./SectionContainer";
-import SectionHeading from "./SectionHeading";
-import { CustomerServiceSectionProps } from "@/types";
+import { FormEvent, useState } from "react";
+import {
+  Mail,
+  MapPin,
+  Phone,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
 
-const topics = [
-  "Umum",
-  "Rasa Menu",
-  "Pengiriman",
-  "Harga & Promo",
-  "Keluhan",
-  "Saran",
-];
-
-function formatDate(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) return "";
-
-  return date.toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-/**
- * Bagian Customer Service: pengunjung bisa menuliskan komentar,
- * dan balasan dari admin ditampilkan di bawah komentar terkait.
- */
-export default function CustomerServiceSection({
-  comments,
-  loading = false,
-  submitting = false,
-  defaultName = "",
-  onSubmitComment,
-  children,
-}: CustomerServiceSectionProps) {
-  const [name, setName] = useState(defaultName);
-  const [topic, setTopic] = useState(topics[0]);
-  const [rating, setRating] = useState(5);
+export default function CustomerServiceSection() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const [formError, setFormError] = useState("");
+  const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    if (defaultName) setName(defaultName);
-  }, [defaultName]);
-
-  const averageRating =
-    comments.length > 0
-      ? (
-          comments.reduce((total, item) => total + item.rating, 0) /
-          comments.length
-        ).toFixed(1)
-      : "—";
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (name.trim().length < 2) {
-      setFormError("Nama minimal 2 karakter.");
+      setStatus("Nama minimal 2 karakter.");
       return;
     }
 
     if (message.trim().length < 10) {
-      setFormError("Komentar minimal 10 karakter.");
+      setStatus("Pesan minimal 10 karakter.");
       return;
     }
 
-    setFormError("");
-
-    const success = await onSubmitComment({
-      name: name.trim(),
-      topic,
-      rating,
-      message: message.trim(),
-    });
-
-    if (success) {
-      setMessage("");
-      setRating(5);
-      setTopic(topics[0]);
-    }
+    setStatus(
+      "Form berhasil divalidasi. Pengiriman pesan akan diaktifkan setelah backend disambungkan."
+    );
   };
 
   return (
-    <SectionContainer id="customer-service" className="cs-section">
-      <SectionHeading
-        label="CUSTOMER SERVICE"
-        title="Punya Masukan?"
-        highlight="Tulis di Sini"
-        description="Setiap pengunjung bisa memberikan komentar, pertanyaan, atau keluhan. Tim kami membalas langsung di halaman ini."
-      />
+    <section id="customer-service" className="contact-section">
+      <div className="contact-container">
 
-      <div className="cs-grid">
-        {/* ───────────── FORM KOMENTAR ───────────── */}
-        <form className="cs-form" onSubmit={handleSubmit}>
-          <div className="cs-form-head">
-            <span className="cs-badge">📝 FORM KOMENTAR</span>
-            <h3>Kirim komentar kamu</h3>
-            <p>
-              Tidak perlu login — cukup tulis nama dan pesanmu, komentar akan
-              langsung tampil.
-            </p>
+        {/* BAGIAN KIRI */}
+        <div className="contact-left">
+
+          <div className="contact-label">
+            CUSTOMER SERVICE
           </div>
 
-          <label className="cs-field">
-            <span>Nama *</span>
-            <input
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Nama kamu"
-              maxLength={60}
-            />
-          </label>
+          <h2>
+            Talk to our
+            <br />
+            <span>support team</span>
+          </h2>
 
-          <label className="cs-field">
-            <span>Topik</span>
-            <select
-              value={topic}
-              onChange={(event) => setTopic(event.target.value)}
-            >
-              {topics.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
+          <p className="contact-description">
+            Jangan ragu untuk menghubungi kami jika
+            kamu membutuhkan bantuan mengenai pesanan
+            atau memiliki pertanyaan seputar Gado-Gado
+            Nusantara.
+          </p>
 
-          <div className="cs-field">
-            <span>Penilaian</span>
+          <div className="contact-info">
 
-            <div className="cs-rating" role="radiogroup" aria-label="Penilaian">
-              {[1, 2, 3, 4, 5].map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  role="radio"
-                  aria-checked={rating === value}
-                  aria-label={`${value} bintang`}
-                  className={`cs-star ${value <= rating ? "active" : ""}`.trim()}
-                  onClick={() => setRating(value)}
-                >
-                  ★
-                </button>
-              ))}
-
-              <small>{rating} dari 5</small>
+            <div className="contact-info-item">
+              <div className="contact-icon">
+                <Mail size={19} />
+              </div>
+              <div>
+                <strong>Layanan Email</strong>
+                <span>Kirim pesan melalui formulir kami</span>
+              </div>
             </div>
+
+            <div className="contact-info-item">
+              <div className="contact-icon">
+                <MapPin size={19} />
+              </div>
+              <div>
+                <strong>Informasi Pesanan</strong>
+                <span>Bantuan seputar menu dan pemesanan</span>
+              </div>
+            </div>
+
+            <div className="contact-info-item">
+              <div className="contact-icon">
+                <Phone size={19} />
+              </div>
+              <div>
+                <strong>Bantuan Pelanggan</strong>
+                <span>Saran, pertanyaan, dan keluhan</span>
+              </div>
+            </div>
+
           </div>
-
-          <label className="cs-field">
-            <span>Komentar *</span>
-            <textarea
-              rows={5}
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              placeholder="Ceritakan pengalamanmu memesan di Gado-Gado Nusantara..."
-              maxLength={800}
-            />
-            <small>{message.length}/800 karakter</small>
-          </label>
-
-          {formError && <p className="cs-error">{formError}</p>}
-
-          <button type="submit" className="cs-submit" disabled={submitting}>
-            {submitting ? "Mengirim..." : "Kirim Komentar"}
-          </button>
-
-          {children}
-        </form>
-
-        {/* ───────────── DAFTAR KOMENTAR ───────────── */}
-        <div className="cs-list-wrap">
-          <div className="cs-list-head">
-            <div>
-              <strong>{comments.length}</strong>
-              <span>komentar pengunjung</span>
-            </div>
-
-            <div>
-              <strong>★ {averageRating}</strong>
-              <span>rata-rata penilaian</span>
-            </div>
-          </div>
-
-          {loading ? (
-            <div className="cs-empty">Memuat komentar...</div>
-          ) : comments.length === 0 ? (
-            <div className="cs-empty">
-              Belum ada komentar. Jadilah yang pertama memberi masukan!
-            </div>
-          ) : (
-            <ul className="cs-list">
-              {comments.map((comment) => (
-                <li key={comment.id} className="cs-item">
-                  <div className="cs-item-head">
-                    <div className="cs-avatar">
-                      {comment.name.charAt(0).toUpperCase()}
-                    </div>
-
-                    <div>
-                      <strong>{comment.name}</strong>
-                      <small>
-                        {comment.topic} · {formatDate(comment.createdAt)}
-                      </small>
-                    </div>
-
-                    <span className="cs-item-rating">
-                      {"★".repeat(comment.rating)}
-                      <i>{"★".repeat(5 - comment.rating)}</i>
-                    </span>
-                  </div>
-
-                  <p className="cs-item-message">{comment.message}</p>
-
-                  {comment.reply && (
-                    <div className="cs-reply">
-                      <span>💬 Balasan Gado-Gado Nusantara</span>
-                      <p>{comment.reply}</p>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
+
+        {/* BAGIAN KANAN - FORM */}
+        <div className="contact-right">
+
+          <form onSubmit={handleSubmit}>
+
+            <label className="contact-field">
+              <span>Full Name</span>
+              <input
+                type="text"
+                placeholder="Enter Your Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                maxLength={100}
+              />
+            </label>
+
+            <label className="contact-field">
+              <span>Email Address</span>
+              <input
+                type="email"
+                placeholder="Enter Your Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                maxLength={150}
+              />
+            </label>
+
+            <label className="contact-field">
+              <span>Phone Number</span>
+              <input
+                type="tel"
+                placeholder="Enter Your Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                maxLength={20}
+              />
+            </label>
+
+            <label className="contact-field">
+              <span>Message</span>
+              <textarea
+                placeholder="Write Your Message Here"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+                minLength={10}
+                maxLength={1000}
+                rows={5}
+              />
+            </label>
+
+            {status && (
+              <div className="contact-status" role="status">
+                <CheckCircle2 size={18} />
+                <span>{status}</span>
+              </div>
+            )}
+
+            <button type="submit" className="contact-submit">
+              Send Message
+              <ArrowRight size={18} />
+            </button>
+
+          </form>
+        </div>
+
       </div>
-    </SectionContainer>
+    </section>
   );
 }

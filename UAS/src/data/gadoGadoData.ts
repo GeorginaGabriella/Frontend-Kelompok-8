@@ -1,3 +1,4 @@
+
 import {
   DiscountCodeSeed,
   FaqItem,
@@ -109,7 +110,7 @@ export const initialMenus: MenuItem[] = [
     name: "Gado-Gado Betawi",
     searchName: "gado-gado betawi",
     kategori: "betawi",
-    group: "betawi",
+    group: "lainnya",
     regionBadge: "BETAWI",
     categoryLabel: "JAKARTA",
     region: "BETAWI",
@@ -155,7 +156,7 @@ export const initialMenus: MenuItem[] = [
     name: "Gado-Gado Solo",
     searchName: "gado-gado solo",
     kategori: "jawa",
-    group: "jawa",
+    group: "lainnya",
     regionBadge: "SOLO",
     categoryLabel: "JAWA TENGAH",
     region: "SOLO",
@@ -251,7 +252,7 @@ export const initialMenus: MenuItem[] = [
     name: "Gado-Gado Sunda",
     searchName: "gado-gado sunda",
     kategori: "sunda",
-    group: "sunda",
+    group: "lainnya",
     regionBadge: "SUNDA",
     categoryLabel: "JAWA BARAT",
     region: "SUNDA",
@@ -270,15 +271,17 @@ export const initialMenus: MenuItem[] = [
     benefits:
       "Sayuran segar memberi serat; kacang dan tahu menyumbang protein nabati.",
   },
-  // ───── MENU SAMPINGAN: MINUMAN TRADISIONAL & KUE TRADISIONAL/CAMILAN ─────
+
+  // MENU SAMPINGAN: MINUMAN DAN DESSERT
+
   {
     slug: "es-cendol",
     name: "Es Cendol",
     searchName: "es cendol",
     kategori: "minuman-tradisional",
-    group: "minuman",
+    group: "dessert",
     regionBadge: "NUSANTARA",
-    categoryLabel: "MINUMAN TRADISIONAL",
+    categoryLabel: "DESSERT",
     region: "JAWA BARAT",
     rating: "4.9",
     image: "/images/cendol.png",
@@ -300,9 +303,9 @@ export const initialMenus: MenuItem[] = [
     name: "Es Teler",
     searchName: "es teler",
     kategori: "minuman-tradisional",
-    group: "minuman",
+    group: "dessert",
     regionBadge: "NUSANTARA",
-    categoryLabel: "MINUMAN TRADISIONAL",
+    categoryLabel: "DESSERT",
     region: "JAWA TENGAH",
     rating: "4.8",
     image: "/images/es-teler.png",
@@ -324,9 +327,9 @@ export const initialMenus: MenuItem[] = [
     name: "Es Doger",
     searchName: "es doger",
     kategori: "minuman-tradisional",
-    group: "minuman",
+    group: "dessert",
     regionBadge: "CIREBON",
-    categoryLabel: "MINUMAN TRADISIONAL",
+    categoryLabel: "DESSERT",
     region: "JAWA BARAT",
     rating: "4.7",
     image: "/images/es-doger.png",
@@ -521,10 +524,7 @@ export function getMenuBySlug(slug: string): MenuItem | undefined {
   return initialMenus.find((item) => item.slug === slug);
 }
 
-// ───────────────────────── MENU UTAMA vs MENU SAMPINGAN ─────────────────────────
-// Menu sampingan = minuman tradisional + kue tradisional/camilan (dessert).
 export const SIDE_MENU_GROUPS: ReadonlyArray<MenuItem["group"]> = [
-  "minuman",
   "dessert",
 ];
 
@@ -540,7 +540,7 @@ export function getSideMenus(menus: MenuItem[]): MenuItem[] {
   return menus.filter((menu) => isSideMenu(menu));
 }
 
-// ───────────────────────────── SLIDING BANNER PROMO ─────────────────────────────
+
 export const promoSlides: PromoSlide[] = [
   {
     id: "promo-ongkir",
@@ -550,7 +550,7 @@ export const promoSlides: PromoSlide[] = [
       "Pesan gado-gado favoritmu sekaligus menu sampingan, ongkos kirim langsung hilang di keranjang.",
     code: "GRATISONGKIR",
     ctaLabel: "Pesan Sekarang",
-    image: "/images/hero.png",
+    image: "/images/hero1.png",
     accent: "emerald",
   },
   {
@@ -588,7 +588,7 @@ export const promoSlides: PromoSlide[] = [
   },
 ];
 
-// ───────────────────────────── KODE DISKON BAWAAN ─────────────────────────────
+
 export const defaultDiscountCodes: DiscountCodeSeed[] = [
   {
     code: "NUSANTARA20",

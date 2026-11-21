@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -10,7 +11,6 @@ import MenuSection from "@/components/MenuSection";
 import ChoiceSection from "@/components/ChoiceSection";
 import FavoriteSection from "@/components/FavoriteSection";
 import AboutSection from "@/components/AboutSection";
-import CustomerServiceSection from "@/components/CustomerServiceSection";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import DetailModal from "@/components/DetailModal";
@@ -18,12 +18,12 @@ import CartDrawer from "@/components/CartDrawer";
 import AuthModal from "@/components/AuthModal";
 import ProfileModal from "@/components/ProfileModal";
 import Toast from "@/components/Toast";
+import CustomerServiceSection from "@/components/CustomerServiceSection";
 
 import {
   defaultFaqs,
   defaultSiteContent,
   initialMenus,
-  promoSlides,
 } from "@/data/gadoGadoData";
 
 import {
@@ -38,7 +38,6 @@ import {
 import {
   AppliedDiscount,
   CartItem,
-  CommentItem,
   FaqItem,
   MenuItem,
   OrderRecord,
@@ -77,7 +76,7 @@ export default function HomePage() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
 
-  // ───────────────────────── KERANJANG & PESANAN ─────────────────────────
+  // KERANJANG DAN PESANAN
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [cartReady, setCartReady] = useState(false);
@@ -92,11 +91,6 @@ export default function HomePage() {
   const [submittingOrder, setSubmittingOrder] = useState(false);
   const [lastOrder, setLastOrder] = useState<OrderRecord | null>(null);
 
-  // ───────────────────────── CUSTOMER SERVICE ─────────────────────────
-  const [comments, setComments] = useState<CommentItem[]>([]);
-  const [commentsLoading, setCommentsLoading] = useState(true);
-  const [submittingComment, setSubmittingComment] = useState(false);
-
   const [activeSection, setActiveSection] = useState("home");
   const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
@@ -106,6 +100,7 @@ export default function HomePage() {
     setToastVisible(true);
   }, []);
 
+  // MEMUAT DATA PERSONAL
   const loadPersonalData = useCallback(
     async (username: string) => {
       try {
@@ -135,23 +130,7 @@ export default function HomePage() {
     [showToast]
   );
 
-  const loadComments = useCallback(async () => {
-    setCommentsLoading(true);
-
-    try {
-      const response = await fetch("/api/comments");
-
-      if (!response.ok) throw new Error("Gagal mengambil komentar.");
-
-      const data = await response.json();
-      setComments(data.comments || []);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setCommentsLoading(false);
-    }
-  }, []);
-
+  // MEMUAT DATA UTAMA
   const loadMainData = useCallback(async () => {
     try {
       const [
@@ -218,10 +197,9 @@ export default function HomePage() {
 
   useEffect(() => {
     loadMainData();
-    loadComments();
-  }, [loadMainData, loadComments]);
+  }, [loadMainData]);
 
-  // Memuat keranjang dan alamat yang tersimpan di perangkat pengguna.
+  // MEMUAT KERANJANG DAN ALAMAT
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -258,7 +236,7 @@ export default function HomePage() {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
     } catch {
-      // Penyimpanan lokal penuh atau diblokir — keranjang tetap jalan di memori.
+      // Keranjang tetap berjalan di memori.
     }
   }, [cartItems, cartReady]);
 
@@ -272,6 +250,7 @@ export default function HomePage() {
     }
   }, [address, cartReady]);
 
+  // TOAST
   useEffect(() => {
     if (!toastVisible) return;
 
@@ -282,6 +261,7 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, [toastVisible]);
 
+  // NAVIGASI AKTIF
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -308,6 +288,7 @@ export default function HomePage() {
     };
   }, []);
 
+  // MODAL
   useEffect(() => {
     const anyModalOpen =
       Boolean(selectedMenu) ||
@@ -322,7 +303,7 @@ export default function HomePage() {
     };
   }, [selectedMenu, authModalOpen, profileModalOpen, cartOpen]);
 
-  // Alamat otomatis terisi nama pengguna yang login.
+  // ALAMAT OTOMATIS
   useEffect(() => {
     if (currentUser && !address.recipient) {
       setAddress((previous) => ({
@@ -332,6 +313,7 @@ export default function HomePage() {
     }
   }, [currentUser, address.recipient]);
 
+  // TOTAL KERANJANG
   const totals = useMemo(
     () => calculateTotals(cartItems, appliedDiscount),
     [cartItems, appliedDiscount]
@@ -342,8 +324,7 @@ export default function HomePage() {
     [cartItems]
   );
 
-  // Diskon diperiksa ulang bila isi keranjang berubah sehingga syarat
-  // minimum belanja tidak bisa dilewati setelah item dikurangi.
+  // VALIDASI DISKON
   const revalidateDiscount = useCallback(
     async (code: string, subtotal: number, silent = false) => {
       if (!code) return;
@@ -376,7 +357,7 @@ export default function HomePage() {
     [showToast]
   );
 
-  // ───────────────────────────── KERANJANG ─────────────────────────────
+  // MENAMBAHKAN MENU KE KERANJANG
   const handleAddToCart = (menu: MenuItem) => {
     setCartItems((previous) => {
       const existing = previous.find((item) => item.slug === menu.slug);
@@ -442,7 +423,7 @@ export default function HomePage() {
     showToast("Keranjang dikosongkan.");
   };
 
-  // Menjaga agar diskon tetap valid setelah keranjang berubah.
+  // VALIDASI ULANG DISKON SAAT KERANJANG BERUBAH
   useEffect(() => {
     if (!appliedDiscount) return;
 
@@ -482,19 +463,7 @@ export default function HomePage() {
     setDiscountError("");
   };
 
-  const handleUsePromoCode = (code: string) => {
-    setDiscountInput(code);
-    setDiscountError("");
-    setLastOrder(null);
-    setCartOpen(true);
-
-    if (cartItems.length > 0) {
-      revalidateDiscount(code, totals.subtotal);
-    } else {
-      showToast(`Kode ${code} siap dipakai. Pilih menu dulu, ya!`);
-    }
-  };
-
+  // ALAMAT PENGIRIMAN
   const handleAddressChange = (
     field: keyof ShippingAddress,
     value: string
@@ -502,6 +471,7 @@ export default function HomePage() {
     setAddress((previous) => ({ ...previous, [field]: value }));
   };
 
+  // CHECKOUT
   const handleCheckout = async () => {
     if (cartItems.length === 0) {
       showToast("Keranjang masih kosong.");
@@ -561,41 +531,6 @@ export default function HomePage() {
       showToast("Gagal menghubungkan ke server pesanan.");
     } finally {
       setSubmittingOrder(false);
-    }
-  };
-
-  // ───────────────────────── CUSTOMER SERVICE ─────────────────────────
-  const handleSubmitComment = async (payload: {
-    name: string;
-    topic: string;
-    rating: number;
-    message: string;
-  }) => {
-    setSubmittingComment(true);
-
-    try {
-      const response = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        showToast(data.error || "Gagal mengirim komentar.");
-        return false;
-      }
-
-      setComments((previous) => [data.comment, ...previous]);
-      showToast("Komentar berhasil dikirim. Terima kasih!");
-
-      return true;
-    } catch {
-      showToast("Gagal menghubungkan ke server komentar.");
-      return false;
-    } finally {
-      setSubmittingComment(false);
     }
   };
 
@@ -802,13 +737,8 @@ export default function HomePage() {
       <Header
         activeSection={activeSection}
         favoriteCount={favorites.length}
-        cartCount={cartCount}
         currentUser={currentUser}
         onProfileClick={handleProfileButtonClick}
-        onCartClick={() => {
-          setLastOrder(null);
-          setCartOpen(true);
-        }}
       />
 
       <main>
@@ -817,8 +747,8 @@ export default function HomePage() {
         />
 
         <PromoBanner
-          slides={promoSlides}
-          onUseCode={handleUsePromoCode}
+          menus={menus}
+          onOpenDetail={(menu) => setSelectedMenu(menu)}
         />
 
         <IntroSection />
@@ -847,13 +777,7 @@ export default function HomePage() {
           aboutDescription={siteContent.aboutDescription}
         />
 
-        <CustomerServiceSection
-          comments={comments}
-          loading={commentsLoading}
-          submitting={submittingComment}
-          defaultName={currentUser?.name || ""}
-          onSubmitComment={handleSubmitComment}
-        />
+        <CustomerServiceSection />
 
         <FaqSection faqs={faqs} />
       </main>

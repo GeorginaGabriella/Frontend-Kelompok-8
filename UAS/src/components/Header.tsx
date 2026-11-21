@@ -69,19 +69,6 @@ export default function Header({
             <b id="favoriteCounter">{favoriteCount}</b>
           </a>
 
-          {onCartClick && (
-            <button
-              type="button"
-              className="icon-button cart-nav"
-              id="cartButton"
-              title="Keranjang pesanan"
-              onClick={onCartClick}
-            >
-              <span>🛒</span>
-              <b id="cartCounter">{cartCount}</b>
-            </button>
-          )}
-
           <button
             type="button"
             className="profile-button"

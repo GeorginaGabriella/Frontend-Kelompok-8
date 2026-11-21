@@ -1,21 +1,10 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
 import { isAdminRequest } from "@/lib/adminAuth";
-import type { CommentItem } from "@/types";
 
 export const runtime = "nodejs";
-
-type CommentRow = {
-  id: number;
-  name: string;
-  topic: string;
-  rating: number;
-  message: string;
-  reply: string;
-  published: boolean;
-  createdAt: Date;
-};
 
 const TOPICS = [
   "Umum",
@@ -26,10 +15,21 @@ const TOPICS = [
   "Saran",
 ];
 
-function serializeComment(row: CommentRow): CommentItem {
+function serializeComment(row: {
+  id: number;
+  name: string;
+  menuSlug: string;
+  topic: string;
+  rating: number;
+  message: string;
+  reply: string;
+  published: boolean;
+  createdAt: Date;
+}) {
   return {
     id: row.id,
     name: row.name,
+    menuSlug: row.menuSlug,
     topic: row.topic,
     rating: row.rating,
     message: row.message,
@@ -40,24 +40,27 @@ function serializeComment(row: CommentRow): CommentItem {
 }
 
 /**
- * GET /api/comments
- * Pengunjung hanya menerima komentar yang sudah ditampilkan,
- * admin menerima semuanya termasuk yang disembunyikan.
+ * GET /api/comments?menuSlug=gado-gado-betawi
+ * Mengambil komentar sesuai menu.
  */
 export async function GET(request: NextRequest) {
   try {
     await seedDatabase();
 
     const admin = await isAdminRequest(request);
+    const menuSlug = request.nextUrl.searchParams.get("menuSlug");
 
     const rows = await prisma.comment.findMany({
-      where: admin ? {} : { published: true },
+      where: {
+        ...(menuSlug ? { menuSlug } : {}),
+        ...(admin ? {} : { published: true }),
+      },
       orderBy: { createdAt: "desc" },
       take: 100,
     });
 
     return NextResponse.json({
-      comments: rows.map((row) => serializeComment(row as CommentRow)),
+      comments: rows.map(serializeComment),
     });
   } catch (error) {
     console.error("Comments GET error:", error);
@@ -69,7 +72,10 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/** POST /api/comments — pengunjung mengirim komentar baru. */
+/**
+ * POST /api/comments
+ * Menyimpan komentar baru berdasarkan menu.
+ */
 export async function POST(request: NextRequest) {
   try {
     await seedDatabase();
@@ -77,24 +83,41 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const name =
-      typeof body.name === "string" ? body.name.trim().slice(0, 60) : "";
+      typeof body.name === "string"
+        ? body.name.trim().slice(0, 60)
+        : "";
+
+    const menuSlug =
+      typeof body.menuSlug === "string"
+        ? body.menuSlug.trim().slice(0, 120)
+        : "";
+
     const message =
       typeof body.message === "string"
         ? body.message.trim().slice(0, 800)
         : "";
+
     const topic =
       typeof body.topic === "string" && TOPICS.includes(body.topic)
         ? body.topic
-        : "Umum";
+        : "Rasa Menu";
 
     const parsedRating = Math.round(Number(body.rating));
+
     const rating = Number.isFinite(parsedRating)
       ? Math.min(5, Math.max(1, parsedRating))
       : 5;
 
-    if (!name || name.length < 2) {
+    if (name.length < 2) {
       return NextResponse.json(
         { error: "Nama minimal 2 karakter." },
+        { status: 400 }
+      );
+    }
+
+    if (!menuSlug) {
+      return NextResponse.json(
+        { error: "Menu belum dipilih." },
         { status: 400 }
       );
     }
@@ -106,9 +129,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Pastikan slug menu benar-benar tersedia.
+    const menu = await prisma.menu.findUnique({
+      where: { slug: menuSlug },
+    });
+
+    if (!menu) {
+      return NextResponse.json(
+        { error: "Menu tidak ditemukan." },
+        { status: 404 }
+      );
+    }
+
     const created = await prisma.comment.create({
       data: {
         name,
+        menuSlug,
         topic,
         rating,
         message,
@@ -119,8 +155,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Komentar berhasil dikirim. Terima kasih!",
-        comment: serializeComment(created as CommentRow),
+        message: "Komentar berhasil dikirim.",
+        comment: serializeComment(created),
       },
       { status: 201 }
     );
@@ -134,7 +170,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/** PUT /api/comments — admin membalas atau menyembunyikan komentar. */
+/**
+ * PUT /api/comments
+ * Admin membalas atau menyembunyikan komentar.
+ */
 export async function PUT(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -154,7 +193,9 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const existing = await prisma.comment.findUnique({ where: { id } });
+    const existing = await prisma.comment.findUnique({
+      where: { id },
+    });
 
     if (!existing) {
       return NextResponse.json(
@@ -163,7 +204,10 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const data: { reply?: string; published?: boolean } = {};
+    const data: {
+      reply?: string;
+      published?: boolean;
+    } = {};
 
     if (typeof body.reply === "string") {
       data.reply = body.reply.trim().slice(0, 800);
@@ -180,7 +224,10 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    await prisma.comment.update({ where: { id }, data });
+    await prisma.comment.update({
+      where: { id },
+      data,
+    });
 
     return NextResponse.json({
       message: "Komentar berhasil diperbarui.",
@@ -195,7 +242,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-/** DELETE /api/comments — admin menghapus komentar. */
+
 export async function DELETE(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -215,7 +262,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await prisma.comment.deleteMany({ where: { id } });
+    await prisma.comment.deleteMany({
+      where: { id },
+    });
 
     return NextResponse.json({
       message: "Komentar berhasil dihapus.",

@@ -2,9 +2,7 @@ import React from "react";
 
 export type FilterGroup =
   | "semua"
-  | "betawi"
-  | "sunda"
-  | "jawa"
+  | "Makanan"
   | "minuman"
   | "dessert"
   | "lainnya";

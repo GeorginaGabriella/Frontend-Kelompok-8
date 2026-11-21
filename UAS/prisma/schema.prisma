@@ -99,6 +99,7 @@ model DiscountCode {
 model Comment {
   id        Int      @id @default(autoincrement())
   name      String
+  menuSlug  String   @default("umum") @map("menu_slug")
   topic     String   @default("Umum")
   rating    Int      @default(5)
   message   String
@@ -106,5 +107,6 @@ model Comment {
   published Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
 
+  @@index([menuSlug])
   @@map("comments")
 }

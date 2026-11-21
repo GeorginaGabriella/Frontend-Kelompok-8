@@ -67,7 +67,7 @@ export default function HeroSection({
           <div className="floating-peanut peanut-two">🥜</div>
 
           <div className="hero-food">
-            <img src="/images/hero.png" alt="Gado-Gado Nusantara" />
+           <img src="/images/hero1.png" alt="Gado-Gado Nusantara" />
           </div>
 
           <div className="hero-label">

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import ModalWrapper from "./ModalWrapper";
 import Button from "./Button";
+import MenuComments from "./MenuComments";
 import { formatRupiah, parsePriceLabel } from "@/lib/order";
 import { MenuItem } from "@/types";
 
@@ -85,15 +86,18 @@ export default function DetailModal({
                   {menu.price}.
                 </small>
               </div>
+
               <div>
                 <span>Kondimen</span>
                 <p id="modalCondiments">{menu.condiments}</p>
               </div>
+
               <div>
                 <span>Manfaat Makanan</span>
                 <p id="modalBenefits">{menu.benefits}</p>
                 <small>Informasi umum bahan, bukan klaim medis.</small>
               </div>
+
               <div>
                 <span>Area penjual</span>
                 <p id="modalLocation">{menu.location}</p>
@@ -144,6 +148,13 @@ export default function DetailModal({
                 Halaman Detail Penuh →
               </Link>
             </div>
+
+            {/* KOMENTAR KHUSUS SETIAP MENU */}
+            <MenuComments
+              key={menu.slug}
+              menuSlug={menu.slug}
+              menuName={menu.name}
+            />
           </div>
         </>
       )}

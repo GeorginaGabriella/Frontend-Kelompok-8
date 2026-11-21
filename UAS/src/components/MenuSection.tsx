@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useMemo, useState } from "react";
@@ -21,11 +22,7 @@ type SortOption = "abjad" | "abjad-desc" | "harga" | "rating";
 
 const filterOptions: Array<{ value: FilterGroup; label: string }> = [
   { value: "semua", label: "Semua" },
-  { value: "betawi", label: "Betawi" },
-  { value: "sunda", label: "Sunda" },
-  { value: "jawa", label: "Jawa" },
-  { value: "minuman", label: "Minuman Tradisional" },
-  { value: "dessert", label: "Kue & Camilan" },
+  { value: "dessert", label: "Dessert" },
   { value: "lainnya", label: "Lainnya" },
 ];
 
@@ -69,9 +66,18 @@ export default function MenuSection({
       Number.parseInt(value.replace(/[^0-9]/g, "").slice(0, 9), 10) || 0;
 
     return [...result].sort((a, b) => {
-      if (sortBy === "abjad") return a.name.localeCompare(b.name, "id");
-      if (sortBy === "abjad-desc") return b.name.localeCompare(a.name, "id");
-      if (sortBy === "harga") return toNumber(a.price) - toNumber(b.price);
+      if (sortBy === "abjad") {
+        return a.name.localeCompare(b.name, "id");
+      }
+
+      if (sortBy === "abjad-desc") {
+        return b.name.localeCompare(a.name, "id");
+      }
+
+      if (sortBy === "harga") {
+        return toNumber(a.price) - toNumber(b.price);
+      }
+
       return Number(b.rating) - Number(a.rating);
     });
   }, [menus, searchQuery, activeFilter, sortBy]);
@@ -98,7 +104,7 @@ export default function MenuSection({
         label="PILIHAN NUSANTARA"
         title="Menu Gado-Gado"
         highlight="& Menu Sampingan"
-        description="Pilih gado-gado dari berbagai daerah, lengkapi dengan minuman tradisional dan kue/camilan khas Nusantara."
+        description="Jelajahi pilihan gado-gado, dessert, dan hidangan favorit khas Nusantara."
       />
 
       <div className="search-filter">
@@ -111,10 +117,13 @@ export default function MenuSection({
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
           />
+
           <button
             type="button"
             id="clearSearch"
-            style={{ display: searchQuery.length > 0 ? "block" : "none" }}
+            style={{
+              display: searchQuery.length > 0 ? "block" : "none",
+            }}
             onClick={() => setSearchQuery("")}
             aria-label="Bersihkan pencarian"
           >
@@ -143,6 +152,7 @@ export default function MenuSection({
 
           <label className="sort-select">
             <span>Urutkan:</span>
+
             <select
               value={sortBy}
               onChange={(event) =>
@@ -168,6 +178,7 @@ export default function MenuSection({
               <span className="menu-group-kicker">MENU UTAMA</span>
               <h3>Gado-Gado Nusantara</h3>
             </div>
+
             <small>{mainMenus.length} menu</small>
           </div>
 
@@ -184,6 +195,7 @@ export default function MenuSection({
               <span className="menu-group-kicker">MENU SAMPINGAN</span>
               <h3>Minuman Tradisional, Kue &amp; Camilan</h3>
             </div>
+
             <small>{sideMenus.length} menu</small>
           </div>
 
@@ -196,7 +208,9 @@ export default function MenuSection({
       <div
         className="empty-search"
         id="emptySearch"
-        style={{ display: filteredMenus.length === 0 ? "block" : "none" }}
+        style={{
+          display: filteredMenus.length === 0 ? "block" : "none",
+        }}
       >
         <div>🔎</div>
         <h3>Menu tidak ditemukan</h3>
