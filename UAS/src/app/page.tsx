@@ -1,5 +1,4 @@
-﻿
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 
@@ -59,7 +58,6 @@ export default function HomePage() {
     setToastVisible(true);
   }, []);
 
-  // MEMUAT DATA PERSONAL
   const loadPersonalData = useCallback(
     async (username: string) => {
       try {
@@ -89,7 +87,6 @@ export default function HomePage() {
     [showToast]
   );
 
-  // MEMUAT DATA UTAMA
   const loadMainData = useCallback(async () => {
     try {
       const [
@@ -132,15 +129,12 @@ export default function HomePage() {
 
       setAccounts(authData.users || []);
 
-      // Status login dipulihkan secara terpisah dari localStorage.\n      // Kegagalan mengambil data website tidak boleh menghapus sesi login.
     } catch (error) {
       console.error(error);
       showToast("Gagal menghubungkan ke database.");
     }
   }, [loadPersonalData, showToast]);
 
-  // PULIHKAN SESI LOGIN SAAT WEBSITE DIBUKA / DI-REFRESH.
-  // Sesi hanya dihapus oleh tombol Logout, kecuali data sesi memang rusak.
   useEffect(() => {
     const savedUser = localStorage.getItem("gadoGadoCurrentUser");
 
@@ -177,7 +171,6 @@ export default function HomePage() {
     loadMainData();
   }, [loadMainData]);
 
-  // TOAST
   useEffect(() => {
     if (!toastVisible) return;
 
@@ -188,7 +181,6 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, [toastVisible]);
 
-  // NAVIGASI AKTIF
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -215,7 +207,6 @@ export default function HomePage() {
     };
   }, []);
 
-  // MODAL
   useEffect(() => {
     const anyModalOpen =
       Boolean(selectedMenu) ||
@@ -228,7 +219,6 @@ export default function HomePage() {
     };
   }, [selectedMenu, authModalOpen, profileModalOpen]);
 
-  // FAVORIT
   const handleToggleFavorite = async (name: string) => {
     try {
       const exists = favorites.includes(name);
@@ -287,7 +277,6 @@ export default function HomePage() {
     }
   };
 
-  // PILIHAN SAYA
   const handleAddChoice = async (name: string) => {
     if (choices.includes(name)) {
       showToast(`${name} sudah ada di Pilihan Saya.`);
@@ -344,7 +333,6 @@ export default function HomePage() {
     }
   };
 
-  // BUKA PROFIL
   const handleProfileButtonClick = () => {
     if (!currentUser) {
       setAuthModalOpen(true);
@@ -353,7 +341,6 @@ export default function HomePage() {
     }
   };
 
-  // REGISTER
   const handleRegisterAccount = async (newUser: UserAccount) => {
     try {
       const response = await fetch("/api/auth", {
@@ -386,7 +373,6 @@ export default function HomePage() {
     }
   };
 
-  // LOGIN
   const handleLoginSuccess = (user: UserAccount) => {
     const sessionUser: UserAccount = {
       name: user.name,
@@ -412,7 +398,6 @@ export default function HomePage() {
     );
   };
 
-  // LOGOUT
   const handleLogout = async () => {
     localStorage.removeItem("gadoGadoCurrentUser");
 

@@ -6,7 +6,6 @@ import { isAdminRequest } from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
 
-// GET: Mengambil seluruh data FAQ (publik)
 export async function GET() {
   try {
     await seedDatabase();
@@ -33,7 +32,6 @@ export async function GET() {
   }
 }
 
-// POST: Menambahkan FAQ (khusus admin)
 export async function POST(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -83,7 +81,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT: Mengedit FAQ (khusus admin)
 export async function PUT(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -147,7 +144,6 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE: Menghapus FAQ (khusus admin)
 export async function DELETE(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {

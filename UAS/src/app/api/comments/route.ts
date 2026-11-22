@@ -39,10 +39,6 @@ function serializeComment(row: {
   };
 }
 
-/**
- * GET /api/comments?menuSlug=gado-gado-betawi
- * Mengambil komentar sesuai menu.
- */
 export async function GET(request: NextRequest) {
   try {
     await seedDatabase();
@@ -72,10 +68,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/**
- * POST /api/comments
- * Menyimpan komentar baru berdasarkan menu.
- */
 export async function POST(request: NextRequest) {
   try {
     await seedDatabase();
@@ -129,7 +121,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Pastikan slug menu benar-benar tersedia.
     const menu = await prisma.menu.findUnique({
       where: { slug: menuSlug },
     });
@@ -170,10 +161,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * PUT /api/comments
- * Admin membalas atau menyembunyikan komentar.
- */
 export async function PUT(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {

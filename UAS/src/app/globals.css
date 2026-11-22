@@ -1,5 +1,4 @@
 :root {
-    /* Hijau */
     --brand-green-900: #0f2318;
     --brand-green-800: #16311f;
     --brand-green-700: #193827;
@@ -7,7 +6,6 @@
     --brand-green-500: #2f6042;
     --brand-green-400: #3f7a55;
 
-    /* Emas */
     --brand-gold-700: #8a6219;
     --brand-gold-600: #a9792a;
     --brand-gold-500: #c49a3f;
@@ -15,12 +13,10 @@
     --brand-gold-200: #f0dfae;
     --brand-gold-100: #faf1da;
 
-    /* Netral krem */
     --cream-50: #fdfbf4;
     --cream-100: #f7f4e9;
     --cream-200: #f1e8d2;
 
-    /* Teks */
     --ink-900: #1d2a21;
     --ink-700: #3d4a40;
     --ink-500: #6b766c;
@@ -29,7 +25,6 @@
     --line: #e7e3d3;
     --danger: #b42318;
 
-    /* Bayangan & gradien */
     --shadow-sm: 0 6px 20px rgba(36, 75, 53, 0.07);
     --shadow-md: 0 16px 44px rgba(36, 75, 53, 0.11);
     --shadow-lg: 0 28px 72px rgba(15, 35, 24, 0.18);
@@ -513,7 +508,6 @@ img {
     right: 0;
 }
 
-/* Intro */
 .intro-section {
     padding: 110px 0;
     background: var(--cream-50);
@@ -1045,7 +1039,6 @@ img {
     font-weight: 700;
 }
 
-/* Favorite */
 .favorite-section {
     padding: 105px 0;
     background: var(--cream-50);
@@ -2552,7 +2545,7 @@ img {
     }
 }
 
-/* UAS Next.js Extensions: Dynamic Page & Role Badge */.role-badge {
+.role-badge {
     display: inline-block;
     margin-top: 8px;
     padding: 5px 14px;
@@ -2640,7 +2633,6 @@ body {
         var(--cream-100);
 }
 
-/* Header kaca dengan garis emas */
 .header {
     background: rgba(253, 251, 244, 0.82);
     backdrop-filter: blur(16px) saturate(140%);
@@ -2700,7 +2692,6 @@ body {
     color: var(--brand-gold-600);
 }
 
-/* Tombol utama berlapis emas */
 .primary-button,
 .add-button {
     background: var(--gradient-green);
@@ -2728,7 +2719,6 @@ body {
     border-color: var(--brand-gold-500);
 }
 
-/* Kartu menu */
 .menu-card {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
@@ -2753,7 +2743,6 @@ body {
     color: var(--brand-gold-700);
 }
 
-/* ───────────────────────── JUDUL KELOMPOK MENU ───────────────────────── */
 .menu-group-heading {
     display: flex;
     align-items: flex-end;
@@ -2791,7 +2780,6 @@ body {
     font-weight: 700;
 }
 
-/* Harga di kartu menu */
 .card-price {
     display: flex;
     align-items: baseline;
@@ -2812,7 +2800,6 @@ body {
     font-size: 11px;
 }
 
-/* Dropdown urutkan pada katalog */
 .sort-select {
     display: flex;
     align-items: center;
@@ -3856,12 +3843,7 @@ body {
 .intro-menu-button:hover span {
   transform: translateX(4px);
 }
-/* =========================================================
-   FINAL OVERRIDES — penyesuaian tampilan terbaru
-   Letakkan di bagian paling bawah agar menimpa style sebelumnya.
-   ========================================================= */
 
-/* Tombol "Tentang Gado-Gado" menggunakan warna emas */
 .secondary-button {
     background: var(--gradient-gold);
     color: #ffffff;
@@ -3877,13 +3859,10 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* Sembunyikan seluruh banner promo dari tampilan.
-   Hapus aturan ini jika banner promo ingin ditampilkan kembali. */
 .promo-banner-section {
     display: none !important;
 }
 
-/* Tombol "Detail" pada kartu menu menggunakan aksen emas */
 .detail-button {
     border-color: var(--brand-gold-600);
     color: var(--brand-gold-700);
@@ -3897,12 +3876,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* ========================================
-   PERBAIKAN MODAL DETAIL MENU
-   Desktop dan Mobile
-======================================== */
-
-/* Desktop */
 .detail-modal {
     width: min(900px, 94vw);
     max-height: 88vh;
@@ -3954,7 +3927,6 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
-/* Tablet dan layar kecil */
 @media (max-width: 900px) {
     .modal-overlay {
         padding: 12px;
@@ -3996,7 +3968,6 @@ body {
     }
 }
 
-/* Smartphone */
 @media (max-width: 480px) {
     .modal-overlay {
         padding: 8px;
@@ -4042,16 +4013,10 @@ body {
     }
 }
 
-/* =====================================
-   BATIK NUSANTARA - HERO SECTION
-===================================== */
-
 .hero.batik-decoration {
     position: relative;
     isolation: isolate;
 }
-
-/* Motif kanan atas */
 
 .hero.batik-decoration::before {
     content: "";
@@ -4071,8 +4036,6 @@ body {
     z-index: 0;
 }
 
-/* Motif kiri bawah */
-
 .hero.batik-decoration-left::after {
     content: "";
     position: absolute;
@@ -4091,14 +4054,10 @@ body {
     z-index: 0;
 }
 
-/* Pastikan isi hero tetap di depan ornamen */
-
 .hero.batik-decoration > .hero-content {
     position: relative;
     z-index: 2;
 }
-
-/* Penyesuaian layar HP */
 
 @media (max-width: 768px) {
     .hero.batik-decoration::before {
@@ -4115,11 +4074,6 @@ body {
         opacity: 0.08;
     }
 }
-
-/* =========================================
-   REKOMENDASI TERATAS - PROMO BANNER
-   Digunakan oleh src/components/PromoBanner.tsx
-========================================= */
 
 .promo-recommendation {
     padding: 55px 20px;
@@ -4374,7 +4328,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Tablet */
 @media (max-width: 900px) {
     .promo-recommendation-inner {
         padding: 35px;
@@ -4386,7 +4339,6 @@ body {
     }
 }
 
-/* Smartphone */
 @media (max-width: 768px) {
     .promo-recommendation {
         padding: 35px 15px;
@@ -4426,10 +4378,6 @@ body {
         font-size: 20px;
     }
 }
-
-/* =====================================
-   PROFILE MODAL - GADO GADO NUSANTARA
-===================================== */
 
 .profile-modal {
   overflow: hidden;
@@ -4714,7 +4662,6 @@ body {
   margin-right: 4px;
 }
 
-/* Tampilan HP */
 @media (max-width: 480px) {
   .profile-modal-content {
     padding: 30px 20px 22px;
@@ -4733,10 +4680,6 @@ body {
     margin-top: 19px;
   }
 }
-
-/* =====================================
-   AUTH MODAL - LOGIN & REGISTER
-===================================== */
 
 .auth-modal {
   overflow: hidden;
@@ -5039,7 +4982,6 @@ body {
   color: #b2853c;
 }
 
-/* Register: form lebih panjang */
 #registerSection .auth-switch {
   margin-top: 17px;
 }
@@ -5060,7 +5002,6 @@ body {
   }
 }
 
-/* FOOTER GRADASI HIJAU EMERALD - EMAS */
 .footer {
     background: linear-gradient(
         115deg,
@@ -5075,7 +5016,6 @@ body {
     overflow: hidden;
 }
 
-/* Ornamen cahaya emas */
 .footer::before {
     content: "";
     position: absolute;
