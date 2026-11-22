@@ -4,6 +4,17 @@ import React from "react";
 import Link from "next/link";
 import ModalWrapper from "./ModalWrapper";
 import { UserAccount } from "@/types";
+import {
+  UserRound,
+  Heart,
+  BookmarkCheck,
+  LayoutDashboard,
+  ArrowRight,
+  Utensils,
+  LogOut,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -24,79 +35,125 @@ export default function ProfileModal({
   onLogout,
   children,
 }: ProfileModalProps) {
+  if (!user) return null;
+
+  const isAdmin = user.role === "admin";
+
   return (
     <ModalWrapper
       isOpen={isOpen && Boolean(user)}
       onClose={onClose}
       modalClassName="profile-modal"
     >
-      <button
-        className="modal-close"
-        id="profileClose"
-        type="button"
-        onClick={onClose}
-      >
-        ×
-      </button>
+      <div className="profile-modal-content">
+        <button
+          className="profile-close-button"
+          id="profileClose"
+          type="button"
+          onClick={onClose}
+          aria-label="Tutup profil"
+        >
+          <X size={19} />
+        </button>
 
-      {user && (
-        <>
-          <div className="profile-icon">👤</div>
-          <p className="section-label">PROFIL</p>
-          <h2 id="profileName">{user.name}</h2>
+        <div className="profile-top-decoration">
+          <div className="profile-avatar">
+            <UserRound size={43} strokeWidth={1.5} />
+          </div>
+          <span className="profile-online-indicator" />
+        </div>
+
+        <div className="profile-heading">
+          <span className="profile-eyebrow">AKUN SAYA</span>
+
+          <h2 id="profileName">
+            {user.name || user.username}
+          </h2>
+
           <p id="profileUsername">@{user.username}</p>
 
-          <span className="role-badge" id="profileRole">
-            {user.role.toUpperCase()}
+          <span
+            className={`profile-role ${isAdmin ? "profile-role-admin" : "profile-role-user"}`}
+            id="profileRole"
+          >
+            {isAdmin ? (
+              <ShieldCheck size={14} />
+            ) : (
+              <UserRound size={14} />
+            )}
+            {isAdmin ? "ADMINISTRATOR" : "MEMBER"}
           </span>
+        </div>
 
-          <div className="profile-stats">
-            <div>
-              <strong id="profileFavorite">{favoriteCount}</strong>
-              <span>Favorit</span>
+        <div className="profile-divider" />
+
+        <div className="profile-stats">
+          <div className="profile-stat-card">
+            <div className="profile-stat-icon">
+              <Heart size={20} />
             </div>
-            <div>
-              <strong id="profileChoice">{choiceCount}</strong>
-              <span>Pilihan</span>
-            </div>
+            <strong id="profileFavorite">{favoriteCount}</strong>
+            <span>Menu Favorit</span>
           </div>
 
-          {children}
+          <div className="profile-stat-card">
+            <div className="profile-stat-icon">
+              <BookmarkCheck size={20} />
+            </div>
+            <strong id="profileChoice">{choiceCount}</strong>
+            <span>Menu Pilihan</span>
+          </div>
+        </div>
 
-          {user.role === "admin" && (
+        {children && (
+          <div className="profile-extra-content">
+            {children}
+          </div>
+        )}
+
+        <div className="profile-actions">
+          {isAdmin && (
             <Link
               href="/admin"
-              className="admin-profile-button"
+              className="profile-dashboard-button"
               onClick={onClose}
             >
-              <span>▦</span>
-              Dashboard Admin
-              <span className="admin-profile-arrow">→</span>
+              <span className="profile-action-icon">
+                <LayoutDashboard size={19} />
+              </span>
+              <span>Dashboard Admin</span>
+              <ArrowRight size={18} className="profile-action-arrow" />
             </Link>
           )}
 
           <a
             href="#menu"
-            className="primary-button"
+            className="profile-explore-button"
             id="profileExplore"
             onClick={onClose}
           >
+            <Utensils size={18} />
             Jelajahi Menu
           </a>
 
           <button
             type="button"
-            className="logout-button"
+            className="profile-logout-button"
             id="logoutButton"
             onClick={() => {
               onLogout();
               onClose();
             }}
           >
-            Logout
+            <LogOut size={18} />
+            Logout dari Akun
           </button>
-        </>
-      )}
+        </div>
+
+        <p className="profile-footer">
+          <span>✦</span> Gado-Gado Nusantara
+        </p>
+      </div>
     </ModalWrapper>
   );
 }

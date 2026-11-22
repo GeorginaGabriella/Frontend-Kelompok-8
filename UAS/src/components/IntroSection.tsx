@@ -53,8 +53,8 @@ export default function IntroSection({
           </>
         )}
 
-        <a href="#menu" className="text-button">
-          Lihat Semua Menu →
+        <a href="#menu" className="intro-menu-button">
+          Lihat Semua Menu <span aria-hidden="true">→</span>
         </a>
       </div>
     </SectionContainer>

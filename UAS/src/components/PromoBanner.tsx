@@ -1,9 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { MenuItem } from "@/types";
 import { isSideMenu } from "@/data/gadoGadoData";
-import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 interface PromoBannerProps {
   menus: MenuItem[];
@@ -14,27 +13,35 @@ export default function PromoBanner({
   menus,
   onOpenDetail,
 }: PromoBannerProps) {
+  // Ambil maksimal 5 menu utama untuk rekomendasi
   const recommendations = menus
     .filter((menu) => !isSideMenu(menu))
-    .slice(0, 4);
+    .slice(0, 5);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (recommendations.length <= 1) return;
 
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setActiveIndex((current) =>
         (current + 1) % recommendations.length
       );
     }, 5000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, [recommendations.length]);
 
   if (recommendations.length === 0) return null;
 
-  const currentMenu = recommendations[activeIndex];
+  const activeMenu = recommendations[activeIndex];
+
+  const previousSlide = () => {
+    setActiveIndex((current) =>
+      (current - 1 + recommendations.length) %
+      recommendations.length
+    );
+  };
 
   const nextSlide = () => {
     setActiveIndex((current) =>
@@ -42,104 +49,97 @@ export default function PromoBanner({
     );
   };
 
-  const prevSlide = () => {
-    setActiveIndex((current) =>
-      (current - 1 + recommendations.length) %
-      recommendations.length
-    );
-  };
-
-  const colors = ["promo-emerald", "promo-gold", "promo-clove", "promo-ember"];
-
   return (
-    <section className="promo-banner-section">
-      <div className="container">
-        <div className="promo-banner">
-          <div
-            className="promo-track"
-            style={{
-              transform: `translateX(-${activeIndex * 100}%)`,
-            }}
-          >
-            {recommendations.map((menu, index) => (
-              <div
-                className={`promo-slide ${colors[index % colors.length]}`}
-                key={menu.slug}
-              >
-                <div className="promo-slide-text">
-                  <span className="promo-eyebrow">
-                    <Star size={13} fill="currentColor" />
-                    REKOMENDASI MENU
-                  </span>
+    <section className="promo-recommendation">
+      <div className="promo-recommendation-inner">
 
-                  <h3>{menu.name}</h3>
+        <div className="promo-recommendation-content">
+          <span className="promo-recommendation-label">
+            ✦ REKOMENDASI TERATAS
+          </span>
 
-                  <p>{menu.shortDescription}</p>
+          <p className="promo-recommendation-subtitle">
+            PILIHAN SPESIAL NUSANTARA
+          </p>
 
-                  <div className="promo-actions">
-                    <button
-                      type="button"
-                      className="promo-cta"
-                      onClick={() => onOpenDetail(menu)}
-                    >
-                      Lihat Detail
-                      <ArrowRight size={16} />
-                    </button>
+          <h2>
+            Menu Andalan
+            <span> Nusantara</span>
+          </h2>
 
-                    <span className="promo-code">
-                      Harga: <strong>{menu.price}</strong>
-                    </span>
-                  </div>
-                </div>
+          <p className="promo-recommendation-description">
+            Temukan sajian favorit dengan cita rasa khas
+            Nusantara yang istimewa dan menggugah selera.
+          </p>
 
-                <div className="promo-slide-image">
-                  <div className="promo-glow" />
+          <div className="promo-recommendation-info">
+            <span>
+              REKOMENDASI {activeIndex + 1} / {recommendations.length}
+            </span>
 
-                  <img
-                    src={menu.image}
-                    alt={menu.name}
-                  />
-                </div>
-              </div>
-            ))}
+            <h3>{activeMenu.name}</h3>
+
+            <p>{activeMenu.shortDescription}</p>
+
+            <strong>{activeMenu.price}</strong>
           </div>
 
-          {recommendations.length > 1 && (
-            <>
-              <button
-                type="button"
-                className="promo-arrow promo-arrow-prev"
-                onClick={prevSlide}
-                aria-label="Menu sebelumnya"
-              >
-                <ChevronLeft size={22} />
-              </button>
+          <button
+            type="button"
+            className="promo-recommendation-button"
+            onClick={() => onOpenDetail(activeMenu)}
+          >
+            Lihat Menu <span>→</span>
+          </button>
 
-              <button
-                type="button"
-                className="promo-arrow promo-arrow-next"
-                onClick={nextSlide}
-                aria-label="Menu berikutnya"
-              >
-                <ChevronRight size={22} />
-              </button>
+          <div className="promo-recommendation-navigation">
+            <button
+              type="button"
+              onClick={previousSlide}
+              aria-label="Rekomendasi sebelumnya"
+            >
+              ‹
+            </button>
 
-              <div className="promo-dots">
-                {recommendations.map((menu, index) => (
-                  <button
-                    type="button"
-                    key={menu.slug}
-                    className={`promo-dot ${
-                      activeIndex === index ? "active" : ""
-                    }`}
-                    onClick={() => setActiveIndex(index)}
-                    aria-label={`Buka rekomendasi ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
+            {recommendations.map((menu, index) => (
+              <button
+                key={menu.slug}
+                type="button"
+                aria-label={`Pilih rekomendasi ${index + 1}`}
+                className={`promo-recommendation-dot ${
+                  activeIndex === index ? "active" : ""
+                }`}
+                onClick={() => setActiveIndex(index)}
+              />
+            ))}
+
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Rekomendasi selanjutnya"
+            >
+              ›
+            </button>
+          </div>
         </div>
+
+        <div className="promo-recommendation-visual">
+          <img
+            key={activeMenu.slug}
+            src={activeMenu.image}
+            alt={activeMenu.name}
+          />
+
+          <div className="promo-recommendation-image-caption">
+            <span>MENU PILIHAN</span>
+            <h3>{activeMenu.name}</h3>
+          </div>
+
+          <div className="promo-recommendation-badge">
+            TOP {activeIndex + 1}
+          </div>
+        </div>
+
       </div>
     </section>
   );
