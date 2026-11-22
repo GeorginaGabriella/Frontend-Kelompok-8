@@ -72,7 +72,7 @@ export default function AboutSection({
         <div className="batik-circle"></div>
 
         <div className="about-card">
-          <span>🇮🇩</span>
+          <span>🌺</span>
           <strong>Rasa Indonesia</strong>
           <p>Beragam rasa dalam satu perjalanan kuliner Nusantara.</p>
         </div>
