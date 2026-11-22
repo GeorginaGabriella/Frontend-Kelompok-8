@@ -1,0 +1,351 @@
+warning: in the working copy of 'UAS/package-lock.json', CRLF will be replaced by LF the next time Git touches it
+[1mdiff --git a/UAS/package-lock.json b/UAS/package-lock.json[m
+[1mindex c74f0f2..626959b 100644[m
+[1m--- a/UAS/package-lock.json[m
+[1m+++ b/UAS/package-lock.json[m
+[36m@@ -10,8 +10,8 @@[m
+       "dependencies": {[m
+         "@libsql/client": "^0.18.0",[m
+         "@prisma/adapter-libsql": "^7.10.1",[m
+[31m-        "@prisma/adapter-pg": "^7.10.1",[m
+[31m-        "@prisma/client": "^7.10.1",[m
+[32m+[m[32m        "@prisma/adapter-pg": "^7.9.1",[m
+[32m+[m[32m        "@prisma/client": "^7.9.1",[m
+         "bootstrap": "^5.3.8",[m
+         "dotenv": "^18.0.9",[m
+         "lucide-react": "^1.61.0",[m
+[36m@@ -28,7 +28,7 @@[m
+         "eslint": "^8",[m
+         "eslint-config-next": "14.2.35",[m
+         "postcss": "^8",[m
+[31m-        "prisma": "^7.10.1",[m
+[32m+[m[32m        "prisma": "^7.9.1",[m
+         "tailwindcss": "^3.4.1",[m
+         "tsx": "^4.23.15",[m
+         "typescript": "^5"[m
+[36m@@ -1191,24 +1191,39 @@[m
+       }[m
+     },[m
+     "node_modules/@prisma/adapter-pg": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/adapter-pg/-/adapter-pg-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-EP9ruPYHjKP80WZlb5qVaEXKgZjJieBFjAxcBtQnDAHD6+16UN4keVmBh6L/RUpuDQT2FQRbvKNgq5d4Ix+IkQ==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/adapter-pg/-/adapter-pg-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-Ho2RK1KanQxLNSC0sR5bpiiVep10sWPLXCcxK+KXfI/Q69TMRbiafSvLPv3V9snimX72rMCqGlyJ4sBO4lKTAw==",[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/driver-adapter-utils": "7.10.1",[m
+[32m+[m[32m        "@prisma/driver-adapter-utils": "7.9.1",[m
+         "@types/pg": "^8.16.0",[m
+         "pg": "^8.16.3",[m
+         "postgres-array": "3.0.4"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@prisma/adapter-pg/node_modules/@prisma/debug": {[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/debug/-/debug-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-/cpVZ4itxtcgB8GHBvZtcmuEjq+lWsLrRJxFMbwZrT1RIdtuKmUm7PPGo/wzfbYpBrk+9WmmBE8CHJw2rybKDQ==",[m
+[32m+[m[32m      "license": "Apache-2.0"[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@prisma/adapter-pg/node_modules/@prisma/driver-adapter-utils": {[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/driver-adapter-utils/-/driver-adapter-utils-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-vmHehG7nn/heW32DXXpp13DxxAxVVe6n250oEt3dOL2E/4bt3olktKZN0mzSuxMMronyMSkbeW2uCOn3F4g8RQ==",[m
+[32m+[m[32m      "license": "Apache-2.0",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@prisma/debug": "7.9.1"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@prisma/client": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/client/-/client-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-5tgAbFGh//zVOC6WPNVgziOErJHYkUE+wmqCwbIyq6IrTXUYtv9y2iBFGh/Owo99Mx0+cr0j1FOrxkYBMuyhaQ==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/client/-/client-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-+xgrh2EhJVF79wC0yX5G4PI1Rdcm7Qn/nekNQ+t/O153wtNggruHal+fXHSa0QE+Tp/Cw5wvxeCEhZZ59xGm8Q==",[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/client-runtime-utils": "7.10.1"[m
+[32m+[m[32m        "@prisma/client-runtime-utils": "7.9.1"[m
+       },[m
+       "engines": {[m
+         "node": "^20.19 || ^22.12 || >=24.0"[m
+[36m@@ -1227,20 +1242,20 @@[m
+       }[m
+     },[m
+     "node_modules/@prisma/client-runtime-utils": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/client-runtime-utils/-/client-runtime-utils-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-AzoATVIgmO3lcZfM443+9SI7+cyLMW2+Psw4op8WQHpHvHCX//CKxv8fwhiL0yGWF8DjdQrFewxrZo5McBdB8g==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/client-runtime-utils/-/client-runtime-utils-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-mVIBGYdO5CFmK0HvjxrtfIyQQcPdb88pSCeVQriVQPVZyDovIWblpHfOgcS8QO187j3QF0ePArH8qPhp0AU2vg==",[m
+       "license": "Apache-2.0"[m
+     },[m
+     "node_modules/@prisma/config": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/config/-/config-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-+0swF5ELUa3P/9cIR26+gpYjjCbGE0qvEBZhV4zMDkYsrtHjZ884MQbOnWFWXj600N0sSJNnHbtBqe12yDngWg==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/config/-/config-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-4znKhxTmXmuPye9Z6pbIyYb5VZlkZ05qG1L6Dr4g+7oTwc6V50Bs9XirFBDdjWt+H/AabMn9aUnxBcvj8z05aA==",[m
+       "devOptional": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+         "c12": "3.3.4",[m
+[31m-        "deepmerge-ts": "8.0.2",[m
+[32m+[m[32m        "deepmerge-ts": "7.1.5",[m
+         "effect": "3.20.0",[m
+         "empathic": "2.0.0"[m
+       }[m
+[36m@@ -1285,56 +1300,70 @@[m
+       }[m
+     },[m
+     "node_modules/@prisma/engines": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/engines/-/engines-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-R6/ghv1Bu36FhCdQLFof1pNtyoWoeDzJLYeTKjgqb4eGtOAJx7ZqJtcm4pzkahLfZ9rYz8AkmsMDwkyiYbXPCQ==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/engines/-/engines-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-UprXSMNXx2NF5ow4pqaQtE8OuBz6K78B0wc0tn2L28G5r933iWp1DR9Do2qWrsNvvFIP3x6mpEWnQtckMO0Uhg==",[m
+       "devOptional": true,[m
+       "hasInstallScript": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/debug": "7.10.1",[m
+[31m-        "@prisma/engines-version": "8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8",[m
+[31m-        "@prisma/fetch-engine": "7.10.1",[m
+[31m-        "@prisma/get-platform": "7.10.1"[m
+[32m+[m[32m        "@prisma/debug": "7.9.1",[m
+[32m+[m[32m        "@prisma/engines-version": "7.9.0-1.e922089b7d7502aff4249d5da3420f6fa55fc6ad",[m
+[32m+[m[32m        "@prisma/fetch-engine": "7.9.1",[m
+[32m+[m[32m        "@prisma/get-platform": "7.9.1"[m
+       }[m
+     },[m
+     "node_modules/@prisma/engines-version": {[m
+[31m-      "version": "8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8.tgz",[m
+[31m-      "integrity": "sha512-XjXmwjN2NE340RpXoXv8ZF8aNAvr0FE+7gNfkKeW6vyjXs7F8uxvEbWQoVrhioXDQoIsnNmv7r+wxvzfdEZaWA==",[m
+[32m+[m[32m      "version": "7.9.0-1.e922089b7d7502aff4249d5da3420f6fa55fc6ad",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-7.9.0-1.e922089b7d7502aff4249d5da3420f6fa55fc6ad.tgz",[m
+[32m+[m[32m      "integrity": "sha512-2BsPPFksz3CQUXG6af3rVCtJKg6+JJGJTtfgu2fU8DdXhOfkBjulCq8mwybCd6ge0/jhZq2kOtLAbmUDMyI1nA==",[m
+[32m+[m[32m      "devOptional": true,[m
+[32m+[m[32m      "license": "Apache-2.0"[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@prisma/engines/node_modules/@prisma/debug": {[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/debug/-/debug-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-/cpVZ4itxtcgB8GHBvZtcmuEjq+lWsLrRJxFMbwZrT1RIdtuKmUm7PPGo/wzfbYpBrk+9WmmBE8CHJw2rybKDQ==",[m
+       "devOptional": true,[m
+       "license": "Apache-2.0"[m
+     },[m
+     "node_modules/@prisma/engines/node_modules/@prisma/get-platform": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-iVnghHne5vcaobBjPVCMEjh5r/1UCj394EIGTUclasFRatpR/MQwcM2veLv5kgoFSyYP54nch/lNFCQRYcDxvg==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-PK8R60YZRQvYxBrGG9i7l2/rFyzy+2MuI1dKtmtrCqPH8YpiJx/MfiC7LRzX5786rZDEv7BngcjfIJW4/9ADuw==",[m
+       "devOptional": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/debug": "7.10.1"[m
+[32m+[m[32m        "@prisma/debug": "7.9.1"[m
+       }[m
+     },[m
+     "node_modules/@prisma/fetch-engine": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/fetch-engine/-/fetch-engine-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-qZezeaExLWG2ptbHOrMxdiWluKHgqEclTdJbvY6pk6+Wg7EiVkeq5U3cXz9ti8nd0bngNvsDgledLHVRg5LF1w==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/fetch-engine/-/fetch-engine-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-9DwxrNTeT25Orbu9CWh0CZvVlyY1lmscpbaeLZcOnuR7zcuFrt91YSmmOfIm7zJ08YOZ6mVzURKwLoMwEBcK8w==",[m
+       "devOptional": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/debug": "7.10.1",[m
+[31m-        "@prisma/engines-version": "8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8",[m
+[31m-        "@prisma/get-platform": "7.10.1"[m
+[32m+[m[32m        "@prisma/debug": "7.9.1",[m
+[32m+[m[32m        "@prisma/engines-version": "7.9.0-1.e922089b7d7502aff4249d5da3420f6fa55fc6ad",[m
+[32m+[m[32m        "@prisma/get-platform": "7.9.1"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@prisma/fetch-engine/node_modules/@prisma/debug": {[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/debug/-/debug-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-/cpVZ4itxtcgB8GHBvZtcmuEjq+lWsLrRJxFMbwZrT1RIdtuKmUm7PPGo/wzfbYpBrk+9WmmBE8CHJw2rybKDQ==",[m
+[32m+[m[32m      "devOptional": true,[m
+[32m+[m[32m      "license": "Apache-2.0"[m
+[32m+[m[32m    },[m
+     "node_modules/@prisma/fetch-engine/node_modules/@prisma/get-platform": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-iVnghHne5vcaobBjPVCMEjh5r/1UCj394EIGTUclasFRatpR/MQwcM2veLv5kgoFSyYP54nch/lNFCQRYcDxvg==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-PK8R60YZRQvYxBrGG9i7l2/rFyzy+2MuI1dKtmtrCqPH8YpiJx/MfiC7LRzX5786rZDEv7BngcjfIJW4/9ADuw==",[m
+       "devOptional": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/debug": "7.10.1"[m
+[32m+[m[32m        "@prisma/debug": "7.9.1"[m
+       }[m
+     },[m
+     "node_modules/@prisma/get-platform": {[m
+[36m@@ -1778,7 +1807,7 @@[m
+       "version": "18.3.7",[m
+       "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",[m
+       "integrity": "sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==",[m
+[31m-      "devOptional": true,[m
+[32m+[m[32m      "dev": true,[m
+       "license": "MIT",[m
+       "peerDependencies": {[m
+         "@types/react": "^18.0.0"[m
+[36m@@ -3514,23 +3543,13 @@[m
+       "license": "MIT"[m
+     },[m
+     "node_modules/deepmerge-ts": {[m
+[31m-      "version": "8.0.2",[m
+[31m-      "resolved": "https://registry.npmjs.org/deepmerge-ts/-/deepmerge-ts-8.0.2.tgz",[m
+[31m-      "integrity": "sha512-uqbvqLUMrc6p0MO+WBRtTxY55hmyh94WRwI5a++PZe54X+bfVh59FSN7uWCBCW1CCVjzjnrwzfI8zidE2obMMw==",[m
+[32m+[m[32m      "version": "7.1.5",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/deepmerge-ts/-/deepmerge-ts-7.1.5.tgz",[m
+[32m+[m[32m      "integrity": "sha512-HOJkrhaYsweh+W+e74Yn7YStZOilkoPb6fycpwNLKzSPtruFs48nYis0zy5yJz1+ktUhHxoRDJ27RQAWLIJVJw==",[m
+       "devOptional": true,[m
+[31m-      "funding": [[m
+[31m-        {[m
+[31m-          "type": "ko-fi",[m
+[31m-          "url": "https://ko-fi.com/rebeccastevens"[m
+[31m-        },[m
+[31m-        {[m
+[31m-          "type": "tidelift",[m
+[31m-          "url": "https://tidelift.com/funding/github/npm/deepmerge-ts"[m
+[31m-        }[m
+[31m-      ],[m
+       "license": "BSD-3-Clause",[m
+       "engines": {[m
+[31m-        "node": ">=16.9.0"[m
+[32m+[m[32m        "node": ">=16.0.0"[m
+       }[m
+     },[m
+     "node_modules/define-data-property": {[m
+[36m@@ -3586,6 +3605,16 @@[m
+         "robust-predicates": "^3.0.2"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/denque": {[m
+[32m+[m[32m      "version": "2.1.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/denque/-/denque-2.1.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==",[m
+[32m+[m[32m      "devOptional": true,[m
+[32m+[m[32m      "license": "Apache-2.0",[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=0.10"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/destr": {[m
+       "version": "2.0.5",[m
+       "resolved": "https://registry.npmjs.org/destr/-/destr-2.0.5.tgz",[m
+[36m@@ -5999,25 +6028,24 @@[m
+       "license": "MIT"[m
+     },[m
+     "node_modules/mysql2": {[m
+[31m-      "version": "3.24.4",[m
+[31m-      "resolved": "https://registry.npmjs.org/mysql2/-/mysql2-3.24.4.tgz",[m
+[31m-      "integrity": "sha512-A2olluVlj0mvgyIRRISMEzXc51m+21mRtcMVjJyIpt2GG98+XrC9m9HzsqcMsX2LcnfccJvY5NB22g8fENBnOA==",[m
+[32m+[m[32m      "version": "3.15.3",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/mysql2/-/mysql2-3.15.3.tgz",[m
+[32m+[m[32m      "integrity": "sha512-FBrGau0IXmuqg4haEZRBfHNWB5mUARw6hNwPDXXGg0XzVJ50mr/9hb267lvpVMnhZ1FON3qNd4Xfcez1rbFwSg==",[m
+       "devOptional": true,[m
+       "license": "MIT",[m
+       "dependencies": {[m
+[31m-        "aws-ssl-profiles": "^1.1.2",[m
+[32m+[m[32m        "aws-ssl-profiles": "^1.1.1",[m
+[32m+[m[32m        "denque": "^2.1.0",[m
+         "generate-function": "^2.3.1",[m
+[31m-        "iconv-lite": "^0.7.3",[m
+[31m-        "long": "^5.3.2",[m
+[31m-        "lru.min": "^1.1.4",[m
+[31m-        "named-placeholders": "^1.1.6",[m
+[31m-        "sql-escaper": "^1.5.1"[m
+[32m+[m[32m        "iconv-lite": "^0.7.0",[m
+[32m+[m[32m        "long": "^5.2.1",[m
+[32m+[m[32m        "lru.min": "^1.0.0",[m
+[32m+[m[32m        "named-placeholders": "^1.1.3",[m
+[32m+[m[32m        "seq-queue": "^0.0.5",[m
+[32m+[m[32m        "sqlstring": "^2.3.2"[m
+       },[m
+       "engines": {[m
+         "node": ">= 8.0"[m
+[31m-      },[m
+[31m-      "peerDependencies": {[m
+[31m-        "@types/node": ">= 8"[m
+       }[m
+     },[m
+     "node_modules/mz": {[m
+[36m@@ -6909,18 +6937,18 @@[m
+       }[m
+     },[m
+     "node_modules/prisma": {[m
+[31m-      "version": "7.10.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/prisma/-/prisma-7.10.1.tgz",[m
+[31m-      "integrity": "sha512-GoVeErHGGtsSjsflQ1r2BA3RKTXtxNraQJz8OLkLhoLr7OgCscdx4qw4WMM4HnERYc+a1cq2VnMNbep+vOjNcQ==",[m
+[32m+[m[32m      "version": "7.9.1",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/prisma/-/prisma-7.9.1.tgz",[m
+[32m+[m[32m      "integrity": "sha512-aPqePoZIqwlAchbgbFDO/wHqGB+7H1nj9gaM+OsL9h77S5S3TnLd9BgD3LnoeDikULo7cl2HSUrEyQ55Z7DYbg==",[m
+       "devOptional": true,[m
+       "hasInstallScript": true,[m
+       "license": "Apache-2.0",[m
+       "dependencies": {[m
+[31m-        "@prisma/config": "7.10.1",[m
+[32m+[m[32m        "@prisma/config": "7.9.1",[m
+         "@prisma/dev": "0.24.17",[m
+[31m-        "@prisma/engines": "7.10.1",[m
+[32m+[m[32m        "@prisma/engines": "7.9.1",[m
+         "@prisma/studio-core": "0.33.0",[m
+[31m-        "mysql2": "3.24.4",[m
+[32m+[m[32m        "mysql2": "3.15.3",[m
+         "postgres": "3.4.7"[m
+       },[m
+       "bin": {[m
+[36m@@ -7406,6 +7434,12 @@[m
+         "node": ">=10"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/seq-queue": {[m
+[32m+[m[32m      "version": "0.0.5",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/seq-queue/-/seq-queue-0.0.5.tgz",[m
+[32m+[m[32m      "integrity": "sha512-hr3Wtp/GZIc/6DAGPDcV4/9WoZhjrkXsi5B/07QgX8tsdc6ilr7BFM6PM6rbdAX1kFSDYeZGLipIZZKyQP0O5Q==",[m
+[32m+[m[32m      "devOptional": true[m
+[32m+[m[32m    },[m
+     "node_modules/set-function-length": {[m
+       "version": "1.2.2",[m
+       "resolved": "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz",[m
+[36m@@ -7585,20 +7619,14 @@[m
+         "node": ">= 10.x"[m
+       }[m
+     },[m
+[31m-    "node_modules/sql-escaper": {[m
+[31m-      "version": "1.5.2",[m
+[31m-      "resolved": "https://registry.npmjs.org/sql-escaper/-/sql-escaper-1.5.2.tgz",[m
+[31m-      "integrity": "sha512-6CKD38c31SENivxOADeMNLdukOnUxUcflKtzVWzace7Riv1v7cAEym5Cx9Q7gYZ3ezIJI7ZpqecQq8cqNeSSFg==",[m
+[32m+[m[32m    "node_modules/sqlstring": {[m
+[32m+[m[32m      "version": "2.3.3",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/sqlstring/-/sqlstring-2.3.3.tgz",[m
+[32m+[m[32m      "integrity": "sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg==",[m
+       "devOptional": true,[m
+       "license": "MIT",[m
+       "engines": {[m
+[31m-        "bun": ">=1.0.0",[m
+[31m-        "deno": ">=2.0.0",[m
+[31m-        "node": ">=12.0.0"[m
+[31m-      },[m
+[31m-      "funding": {[m
+[31m-        "type": "github",[m
+[31m-        "url": "https://github.com/mysqljs/sql-escaper?sponsor=1"[m
+[32m+[m[32m        "node": ">= 0.6"[m
+       }[m
+     },[m
+     "node_modules/stable-hash": {[m
