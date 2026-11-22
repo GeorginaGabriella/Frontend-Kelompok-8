@@ -8,7 +8,6 @@ export default function MenuCard({
   onToggleFavorite,
   onOpenDetail,
   onAddChoice,
-  onAddToCart,
   children,
 }: MenuCardProps) {
   const displayedIngredients = menu.cardIngredients?.length
@@ -26,10 +25,14 @@ export default function MenuCard({
     >
       <div className="card-image">
         <img src={menu.image} alt={menu.name} />
+
         <span className="region-badge">{menu.regionBadge}</span>
+
         <button
           type="button"
-          className={`favorite-button ${isFavorite ? "active" : ""}`.trim()}
+          className={`favorite-button ${
+            isFavorite ? "active" : ""
+          }`.trim()}
           data-name={menu.name}
           aria-label={`Tandai ${menu.name} sebagai favorit`}
           onClick={() => onToggleFavorite(menu.name)}

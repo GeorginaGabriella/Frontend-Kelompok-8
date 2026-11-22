@@ -1022,10 +1022,6 @@
   }
 }
 
-/* ════════════════════════════════════════════════════════════════════════════
-   TAMBAHAN: SORTING MENU, PESANAN, KOMENTAR & KODE DISKON
-   ════════════════════════════════════════════════════════════════════════════ */
-
 .order-icon {
   background: var(--admin-gold-light);
 }
@@ -1313,4 +1309,351 @@
 .admin-panel-heading,
 .admin-form-heading {
   flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.admin-welcome-button,
+.admin-content-save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(110deg, #f4e7c5, #d9b45f);
+  color: #173f2d;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-welcome-button:hover,
+.admin-content-save-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(20, 55, 38, 0.16);
+}
+
+.admin-welcome-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 4px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-welcome-link:hover {
+  color: #f1d38e;
+}
+
+.admin-welcome-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-stat-grid-compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.admin-stat-card-clickable {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(35, 82, 57, 0.08);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-stat-card-clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(24, 61, 42, 0.10);
+}
+
+.admin-stat-card-clickable small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.admin-overview-menu-panel {
+  margin-top: 0;
+}
+
+.admin-overview-menu-panel .admin-panel-heading {
+  align-items: center;
+}
+
+.admin-overview-menu-panel .admin-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.admin-content-save-button {
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #174a34, #286746);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(23, 74, 52, 0.16);
+}
+
+.admin-content-save-button:hover {
+  background: linear-gradient(110deg, #286746, #a17a36);
+  color: white;
+}
+
+.admin-content-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .admin-stat-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-stat-grid-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-welcome-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-overview-menu-panel .admin-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-content-save-button {
+    width: 100%;
+  }
+}
+
+.admin-filter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 24px 0 20px;
+}
+
+.admin-filter-label {
+  color: #52675B;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.admin-filter-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-filter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 42px;
+  padding: 0 17px;
+
+  border: 1px solid #E5E9DF;
+  border-radius: 999px;
+
+  background: #FFFFFF;
+  color: #315642;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Angka jumlah menu */
+.admin-filter-button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 23px;
+  height: 23px;
+  padding: 0 6px;
+
+  border-radius: 50px;
+  background: #EDF3ED;
+  color: #286044;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Hover */
+.admin-filter-button:hover {
+  border-color: #C5A45B;
+  background: #FAF6EB;
+  color: #173D2B;
+  transform: translateY(-2px);
+}
+
+/* Filter aktif */
+.admin-filter-button.active {
+  border: 1px solid #286044;
+  background: linear-gradient(
+    120deg,
+    #173D2B 0%,
+    #286044 75%,
+    #A9853F 140%
+  );
+  color: #FFFFFF;
+
+  box-shadow: 0 5px 14px rgba(23, 61, 43, 0.16);
+}
+
+/* Angka pada filter aktif */
+.admin-filter-button.active span {
+  background: linear-gradient(
+    135deg,
+    #F8EBCB,
+    #D4AF62
+  );
+  color: #173D2B;
+}
+
+/* Efek saat diklik */
+.admin-filter-button:active {
+  transform: scale(0.97);
+}
+
+/* Fokus keyboard */
+.admin-filter-button:focus-visible {
+  outline: 3px solid rgba(212, 175, 98, 0.5);
+  outline-offset: 3px;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 600px) {
+  .admin-filter-buttons {
+    gap: 8px;
+  }
+
+  .admin-filter-button {
+    min-height: 39px;
+    padding: 0 13px;
+    font-size: 12px;
+  }
+}
+
+
+/* Tombol Customer Service di Welcome Banner */
+
+.admin-customer-service-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 48px;
+  padding: 0 23px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.admin-customer-service-button svg {
+  flex-shrink: 0;
+  color: #F1D38E;
+}
+
+.admin-customer-service-button:hover {
+  background: linear-gradient(
+    120deg,
+    #D4AF62,
+    #F4E7C5
+  );
+  border-color: #D4AF62;
+  color: #173D2B;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+}
+
+.admin-customer-service-button:hover svg {
+  color: #173D2B;
+}
+
+.admin-customer-service-button:active {
+  transform: scale(0.97);
+}
+
+
+/* Membuat kedua tombol welcome sejajar */
+.admin-welcome-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+/* Samakan tinggi kedua tombol */
+.admin-welcome-button,
+.admin-customer-service-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Ikon dan teks tetap di tengah */
+.admin-welcome-button svg,
+.admin-customer-service-button svg {
+  flex-shrink: 0;
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+  .admin-welcome-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

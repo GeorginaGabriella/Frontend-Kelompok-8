@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { MenuItem } from "@/types";
 import { isSideMenu } from "@/data/gadoGadoData";
-import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+} from "lucide-react";
 
 interface PromoBannerProps {
   menus: MenuItem[];
@@ -24,8 +29,8 @@ export default function PromoBanner({
     if (recommendations.length <= 1) return;
 
     const interval = setInterval(() => {
-      setActiveIndex((current) =>
-        (current + 1) % recommendations.length
+      setActiveIndex(
+        (current) => (current + 1) % recommendations.length
       );
     }, 5000);
 
@@ -34,22 +39,26 @@ export default function PromoBanner({
 
   if (recommendations.length === 0) return null;
 
-  const currentMenu = recommendations[activeIndex];
-
   const nextSlide = () => {
-    setActiveIndex((current) =>
-      (current + 1) % recommendations.length
+    setActiveIndex(
+      (current) => (current + 1) % recommendations.length
     );
   };
 
   const prevSlide = () => {
-    setActiveIndex((current) =>
-      (current - 1 + recommendations.length) %
-      recommendations.length
+    setActiveIndex(
+      (current) =>
+        (current - 1 + recommendations.length) %
+        recommendations.length
     );
   };
 
-  const colors = ["promo-emerald", "promo-gold", "promo-clove", "promo-ember"];
+  const colors = [
+    "promo-emerald",
+    "promo-gold",
+    "promo-clove",
+    "promo-ember",
+  ];
 
   return (
     <section className="promo-banner-section">
@@ -63,7 +72,9 @@ export default function PromoBanner({
           >
             {recommendations.map((menu, index) => (
               <div
-                className={`promo-slide ${colors[index % colors.length]}`}
+                className={`promo-slide ${
+                  colors[index % colors.length]
+                }`}
                 key={menu.slug}
               >
                 <div className="promo-slide-text">
@@ -95,10 +106,7 @@ export default function PromoBanner({
                 <div className="promo-slide-image">
                   <div className="promo-glow" />
 
-                  <img
-                    src={menu.image}
-                    alt={menu.name}
-                  />
+                  <img src={menu.image} alt={menu.name} />
                 </div>
               </div>
             ))}

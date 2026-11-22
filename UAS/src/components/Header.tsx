@@ -7,10 +7,8 @@ import { UserAccount } from "@/types";
 interface HeaderProps {
   activeSection?: string;
   favoriteCount: number;
-  cartCount?: number;
   currentUser: UserAccount | null;
   onProfileClick: () => void;
-  onCartClick?: () => void;
   children?: React.ReactNode;
 }
 
@@ -19,17 +17,19 @@ const navItems = [
   { id: "menu", label: "Menu", href: "/#menu" },
   { id: "favorit", label: "Favorit", href: "/#favorit" },
   { id: "about", label: "About", href: "/#about" },
-  { id: "customer-service", label: "Customer Service", href: "/#customer-service" },
+  {
+    id: "customer-service",
+    label: "Customer Service",
+    href: "/#customer-service",
+  },
   { id: "faq", label: "FAQ", href: "/#faq" },
 ];
 
 export default function Header({
   activeSection = "home",
   favoriteCount,
-  cartCount = 0,
   currentUser,
   onProfileClick,
-  onCartClick,
   children,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,7 +50,9 @@ export default function Header({
             <a
               key={item.id}
               href={item.href}
-              className={`nav-link ${activeSection === item.id ? "active" : ""}`.trim()}
+              className={`nav-link ${
+                activeSection === item.id ? "active" : ""
+              }`.trim()}
             >
               {item.label}
             </a>
@@ -73,7 +75,11 @@ export default function Header({
             type="button"
             className="profile-button"
             id="profileButton"
-            title={currentUser ? `Profil (${currentUser.name})` : "Login / Register"}
+            title={
+              currentUser
+                ? `Profil (${currentUser.name})`
+                : "Login / Register"
+            }
             onClick={onProfileClick}
           >
             👤
@@ -92,7 +98,9 @@ export default function Header({
       </div>
 
       <div
-        className={`mobile-nav ${mobileMenuOpen ? "show" : ""}`.trim()}
+        className={`mobile-nav ${
+          mobileMenuOpen ? "show" : ""
+        }`.trim()}
         id="mobileNav"
       >
         {navItems.map((item) => (

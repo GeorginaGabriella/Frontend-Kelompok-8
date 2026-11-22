@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -31,7 +30,6 @@ import {
   SHIPPING_BASE,
   calculateTotals,
   formatRupiah,
-  getCartQuantity,
   parsePriceLabel,
 } from "@/lib/order";
 
@@ -317,11 +315,6 @@ export default function HomePage() {
   const totals = useMemo(
     () => calculateTotals(cartItems, appliedDiscount),
     [cartItems, appliedDiscount]
-  );
-
-  const cartCount = useMemo(
-    () => getCartQuantity(cartItems),
-    [cartItems]
   );
 
   // VALIDASI DISKON
