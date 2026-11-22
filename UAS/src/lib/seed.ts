@@ -1,44 +1,36 @@
-import { prisma } from "./prisma";
+﻿import { prisma } from "./prisma";
 import {
   initialMenus,
   defaultFaqs,
   defaultSiteContent,
-  defaultDiscountCodes,
   adminAccount,
 } from "@/data/gadoGadoData";
 
 export async function seedDatabase() {
-  const menuCount = await prisma.menu.count();
+  await prisma.menu.createMany({
+    data: initialMenus.map((menu) => ({
+      slug: menu.slug,
+      name: menu.name,
+      data: JSON.stringify(menu),
+    })),
+    skipDuplicates: true,
+  });
 
-  if (menuCount === 0) {
-    for (const menu of initialMenus) {
-      await prisma.menu.create({
-        data: {
-          slug: menu.slug,
-          name: menu.name,
-          data: JSON.stringify(menu),
-        },
-      });
-    }
-  }
+  const faqCount = await prisma.faq.count();
 
-  for (const faq of defaultFaqs) {
-    const existingFaq = await prisma.faq.findFirst({
-      where: { question: faq.question },
+  if (faqCount === 0) {
+    await prisma.faq.createMany({
+      data: defaultFaqs.map((faq) => ({
+        question: faq.question,
+        answer: faq.answer,
+      })),
     });
-
-    if (!existingFaq) {
-      await prisma.faq.create({
-        data: {
-          question: faq.question,
-          answer: faq.answer,
-        },
-      });
-    }
   }
 
   await prisma.user.upsert({
-    where: { username: adminAccount.username },
+    where: {
+      username: adminAccount.username,
+    },
     update: {
       name: adminAccount.name,
       password: adminAccount.password!,
@@ -53,7 +45,9 @@ export async function seedDatabase() {
   });
 
   await prisma.siteContent.upsert({
-    where: { id: 1 },
+    where: {
+      id: 1,
+    },
     update: {},
     create: {
       id: 1,
@@ -61,23 +55,6 @@ export async function seedDatabase() {
       aboutDescription: defaultSiteContent.aboutDescription,
     },
   });
-
-  for (const discount of defaultDiscountCodes) {
-    await prisma.discountCode.upsert({
-      where: { code: discount.code },
-      update: {},
-      create: {
-        code: discount.code,
-        label: discount.label,
-        type: discount.type,
-        value: discount.value,
-        minSpend: discount.minSpend,
-        maxDiscount: discount.maxDiscount,
-        freeShipping: discount.freeShipping,
-        active: true,
-      },
-    });
-  }
 
   const commentCount = await prisma.comment.count();
 

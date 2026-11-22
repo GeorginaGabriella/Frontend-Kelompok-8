@@ -5,14 +5,12 @@ import Link from "next/link";
 import ModalWrapper from "./ModalWrapper";
 import Button from "./Button";
 import MenuComments from "./MenuComments";
-import { formatRupiah, parsePriceLabel } from "@/lib/order";
 import { MenuItem } from "@/types";
 
 interface DetailModalProps {
   menu: MenuItem | null;
   onClose: () => void;
   onAddChoice: (name: string) => void;
-  onAddToCart?: (menu: MenuItem) => void;
   children?: React.ReactNode;
 }
 
@@ -20,7 +18,6 @@ export default function DetailModal({
   menu,
   onClose,
   onAddChoice,
-  onAddToCart,
   children,
 }: DetailModalProps) {
   const googleMapsUrl = menu
@@ -77,14 +74,9 @@ export default function DetailModal({
 
             <div className="modal-facts">
               <div>
-                <span>Harga pesan</span>
-                <strong id="modalPrice">
-                  {formatRupiah(parsePriceLabel(menu.price))}
-                </strong>
-                <small>
-                  Harga per porsi untuk pesanan online. Kisaran pasaran:{" "}
-                  {menu.price}.
-                </small>
+                <span>Informasi Harga</span>
+                <strong id="modalPrice">{menu.price}</strong>
+                <small>Harga yang tercantum merupakan informasi menu.</small>
               </div>
 
               <div>
@@ -116,20 +108,7 @@ export default function DetailModal({
             {children}
 
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              {onAddToCart && (
-                <Button
-                  variant="primary"
-                  className="modal-add"
-                  onClick={() => {
-                    onAddToCart(menu);
-                    onClose();
-                  }}
-                >
-                  🛒 Tambah ke Keranjang
-                </Button>
-              )}
-
-              <Button
+<Button
                 variant="secondary"
                 className="modal-add"
                 onClick={() => {

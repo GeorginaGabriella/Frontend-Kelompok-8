@@ -1,5 +1,5 @@
 import React from "react";
-import { formatRupiah, parsePriceLabel } from "@/lib/order";
+import { formatRupiah, parsePriceLabel } from "@/lib/format";
 import { MenuCardProps } from "@/types";
 
 export default function MenuCard({

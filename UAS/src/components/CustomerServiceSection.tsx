@@ -46,9 +46,9 @@ export default function CustomerServiceSection() {
           </div>
 
           <h2>
-            Talk to our
+            Talk To Our
             <br />
-            <span>support team</span>
+            <span>Support Team</span>
           </h2>
 
           <p className="contact-description">

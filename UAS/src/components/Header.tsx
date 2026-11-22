@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -90,6 +90,7 @@ export default function Header({
             className="menu-toggle"
             id="menuToggle"
             aria-label="Toggle navigasi mobile"
+            aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((prev) => !prev)}
           >
             ☰

@@ -900,7 +900,10 @@ img {
 
 .choice-section {
     padding: 100px 0;
-    background: var(--brand-green-600);
+    background:
+        radial-gradient(ellipse at 12% 15%, rgba(244, 205, 111, 0.48), transparent 38%),
+        radial-gradient(ellipse at 88% 85%, rgba(118, 177, 126, 0.42), transparent 40%),
+        linear-gradient(125deg, #3f8b5b 0%, #286344 42%, #123b2a 100%);
     position: relative;
     overflow: hidden;
 }
@@ -914,6 +917,18 @@ img {
     border-radius: 50%;
     right: -100px;
     top: -100px;
+}
+
+.choice-section::after {
+    content: "";
+    position: absolute;
+    left: -120px;
+    bottom: -170px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 180, 92, 0.12), transparent 70%);
+    pointer-events: none;
 }
 
 .choice-header {
@@ -954,7 +969,7 @@ img {
 }
 
 .choice-box {
-    background: var(--cream-50);
+    background: linear-gradient(135deg, #fff8e8 0%, #e3f0df 48%, #c4dfc8 100%);
     min-height: 250px;
     border-radius: 25px;
     padding: 30px;
@@ -1432,7 +1447,6 @@ img {
     object-fit: contain;
     object-position: center top;
 }
-
 
 .modal-content {
     padding: 50px 35px;
@@ -2674,15 +2688,6 @@ body {
     transform: translateX(-50%);
 }
 
-/* Label seksi & judul */
-.section-label,
-.eyebrow,
-.menu-group-kicker,
-.cart-kicker {
-    color: var(--brand-gold-700);
-    letter-spacing: 2.4px;
-}
-
 .section-heading h2 span,
 .intro-text h2 span,
 .about-content h2 span,
@@ -2748,6 +2753,7 @@ body {
     color: var(--brand-gold-700);
 }
 
+/* ───────────────────────── JUDUL KELOMPOK MENU ───────────────────────── */
 .menu-group-heading {
     display: flex;
     align-items: flex-end;
@@ -2806,32 +2812,6 @@ body {
     font-size: 11px;
 }
 
-/* Tombol keranjang pada kartu */
-.cart-button {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 12px 16px;
-    border: 1px solid rgba(169, 121, 42, 0.42);
-    border-radius: 999px;
-    background: var(--brand-gold-100);
-    color: var(--brand-gold-700);
-    font-size: 13px;
-    font-weight: 700;
-    transition: 0.22s ease;
-}
-
-.cart-button:hover {
-    background: var(--gradient-gold);
-    border-color: transparent;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-}
-
 /* Dropdown urutkan pada katalog */
 .sort-select {
     display: flex;
@@ -2862,23 +2842,6 @@ body {
 .sort-select select:focus-visible {
     outline: 2px solid var(--brand-gold-500);
     outline-offset: 2px;
-}
-
-/* Tombol keranjang di header */
-.cart-nav {
-    position: relative;
-    border: 1px solid rgba(169, 121, 42, 0.35);
-    background: var(--brand-gold-100);
-}
-
-.cart-nav:hover {
-    background: var(--brand-gold-200);
-}
-
-.cart-nav b,
-.favorite-nav b {
-    background: var(--gradient-green);
-    color: var(--brand-gold-200);
 }
 
 .promo-banner-section {
@@ -3089,535 +3052,6 @@ body {
     width: 28px;
     border-radius: 999px;
     background: var(--gradient-gold);
-}
-
-.cart-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(15, 35, 24, 0.5);
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s ease;
-}
-
-.cart-backdrop.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.cart-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2001;
-    display: flex;
-    width: min(468px, 100%);
-    flex-direction: column;
-    background: var(--cream-50);
-    box-shadow: var(--shadow-lg);
-    transform: translateX(104%);
-    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cart-drawer.show {
-    transform: translateX(0);
-}
-
-.cart-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 24px 26px;
-    background: var(--gradient-green);
-    color: #fff;
-}
-
-.cart-head .cart-kicker {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--brand-gold-200);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2.4px;
-}
-
-.cart-head h3 {
-    font-family: "Playfair Display", serif;
-    font-size: 24px;
-}
-
-.cart-close {
-    display: grid;
-    width: 36px;
-    height: 36px;
-    place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 22px;
-    line-height: 1;
-}
-
-.cart-close:hover {
-    background: rgba(255, 255, 255, 0.22);
-}
-
-.cart-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 22px 26px 10px;
-}
-
-.cart-block {
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px dashed var(--line);
-}
-
-.cart-block:last-child {
-    border-bottom: 0;
-}
-
-.cart-block-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.cart-block-head h4 {
-    color: var(--brand-green-600);
-    font-family: "Playfair Display", serif;
-    font-size: 17px;
-}
-
-.cart-block-head h4 small {
-    color: var(--ink-400);
-    font-family: "DM Sans", sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.cart-text-button {
-    border: 0;
-    background: none;
-    color: var(--brand-gold-700);
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
-
-.cart-empty {
-    padding: 34px 20px;
-    border: 1px dashed var(--line);
-    border-radius: var(--radius-md);
-    background: var(--cream-100);
-    text-align: center;
-}
-
-.cart-empty div {
-    font-size: 36px;
-}
-
-.cart-empty strong {
-    display: block;
-    margin: 10px 0 6px;
-    color: var(--brand-green-600);
-    font-size: 15px;
-}
-
-.cart-empty p {
-    color: var(--ink-500);
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.cart-items {
-    display: grid;
-    gap: 13px;
-    list-style: none;
-}
-
-.cart-items li {
-    display: grid;
-    gap: 13px;
-    grid-template-columns: 66px 1fr auto;
-    align-items: center;
-    padding: 12px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: #fff;
-    box-shadow: var(--shadow-sm);
-}
-
-.cart-items img {
-    width: 66px;
-    height: 66px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.cart-item-info strong {
-    display: block;
-    color: var(--ink-900);
-    font-size: 14px;
-}
-
-.cart-item-info small {
-    display: block;
-    margin: 3px 0 8px;
-    color: var(--ink-400);
-    font-size: 11px;
-}
-
-.cart-qty {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--cream-100);
-}
-
-.cart-qty button {
-    display: grid;
-    width: 25px;
-    height: 25px;
-    place-items: center;
-    border: 0;
-    border-radius: 50%;
-    background: #fff;
-    color: var(--brand-green-600);
-    font-size: 15px;
-    font-weight: 700;
-    box-shadow: var(--shadow-sm);
-}
-
-.cart-qty button:hover {
-    background: var(--brand-green-600);
-    color: #fff;
-}
-
-.cart-qty span {
-    min-width: 26px;
-    color: var(--ink-900);
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
-}
-
-.cart-item-right {
-    text-align: right;
-}
-
-.cart-item-right strong {
-    display: block;
-    color: var(--brand-green-600);
-    font-size: 14px;
-}
-
-.cart-remove {
-    margin-top: 7px;
-    border: 0;
-    background: none;
-    color: var(--danger);
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.cart-form-grid {
-    display: grid;
-    gap: 13px;
-    grid-template-columns: 1fr 1fr;
-}
-
-.cart-field {
-    display: grid;
-    gap: 6px;
-}
-
-.cart-field-full {
-    grid-column: 1 / -1;
-}
-
-.cart-field span {
-    color: var(--ink-700);
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-
-.cart-field input,
-.cart-field textarea {
-    padding: 11px 14px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: #fff;
-    color: var(--ink-900);
-    font-family: inherit;
-    font-size: 13px;
-    resize: vertical;
-}
-
-.cart-field input:focus,
-.cart-field textarea:focus {
-    border-color: var(--brand-gold-500);
-    box-shadow: 0 0 0 3px rgba(217, 180, 92, 0.2);
-    outline: none;
-}
-
-.cart-discount-form {
-    display: flex;
-    gap: 9px;
-}
-
-.cart-discount-form input {
-    flex: 1;
-    padding: 12px 15px;
-    border: 1px dashed rgba(169, 121, 42, 0.5);
-    border-radius: 12px;
-    background: var(--brand-gold-100);
-    color: var(--brand-gold-700);
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-}
-
-.cart-discount-form input:focus {
-    outline: 2px solid var(--brand-gold-500);
-    outline-offset: 1px;
-}
-
-.cart-apply {
-    padding: 12px 22px;
-    border: 0;
-    border-radius: 12px;
-    background: var(--gradient-green);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.cart-apply:disabled {
-    background: var(--line);
-    color: var(--ink-400);
-    cursor: not-allowed;
-}
-
-.cart-discount-applied {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 14px 16px;
-    border: 1px solid rgba(169, 121, 42, 0.42);
-    border-radius: var(--radius-sm);
-    background: var(--brand-gold-100);
-}
-
-.cart-discount-applied strong {
-    display: block;
-    color: var(--brand-gold-700);
-    font-size: 14px;
-    letter-spacing: 1.2px;
-}
-
-.cart-discount-applied small {
-    display: block;
-    margin-top: 3px;
-    color: var(--ink-500);
-    font-size: 11.5px;
-}
-
-.cart-discount-value {
-    text-align: right;
-}
-
-.cart-discount-value span {
-    display: block;
-    color: var(--brand-green-600);
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.cart-discount-error {
-    margin-top: 9px;
-    color: var(--danger);
-    font-size: 12px;
-}
-
-.cart-foot {
-    padding: 18px 26px 24px;
-    border-top: 1px solid var(--line);
-    background: #fff;
-    box-shadow: 0 -10px 30px rgba(36, 75, 53, 0.06);
-}
-
-.cart-shipping-hint {
-    margin-bottom: 12px;
-    padding: 9px 14px;
-    border-radius: 10px;
-    background: var(--brand-gold-100);
-    color: var(--brand-gold-700);
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.cart-summary {
-    display: grid;
-    gap: 9px;
-    margin-bottom: 16px;
-    list-style: none;
-}
-
-.cart-summary li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    color: var(--ink-500);
-    font-size: 13px;
-}
-
-.cart-summary li strong {
-    color: var(--ink-900);
-    font-weight: 700;
-}
-
-.cart-summary li strong.is-discount {
-    color: var(--brand-gold-700);
-}
-
-.cart-total {
-    padding-top: 11px;
-    border-top: 1px dashed var(--line);
-}
-
-.cart-total span {
-    color: var(--brand-green-600);
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.cart-total strong {
-    color: var(--brand-green-600) !important;
-    font-family: "Playfair Display", serif;
-    font-size: 25px;
-}
-
-.cart-checkout {
-    width: 100%;
-    padding: 16px 20px;
-    border: 0;
-    border-radius: 999px;
-    background: var(--gradient-green);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    box-shadow:
-        0 0 0 1px rgba(217, 180, 92, 0.5) inset,
-        var(--shadow-sm);
-    transition: 0.24s ease;
-}
-
-.cart-checkout:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow:
-        0 0 0 1px rgba(217, 180, 92, 0.8) inset,
-        var(--shadow-md);
-}
-
-.cart-checkout:disabled {
-    background: var(--line);
-    color: var(--ink-400);
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
-.cart-success {
-    padding: 26px 22px;
-    border: 1px solid rgba(169, 121, 42, 0.35);
-    border-radius: var(--radius-md);
-    background: linear-gradient(180deg, var(--brand-gold-100) 0%, #fff 55%);
-    text-align: center;
-}
-
-.cart-success-icon {
-    display: grid;
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 14px;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--gradient-green);
-    color: var(--brand-gold-200);
-    font-size: 27px;
-}
-
-.cart-success h4 {
-    color: var(--brand-green-600);
-    font-family: "Playfair Display", serif;
-    font-size: 22px;
-}
-
-.cart-success > p {
-    margin: 9px 0 18px;
-    color: var(--ink-500);
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-.cart-success > p strong {
-    color: var(--brand-gold-700);
-    letter-spacing: 1.4px;
-}
-
-.cart-success-detail {
-    display: grid;
-    gap: 10px;
-    margin-bottom: 20px;
-    list-style: none;
-    text-align: left;
-}
-
-.cart-success-detail li {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    font-size: 12.5px;
-}
-
-.cart-success-detail li span {
-    flex-shrink: 0;
-    color: var(--ink-400);
-}
-
-.cart-success-detail li strong {
-    color: var(--ink-900);
-    text-align: right;
-}
-
-.cart-success-total {
-    padding-top: 11px;
-    border-top: 1px dashed var(--line);
-}
-
-.cart-success-total strong {
-    color: var(--brand-green-600) !important;
-    font-family: "Playfair Display", serif;
-    font-size: 20px;
 }
 
 .cs-section {
@@ -3953,37 +3387,6 @@ body {
         flex: 1;
     }
 
-    .cart-drawer {
-        width: 100%;
-    }
-
-    .cart-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cart-items li {
-        grid-template-columns: 56px 1fr;
-    }
-
-    .cart-items img {
-        width: 56px;
-        height: 56px;
-    }
-
-    .cart-item-right {
-        grid-column: 1 / -1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: 9px;
-        border-top: 1px dashed var(--line);
-        text-align: left;
-    }
-
-    .cart-remove {
-        margin-top: 0;
-    }
-
     .promo-arrow {
         display: none;
     }
@@ -3999,7 +3402,7 @@ body {
 
 .contact-section {
     padding: 85px 0;
-    background: var(--cream-50);
+    background: radial-gradient(circle at 8% 12%, rgba(217, 180, 92, 0.28), transparent 32%), radial-gradient(circle at 92% 88%, rgba(63, 122, 85, 0.22), transparent 34%), linear-gradient(135deg, #fdfbf4 0%, #f0e5c9 48%, #e2efdf 100%);
 }
 
 .contact-container {
@@ -4010,10 +3413,13 @@ body {
     grid-template-columns: 1fr 0.95fr;
     gap: 65px;
     align-items: center;
-    background: #ffffff;
-    border: 1px solid rgba(169, 121, 42, 0.12);
+    background:
+        radial-gradient(ellipse at 0% 0%, rgba(231, 190, 92, 0.52), transparent 43%),
+        radial-gradient(ellipse at 100% 100%, rgba(91, 153, 103, 0.48), transparent 48%),
+        linear-gradient(125deg, #fff8e8 0%, #e4efdc 48%, #b9d9bf 100%);
+    border: 1px solid rgba(169, 121, 42, 0.32);
     border-radius: 24px;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 20px 55px rgba(36, 75, 53, 0.16);
 }
 
 .contact-left {
@@ -4089,7 +3495,9 @@ body {
 .contact-right {
     padding: 28px;
     border-radius: 19px;
-    background: #f4f3f0;
+    background: linear-gradient(145deg, #dcebdc 0%, #f5e6bd 100%);
+    border: 1px solid rgba(169, 121, 42, 0.22);
+    box-shadow: 0 12px 30px rgba(36, 75, 53, 0.10);
 }
 
 .contact-right form {
@@ -4225,10 +3633,6 @@ body {
     }
 }
 
-/* ==================================
-   REKOMENDASI MENU / MENU FAVORIT
-================================== */
-
 .recommendation-section {
   padding: 65px 0 75px;
   background: var(--cream-100);
@@ -4359,7 +3763,6 @@ body {
   font-size: 12px;
   line-height: 1.7;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -4453,7 +3856,12 @@ body {
 .intro-menu-button:hover span {
   transform: translateX(4px);
 }
+/* =========================================================
+   FINAL OVERRIDES — penyesuaian tampilan terbaru
+   Letakkan di bagian paling bawah agar menimpa style sebelumnya.
+   ========================================================= */
 
+/* Tombol "Tentang Gado-Gado" menggunakan warna emas */
 .secondary-button {
     background: var(--gradient-gold);
     color: #ffffff;
@@ -4489,6 +3897,12 @@ body {
     transform: translateY(-2px);
 }
 
+/* ========================================
+   PERBAIKAN MODAL DETAIL MENU
+   Desktop dan Mobile
+======================================== */
+
+/* Desktop */
 .detail-modal {
     width: min(900px, 94vw);
     max-height: 88vh;
@@ -4628,6 +4042,10 @@ body {
     }
 }
 
+/* =====================================
+   BATIK NUSANTARA - HERO SECTION
+===================================== */
+
 .hero.batik-decoration {
     position: relative;
     isolation: isolate;
@@ -4697,6 +4115,11 @@ body {
         opacity: 0.08;
     }
 }
+
+/* =========================================
+   REKOMENDASI TERATAS - PROMO BANNER
+   Digunakan oleh src/components/PromoBanner.tsx
+========================================= */
 
 .promo-recommendation {
     padding: 55px 20px;
@@ -5004,6 +4427,10 @@ body {
     }
 }
 
+/* =====================================
+   PROFILE MODAL - GADO GADO NUSANTARA
+===================================== */
+
 .profile-modal {
   overflow: hidden;
   border-radius: 27px !important;
@@ -5306,6 +4733,10 @@ body {
     margin-top: 19px;
   }
 }
+
+/* =====================================
+   AUTH MODAL - LOGIN & REGISTER
+===================================== */
 
 .auth-modal {
   overflow: hidden;
@@ -5701,3 +5132,4 @@ body {
 .footer a:hover {
     color: #d9b45c;
 }
+

@@ -1,8 +1,6 @@
-import {
-  DiscountCodeSeed,
+﻿import {
   FaqItem,
   MenuItem,
-  PromoSlide,
   SiteContent,
   UserAccount,
 } from "@/types";
@@ -47,8 +45,8 @@ export const initialMenus: MenuItem[] = [
       "Pilihan sederhana dengan sayuran rebus, tahu, tempe, dan saus kacang.",
     description:
       "Pilihan gado-gado sederhana dengan bahan yang mudah ditemukan seperti sayuran rebus, tahu, tempe, dan saus kacang.",
-    cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🍘 Tahu"],
-    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🍘 Tahu", "🍢 Tempe"],
+    cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🍢 Tahu"],
+    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🍢 Tahu", "🍢 Tempe"],
     price: "Rp 12.000–20.000",
     location: "Jakarta dan kota-kota Indonesia",
     city: "Jakarta",
@@ -95,8 +93,8 @@ export const initialMenus: MenuItem[] = [
       "Perpaduan sayuran, tahu, tempe, dan bahan pelengkap dengan karakter khas Malang.",
     description:
       "Perpaduan sayuran, tahu, tempe, dan bahan pelengkap dengan karakter khas Malang.",
-    cardIngredients: ["🥬 Sayuran", "🍘 Tahu", "🥜 Kacang"],
-    ingredients: ["🥬 Sayuran", "🍘 Tahu", "🥜 Saus Kacang", "🥚 Telur"],
+    cardIngredients: ["🥬 Sayuran", "🍢 Tahu", "🥜 Kacang"],
+    ingredients: ["🥬 Sayuran", "🍢 Tahu", "🥜 Saus Kacang", "🥚 Telur"],
     price: "Rp 15.000–25.000",
     location: "Malang, Jawa Timur",
     city: "Malang",
@@ -189,8 +187,8 @@ export const initialMenus: MenuItem[] = [
       "Variasi gado-gado dengan cita rasa daerah Bangka yang khas.",
     description:
       "Variasi gado-gado dengan cita rasa daerah Bangka yang menggunakan berbagai bahan pelengkap.",
-    cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🍘 Tahu"],
-    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🍘 Tahu", "🌱 Tauge"],
+    cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🍢 Tahu"],
+    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🍢 Tahu", "🌱 Tauge"],
     price: "Rp 15.000–25.000",
     location: "Pangkalpinang dan wilayah Bangka Belitung",
     city: "Pangkalpinang",
@@ -214,7 +212,7 @@ export const initialMenus: MenuItem[] = [
     description:
       "Perpaduan sayuran dengan karakter bumbu yang terinspirasi dari cita rasa Padang.",
     cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🌶️ Bumbu"],
-    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌶️ Bumbu", "🍘 Tahu"],
+    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌶️ Bumbu", "🍢 Tahu"],
     price: "Rp 15.000–27.000",
     location: "Padang, Sumatra Barat",
     city: "Padang",
@@ -238,7 +236,7 @@ export const initialMenus: MenuItem[] = [
     description:
       "Kreasi gado-gado dengan sentuhan bahan dan cita rasa khas Bali serta berbagai komponen sayuran.",
     cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🌿 Rempah"],
-    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌿 Rempah", "🍘 Tahu"],
+    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌿 Rempah", "🍢 Tahu"],
     price: "Rp 18.000–30.000",
     location: "Denpasar dan kawasan kuliner Bali",
     city: "Denpasar",
@@ -262,7 +260,7 @@ export const initialMenus: MenuItem[] = [
     description:
       "Perpaduan sayuran segar dan bumbu kacang dengan karakter khas Sunda.",
     cardIngredients: ["🥬 Sayuran", "🥜 Kacang", "🌿 Lalapan"],
-    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌿 Lalapan", "🍘 Tahu"],
+    ingredients: ["🥬 Sayuran", "🥜 Saus Kacang", "🌿 Lalapan", "🍢 Tahu"],
     price: "Rp 15.000–25.000",
     location: "Bandung dan wilayah Jawa Barat",
     city: "Bandung",
@@ -277,9 +275,9 @@ export const initialMenus: MenuItem[] = [
     name: "Es Cendol",
     searchName: "es cendol",
     kategori: "minuman-tradisional",
-    group: "dessert",
+    group: "minuman",
     regionBadge: "NUSANTARA",
-    categoryLabel: "MINUMAN TRADISIONAL",
+    categoryLabel: "MINUMAN",
     region: "JAWA BARAT",
     rating: "4.9",
     image: "/images/cendol.png",
@@ -301,9 +299,9 @@ export const initialMenus: MenuItem[] = [
     name: "Es Teler",
     searchName: "es teler",
     kategori: "minuman-tradisional",
-    group: "dessert",
+    group: "minuman",
     regionBadge: "NUSANTARA",
-    categoryLabel: "DESSERT",
+    categoryLabel: "MINUMAN",
     region: "JAWA TENGAH",
     rating: "4.8",
     image: "/images/es-teler.png",
@@ -325,9 +323,9 @@ export const initialMenus: MenuItem[] = [
     name: "Es Doger",
     searchName: "es doger",
     kategori: "minuman-tradisional",
-    group: "dessert",
+    group: "minuman",
     regionBadge: "CIREBON",
-    categoryLabel: "DESSERT",
+    categoryLabel: "MINUMAN",
     region: "JAWA BARAT",
     rating: "4.7",
     image: "/images/es-doger.png",
@@ -351,7 +349,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "BANYUMAS",
-    categoryLabel: "DESSERT",
+    categoryLabel: "KUE TRADISIONAL",
     region: "JAWA TENGAH",
     rating: "4.8",
     image: "/images/kue-pukis.png",
@@ -375,7 +373,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "NUSANTARA",
-    categoryLabel: "DESSERT",
+    categoryLabel: "KUE TRADISIONAL",
     region: "JAWA",
     rating: "4.8",
     image: "/images/kue-putu.png",
@@ -383,8 +381,8 @@ export const initialMenus: MenuItem[] = [
       "Kue kukus tepung beras beraroma pandan dengan isian gula merah lumer dan kelapa parut.",
     description:
       "Kue putu adalah kue tradisional yang dikukus di dalam tabung bambu, berisi lelehan gula merah di tengahnya dan disajikan hangat bersama taburan kelapa parut gurih.",
-    cardIngredients: ["🍚 Tepung Beras", "🍯 Gula Merah", "🥥 Kelapa"],
-    ingredients: ["🍚 Tepung Beras", "🍃 Daun Pandan", "🍯 Gula Merah", "🥥 Kelapa Parut"],
+    cardIngredients: ["🌾 Tepung Beras", "🍯 Gula Merah", "🥥 Kelapa"],
+    ingredients: ["🌾 Tepung Beras", "🍃 Daun Pandan", "🍯 Gula Merah", "🥥 Kelapa Parut"],
     price: "Rp 8.000–15.000",
     location: "Penjual keliling dan pasar tradisional di Indonesia",
     city: "Jakarta",
@@ -399,7 +397,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "MOJOKERTO",
-    categoryLabel: "DESSERT",
+    categoryLabel: "KUE TRADISIONAL",
     region: "JAWA TIMUR",
     rating: "4.8",
     image: "/images/kue-onde.png",
@@ -423,7 +421,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "SALATIGA",
-    categoryLabel: "MINUMAN TRADISIONAL",
+    categoryLabel: "KUE TRADISIONAL",
     region: "JAWA TENGAH",
     rating: "4.9",
     image: "/images/ronde.png",
@@ -447,7 +445,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "BANDUNG",
-    categoryLabel: "DESSERT",
+    categoryLabel: "KUE TRADISIONAL",
     region: "JAWA BARAT",
     rating: "4.8",
     image: "/images/kue-balok.png",
@@ -489,19 +487,19 @@ export const defaultFaqs: FaqItem[] = [
       "Buka detail menu dan pilih tombol lokasi untuk melihat hasil pencarian penjual di Google Maps.",
   },
   {
-    question: "Bagaimana cara memesan lewat website ini?",
+    question: "Bagaimana melihat informasi menu?",
     answer:
-      "Tekan tombol Keranjang pada menu yang kamu mau, buka ikon keranjang di kanan atas, isi alamat pengiriman, lalu tekan Buat Pesanan.",
+      "Pilih menu yang ingin kamu lihat, lalu buka detailnya untuk membaca deskripsi, bahan, dan informasi lainnya.",
   },
   {
-    question: "Apakah ada kode diskon yang bisa dipakai?",
+    question: "Bagaimana menyimpan menu favorit?",
     answer:
-      "Ada. Coba NUSANTARA20 (diskon 20%), GADOGADO10 (diskon 10%), CAMILAN5K (potongan Rp 5.000), atau GRATISONGKIR untuk bebas ongkir di atas Rp 100.000.",
+      "Gunakan fitur favorit untuk menyimpan menu yang kamu sukai agar mudah ditemukan kembali.",
   },
   {
-    question: "Berapa ongkos kirimnya?",
+    question: "Bagaimana menemukan lokasi penjual?",
     answer:
-      "Ongkos kirim Rp 10.000 untuk semua area dan otomatis menjadi Rp 0 bila total pesanan sudah melewati Rp 100.000.",
+      "Buka detail menu dan gunakan tombol lokasi untuk melihat hasil pencarian penjual di Google Maps.",
   },
   {
     question: "Di mana saya bisa menyampaikan komentar atau keluhan?",
@@ -522,6 +520,7 @@ export function getMenuBySlug(slug: string): MenuItem | undefined {
 }
 
 export const SIDE_MENU_GROUPS: ReadonlyArray<MenuItem["group"]> = [
+  "minuman",
   "dessert",
 ];
 
@@ -537,88 +536,3 @@ export function getSideMenus(menus: MenuItem[]): MenuItem[] {
   return menus.filter((menu) => isSideMenu(menu));
 }
 
-export const promoSlides: PromoSlide[] = [
-  {
-    id: "promo-ongkir",
-    eyebrow: "GRATIS ONGKIR",
-    title: "Ongkir Rp 0 untuk pesanan di atas Rp 100.000",
-    description:
-      "Pesan gado-gado favoritmu sekaligus menu sampingan, ongkos kirim langsung hilang di keranjang.",
-    code: "GRATISONGKIR",
-    ctaLabel: "Pesan Sekarang",
-    image: "/images/hero1.png",
-    accent: "emerald",
-  },
-  {
-    id: "promo-diskon",
-    eyebrow: "DISKON 20%",
-    title: "Hemat 20% untuk paket Gado-Gado + Es Tradisional",
-    description:
-      "Pakai kode NUSANTARA20 saat checkout dan nikmati satu porsi gado-gado dengan es cendol atau es teler.",
-    code: "NUSANTARA20",
-    ctaLabel: "Ambil Promo",
-    image: "/images/cendol.png",
-    accent: "gold",
-  },
-  {
-    id: "promo-camilan",
-    eyebrow: "MENU SAMPINGAN BARU",
-    title: "Kue tradisional baru: Putu, Onde-Onde, Ronde & Kue Balok",
-    description:
-      "Lengkapi pesananmu dengan camilan pasar legendaris yang baru masuk katalog Gado-Gado Nusantara.",
-    code: "CAMILAN5K",
-    ctaLabel: "Lihat Menu Sampingan",
-    image: "/images/kue-putu.png",
-    accent: "clove",
-  },
-  {
-    id: "promo-ronde",
-    eyebrow: "SPESIAL HARI HUJAN",
-    title: "Wedang Ronde hangat, potongan Rp 5.000",
-    description:
-      "Kuah jahe, kacang tumbuk, dan kolang-kaling — penghangat paling pas setelah seporsi gado-gado.",
-    code: "CAMILAN5K",
-    ctaLabel: "Tambah ke Keranjang",
-    image: "/images/ronde.png",
-    accent: "ember",
-  },
-];
-
-export const defaultDiscountCodes: DiscountCodeSeed[] = [
-  {
-    code: "NUSANTARA20",
-    label: "Diskon 20% seluruh menu",
-    type: "percent",
-    value: 20,
-    minSpend: 30000,
-    maxDiscount: 25000,
-    freeShipping: false,
-  },
-  {
-    code: "GADOGADO10",
-    label: "Diskon 10% tanpa minimum",
-    type: "percent",
-    value: 10,
-    minSpend: 0,
-    maxDiscount: 15000,
-    freeShipping: false,
-  },
-  {
-    code: "CAMILAN5K",
-    label: "Potongan Rp 5.000 untuk menu sampingan",
-    type: "amount",
-    value: 5000,
-    minSpend: 20000,
-    maxDiscount: 0,
-    freeShipping: false,
-  },
-  {
-    code: "GRATISONGKIR",
-    label: "Bebas ongkos kirim",
-    type: "shipping",
-    value: 0,
-    minSpend: 100000,
-    maxDiscount: 0,
-    freeShipping: true,
-  },
-];

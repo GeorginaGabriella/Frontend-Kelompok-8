@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { seedDatabase } from "@/lib/seed";
@@ -18,16 +19,45 @@ function parseMenuData(data: string): MenuItem {
   return JSON.parse(data) as MenuItem;
 }
 
+// GET: Mengambil seluruh data menu
 export async function GET() {
   try {
     await seedDatabase();
 
     const rows = await prisma.menu.findMany({
-      select: { data: true },
-      orderBy: { id: "asc" },
+      select: {
+        data: true,
+      },
+      orderBy: {
+        id: "asc",
+      },
     });
 
-    const menus = rows.map((row) => parseMenuData(row.data));
+    console.log("MENU ROWS:", rows);
+    console.log("MENU ROWS TYPE:", typeof rows);
+    console.log("IS ARRAY:", Array.isArray(rows));
+
+    if (!Array.isArray(rows)) {
+      throw new Error(
+        "Hasil prisma.menu.findMany() bukan array."
+      );
+    }
+
+    const menus = rows.map((row, index) => {
+      if (!row.data || typeof row.data !== "string") {
+        throw new Error(
+          `Data menu pada urutan ${index} kosong atau tidak valid.`
+        );
+      }
+
+      try {
+        return parseMenuData(row.data);
+      } catch {
+        throw new Error(
+          `Format JSON menu pada urutan ${index} tidak valid.`
+        );
+      }
+    });
 
     return NextResponse.json({
       total: menus.length,
@@ -43,6 +73,7 @@ export async function GET() {
   }
 }
 
+// POST: Menambahkan menu baru
 export async function POST(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -51,6 +82,8 @@ export async function POST(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    await seedDatabase();
 
     const body = await request.json();
 
@@ -142,6 +175,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// PUT: Memperbarui menu
 export async function PUT(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -150,6 +184,8 @@ export async function PUT(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    await seedDatabase();
 
     const body = await request.json();
     const { slug, updated } = body;
@@ -224,6 +260,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
+// DELETE: Menghapus menu
 export async function DELETE(request: NextRequest) {
   try {
     if (!(await isAdminRequest(request))) {
@@ -233,9 +270,14 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
+    await seedDatabase();
+
     const body = await request.json();
 
-    if (typeof body.slug !== "string" || !body.slug.trim()) {
+    if (
+      typeof body.slug !== "string" ||
+      !body.slug.trim()
+    ) {
       return NextResponse.json(
         { error: "Slug menu tidak valid." },
         { status: 400 }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useMemo, useState } from "react";
@@ -14,7 +13,6 @@ interface MenuSectionProps {
   onToggleFavorite: (name: string) => void;
   onOpenDetail: (menu: MenuItem) => void;
   onAddChoice: (name: string) => void;
-  onAddToCart?: (menu: MenuItem) => void;
   children?: React.ReactNode;
 }
 
@@ -23,8 +21,8 @@ type SortOption = "abjad" | "abjad-desc" | "harga" | "rating";
 const filterOptions: Array<{ value: FilterGroup; label: string }> = [
   { value: "semua", label: "Semua" },
   { value: "gado-gado", label: "Gado-Gado" },
-  { value: "minuman-tradisional", label: "Minuman Tradisional" },
-  { value: "dessert", label: "Dessert" },
+  { value: "minuman-tradisional", label: "Minuman" },
+  { value: "dessert", label: "Kue Tradisional" },
 ];
 
 const sortOptions: Array<{ value: SortOption; label: string }> = [
@@ -34,25 +32,12 @@ const sortOptions: Array<{ value: SortOption; label: string }> = [
   { value: "rating", label: "Rating tertinggi" },
 ];
 
-// Daftar slug minuman tradisional
-const drinkSlugs = [
-  "es-cendol",
-  "wedang-ronde",
-  "sekoteng",
-  "bajigur",
-  "bir-pletok",
-  "talua",
-  "es-cincau",
-  "wedang-uwuh",
-];
-
 export default function MenuSection({
   menus,
   favorites,
   onToggleFavorite,
   onOpenDetail,
   onAddChoice,
-  onAddToCart,
   children,
 }: MenuSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,16 +54,15 @@ export default function MenuSection({
         menu.region.toLowerCase().includes(keyword) ||
         menu.categoryLabel.toLowerCase().includes(keyword);
 
-      const isDrink =
-        isSideMenu(menu) && drinkSlugs.includes(menu.slug);
+      const isMainMenu = !isSideMenu(menu);
+      const isDrink = menu.kategori === "minuman-tradisional";
+      const isDessert = menu.kategori === "dessert";
 
       const matchFilter =
         activeFilter === "semua" ||
-        (activeFilter === "gado-gado" && !isSideMenu(menu)) ||
+        (activeFilter === "gado-gado" && isMainMenu) ||
         (activeFilter === "minuman-tradisional" && isDrink) ||
-        (activeFilter === "dessert" &&
-          isSideMenu(menu) &&
-          !drinkSlugs.includes(menu.slug));
+        (activeFilter === "dessert" && isDessert);
 
       return matchSearch && matchFilter;
     });
@@ -103,23 +87,16 @@ export default function MenuSection({
     });
   }, [menus, searchQuery, activeFilter, sortBy]);
 
-  // Pisahkan menu utama dan menu sampingan
   const mainMenus = filteredMenus.filter(
     (menu) => !isSideMenu(menu)
   );
 
-  const sideMenus = filteredMenus.filter(
-    (menu) => isSideMenu(menu)
+  const drinkMenus = filteredMenus.filter(
+    (menu) => menu.kategori === "minuman-tradisional"
   );
 
-  // Minuman Tradisional Nusantara
-  const drinkMenus = sideMenus.filter((menu) =>
-    drinkSlugs.includes(menu.slug)
-  );
-
-  // Menu lainnya tetap masuk Dessert
-  const dessertMenus = sideMenus.filter(
-    (menu) => !drinkSlugs.includes(menu.slug)
+  const dessertMenus = filteredMenus.filter(
+    (menu) => menu.kategori === "dessert"
   );
 
   const renderCards = (items: MenuItem[]) =>
@@ -131,7 +108,6 @@ export default function MenuSection({
         onToggleFavorite={onToggleFavorite}
         onOpenDetail={onOpenDetail}
         onAddChoice={onAddChoice}
-        onAddToCart={onAddToCart}
       />
     ));
 
@@ -209,7 +185,6 @@ export default function MenuSection({
 
       {children}
 
-      {/* MENU UTAMA: GADO-GADO */}
       {mainMenus.length > 0 && (
         <>
           <div className="menu-group-heading">
@@ -227,15 +202,12 @@ export default function MenuSection({
         </>
       )}
 
-      {/* MINUMAN TRADISIONAL */}
       {drinkMenus.length > 0 && (
         <>
           <div className="menu-group-heading side">
             <div>
-              <span className="menu-group-kicker">
-                MINUMAN NUSANTARA
-              </span>
-              <h3>Minuman Tradisional</h3>
+              <span className="menu-group-kicker">MINUMAN NUSANTARA</span>
+              <h3>Minuman</h3>
             </div>
 
             <small>{drinkMenus.length} menu</small>
@@ -247,13 +219,12 @@ export default function MenuSection({
         </>
       )}
 
-      {/* DESSERT */}
       {dessertMenus.length > 0 && (
         <>
           <div className="menu-group-heading side">
             <div>
-              <span className="menu-group-kicker">DESSERT</span>
-              <h3>Dessert</h3>
+              <span className="menu-group-kicker">KUE TRADISIONAL</span>
+              <h3>Kue Tradisional</h3>
             </div>
 
             <small>{dessertMenus.length} menu</small>
@@ -265,7 +236,6 @@ export default function MenuSection({
         </>
       )}
 
-      {/* MENU KOSONG */}
       <div
         className="empty-search"
         id="emptySearch"
