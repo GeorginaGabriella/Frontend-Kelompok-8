@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import "./admin.css";
 
@@ -11,26 +11,31 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  LayoutDashboard,
+  Utensils,
+  MessageCircle,
+  FileText,
+  CircleHelp,
+  House,
+  LogOut,
+  Salad,
+  Save,
+  ArrowRight,
+} from "lucide-react";
 
 import {
   CommentItem,
-  DiscountCodeItem,
-  DiscountType,
   FaqItem,
   MenuItem,
-  OrderRecord,
-  OrderStatus,
   SiteContent,
 } from "@/types";
-import { ORDER_STATUSES, formatRupiah } from "@/lib/order";
 
 type TabType =
   | "overview"
   | "menus"
-  | "orders"
-  | "comments"
-  | "discounts"
-  | "content"
+    | "comments"
+    | "content"
   | "faq";
 
 /** Urutan tampilan daftar menu pada dashboard. */
@@ -49,13 +54,34 @@ const menuSortOptions: Array<{ value: MenuSortOption; label: string }> = [
   { value: "harga-desc", label: "Harga termahal" },
 ];
 
-const statusLabels: Record<OrderStatus, string> = {
-  baru: "Baru",
-  diproses: "Diproses",
-  dikirim: "Dikirim",
-  selesai: "Selesai",
-  batal: "Batal",
+type MenuFilterOption = "semua" | "gado-gado" | "minuman" | "kue";
+
+const menuFilterOptions: Array<{ value: MenuFilterOption; label: string }> = [
+  { value: "semua", label: "Semua Menu" },
+  { value: "gado-gado", label: "Gado-Gado" },
+  { value: "minuman", label: "Minuman" },
+  { value: "kue", label: "Kue Tradisional" },
+];
+
+const getMenuFilterCategory = (menu: MenuItem): Exclude<MenuFilterOption, "semua"> | "lainnya" => {
+  const group = (menu.group || "").toLowerCase();
+  const details = `${menu.kategori || ""} ${menu.categoryLabel || ""} ${menu.name || ""}`.toLowerCase();
+
+  if (group === "minuman" || /minuman|minum|es cendol|es doger|es teler|wedang|jamu/.test(details)) {
+    return "minuman";
+  }
+
+  if (group === "dessert" || /kue|dessert|camilan|jajanan pasar/.test(details)) {
+    return "kue";
+  }
+
+  if (group === "betawi" || group === "sunda" || group === "jawa" || group === "tradisional" || /gado.?gado/.test(details)) {
+    return "gado-gado";
+  }
+
+  return "lainnya";
 };
+
 
 type MenuFormState = {
   name: string;
@@ -75,13 +101,6 @@ type MenuFormState = {
   condiments: string;
   benefits: string;
   rating: string;
-};
-
-type AdminUser = {
-  id?: number;
-  name: string;
-  username: string;
-  role: string;
 };
 
 const emptyMenuForm: MenuFormState = {
@@ -104,23 +123,6 @@ const emptyMenuForm: MenuFormState = {
   rating: "4.8",
 };
 
-type DiscountFormState = {
-  code: string;
-  label: string;
-  type: DiscountType;
-  value: string;
-  minSpend: string;
-  maxDiscount: string;
-};
-
-const emptyDiscountForm: DiscountFormState = {
-  code: "",
-  label: "",
-  type: "percent",
-  value: "",
-  minSpend: "",
-  maxDiscount: "",
-};
 
 /** Mengambil angka dari label harga, untuk keperluan pengurutan. */
 const priceToNumber = (value: string) =>
@@ -155,7 +157,6 @@ export default function AdminPage() {
     useState("Administrator");
 
   const [menus, setMenus] = useState<MenuItem[]>([]);
-  const [users, setUsers] = useState<AdminUser[]>([]);
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   const [siteContent, setSiteContent] =
@@ -174,20 +175,22 @@ export default function AdminPage() {
 
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");
+  const [editingFaqId, setEditingFaqId] = useState<number | null>(null);
+  const [faqSaving, setFaqSaving] = useState(false);
+  const [faqDeletingId, setFaqDeletingId] = useState<number | null>(null);
+  const [faqToDelete, setFaqToDelete] = useState<FaqItem | null>(null);
 
   // Pengurutan dan pencarian daftar menu (default: sesuai abjad A → Z).
   const [menuSort, setMenuSort] =
     useState<MenuSortOption>("abjad-asc");
   const [menuSearch, setMenuSearch] = useState("");
+  const [menuFilter, setMenuFilter] =
+    useState<MenuFilterOption>("semua");
 
-  const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [comments, setComments] = useState<CommentItem[]>([]);
-  const [discounts, setDiscounts] = useState<DiscountCodeItem[]>([]);
 
   const [replyDrafts, setReplyDrafts] = useState<Record<number, string>>({});
 
-  const [discountForm, setDiscountForm] =
-    useState<DiscountFormState>(emptyDiscountForm);
 
   const notify = (text: string, isError = false) => {
     setMessage(isError ? "" : text);
@@ -205,25 +208,18 @@ export default function AdminPage() {
     try {
       const [
         menuResponse,
-        authResponse,
         faqResponse,
         contentResponse,
-        orderResponse,
         commentResponse,
-        discountResponse,
       ] = await Promise.all([
         fetch("/api/menus"),
-        fetch("/api/auth"),
         fetch("/api/faqs"),
         fetch("/api/content"),
-        fetch("/api/orders"),
         fetch("/api/comments"),
-        fetch("/api/discounts"),
       ]);
 
       if (
         !menuResponse.ok ||
-        !authResponse.ok ||
         !faqResponse.ok ||
         !contentResponse.ok
       ) {
@@ -231,28 +227,18 @@ export default function AdminPage() {
       }
 
       const menuData = await menuResponse.json();
-      const authData = await authResponse.json();
       const faqData = await faqResponse.json();
       const contentData = await contentResponse.json();
 
       setMenus(menuData.menus || []);
-      setUsers(authData.users || []);
       setFaqs(faqData.faqs || []);
 
-      if (orderResponse.ok) {
-        const orderData = await orderResponse.json();
-        setOrders(orderData.orders || []);
-      }
 
       if (commentResponse.ok) {
         const commentData = await commentResponse.json();
         setComments(commentData.comments || []);
       }
 
-      if (discountResponse.ok) {
-        const discountData = await discountResponse.json();
-        setDiscounts(discountData.discounts || []);
-      }
 
       setSiteContent(
         contentData.content || {
@@ -521,26 +507,40 @@ export default function AdminPage() {
     }
   };
 
-  const handleAddFaq = async (
-    event: FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-
-    if (!faqQuestion.trim() || !faqAnswer.trim()) {
-      notify(
-        "Pertanyaan dan jawaban FAQ wajib diisi.",
-        true
-      );
+  const handleEditFaq = (faq: FaqItem) => {
+    if (faq.id == null) {
+      notify("ID FAQ tidak ditemukan.", true);
       return;
     }
 
+    setEditingFaqId(faq.id);
+    setFaqQuestion(faq.question);
+    setFaqAnswer(faq.answer);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCancelFaqEdit = () => {
+    setEditingFaqId(null);
+    setFaqQuestion("");
+    setFaqAnswer("");
+  };
+
+  const handleSaveFaq = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!faqQuestion.trim() || !faqAnswer.trim()) {
+      notify("Pertanyaan dan jawaban FAQ wajib diisi.", true);
+      return;
+    }
+
+    setFaqSaving(true);
+
     try {
       const response = await fetch("/api/faqs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: editingFaqId !== null ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...(editingFaqId !== null ? { id: editingFaqId } : {}),
           question: faqQuestion.trim(),
           answer: faqAnswer.trim(),
         }),
@@ -549,61 +549,59 @@ export default function AdminPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.error || "Gagal menambahkan FAQ."
-        );
+        throw new Error(data.error || "Gagal menyimpan FAQ.");
       }
 
-      setFaqQuestion("");
-      setFaqAnswer("");
+      if (editingFaqId !== null) {
+        setFaqs((previous) =>
+          previous.map((faq) => faq.id === editingFaqId ? data.faq : faq)
+        );
+        notify("FAQ berhasil diperbarui.");
+      } else {
+        setFaqs((previous) => [...previous, data.faq]);
+        notify("FAQ berhasil ditambahkan.");
+      }
 
-      notify("FAQ berhasil ditambahkan.");
-      await loadDashboard();
+      handleCancelFaqEdit();
     } catch (error) {
       notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal menambahkan FAQ.",
+        error instanceof Error ? error.message : "Gagal menyimpan FAQ.",
         true
       );
+    } finally {
+      setFaqSaving(false);
     }
   };
 
-  const handleDeleteFaq = async (faq: FaqItem) => {
-    const confirmed = window.confirm(
-      "Yakin ingin menghapus pertanyaan FAQ ini?"
-    );
+  const handleDeleteFaq = async () => {
+    if (!faqToDelete || faqToDelete.id == null) return;
 
-    if (!confirmed) return;
+    const faqId = faqToDelete.id;
+    setFaqDeletingId(faqId);
 
     try {
       const response = await fetch("/api/faqs", {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question: faq.question,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: faqId }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.error || "Gagal menghapus FAQ."
-        );
+        throw new Error(data.error || "Gagal menghapus FAQ.");
       }
 
+      setFaqs((previous) => previous.filter((faq) => faq.id !== faqId));
+      setFaqToDelete(null);
       notify("FAQ berhasil dihapus.");
-      await loadDashboard();
     } catch (error) {
       notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal menghapus FAQ.",
+        error instanceof Error ? error.message : "Gagal menghapus FAQ.",
         true
       );
+    } finally {
+      setFaqDeletingId(null);
     }
   };
 
@@ -613,13 +611,17 @@ export default function AdminPage() {
     const keyword = menuSearch.trim().toLowerCase();
 
     const filtered = menus.filter((menu) => {
-      if (!keyword) return true;
+      const matchesCategory =
+        menuFilter === "semua" || getMenuFilterCategory(menu) === menuFilter;
 
-      return (
+      const matchesSearch =
+        !keyword ||
         menu.name.toLowerCase().includes(keyword) ||
         (menu.kategori || "").toLowerCase().includes(keyword) ||
-        (menu.region || "").toLowerCase().includes(keyword)
-      );
+        (menu.region || "").toLowerCase().includes(keyword) ||
+        (menu.categoryLabel || "").toLowerCase().includes(keyword);
+
+      return matchesCategory && matchesSearch;
     });
 
     return [...filtered].sort((a, b) => {
@@ -639,87 +641,9 @@ export default function AdminPage() {
           return a.name.localeCompare(b.name, "id");
       }
     });
-  }, [menus, menuSearch, menuSort]);
+  }, [menus, menuSearch, menuSort, menuFilter]);
 
-  const orderStats = useMemo(() => {
-    const revenue = orders
-      .filter((order) => order.status !== "batal")
-      .reduce((total, order) => total + order.total, 0);
 
-    return {
-      total: orders.length,
-      baru: orders.filter((order) => order.status === "baru").length,
-      revenue,
-    };
-  }, [orders]);
-
-  // ───────────────────────────── PESANAN ─────────────────────────────
-  const handleUpdateOrderStatus = async (
-    orderCode: string,
-    status: OrderStatus
-  ) => {
-    try {
-      const response = await fetch("/api/orders", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderCode, status }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Gagal memperbarui pesanan.");
-      }
-
-      setOrders((previous) =>
-        previous.map((order) =>
-          order.orderCode === orderCode ? { ...order, status } : order
-        )
-      );
-
-      notify(`Pesanan ${orderCode} diperbarui menjadi ${status}.`);
-    } catch (error) {
-      notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal memperbarui pesanan.",
-        true
-      );
-    }
-  };
-
-  const handleDeleteOrder = async (orderCode: string) => {
-    const confirmed = window.confirm(
-      `Yakin ingin menghapus pesanan ${orderCode}?`
-    );
-
-    if (!confirmed) return;
-
-    try {
-      const response = await fetch("/api/orders", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderCode }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Gagal menghapus pesanan.");
-      }
-
-      setOrders((previous) =>
-        previous.filter((order) => order.orderCode !== orderCode)
-      );
-
-      notify("Pesanan berhasil dihapus.");
-    } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Gagal menghapus pesanan.",
-        true
-      );
-    }
-  };
 
   // ──────────────────────────── KOMENTAR ────────────────────────────
   const handleReplyComment = async (comment: CommentItem) => {
@@ -825,119 +749,6 @@ export default function AdminPage() {
     }
   };
 
-  // ────────────────────────── KODE DISKON ──────────────────────────
-  const handleCreateDiscount = async (
-    event: FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-
-    if (!discountForm.code.trim() || !discountForm.label.trim()) {
-      notify("Kode dan keterangan diskon wajib diisi.", true);
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/discounts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "create",
-          code: discountForm.code,
-          label: discountForm.label,
-          type: discountForm.type,
-          value: Number(discountForm.value) || 0,
-          minSpend: Number(discountForm.minSpend) || 0,
-          maxDiscount: Number(discountForm.maxDiscount) || 0,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Gagal menambahkan kode diskon.");
-      }
-
-      setDiscounts((previous) => [...previous, data.discount]);
-      setDiscountForm(emptyDiscountForm);
-
-      notify("Kode diskon berhasil ditambahkan.");
-    } catch (error) {
-      notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal menambahkan kode diskon.",
-        true
-      );
-    }
-  };
-
-  const handleToggleDiscount = async (discount: DiscountCodeItem) => {
-    const active = !(discount.active ?? true);
-
-    try {
-      const response = await fetch("/api/discounts", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: discount.code, active }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Gagal memperbarui kode diskon.");
-      }
-
-      setDiscounts((previous) =>
-        previous.map((item) =>
-          item.code === discount.code ? { ...item, active } : item
-        )
-      );
-
-      notify(data.message);
-    } catch (error) {
-      notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal memperbarui kode diskon.",
-        true
-      );
-    }
-  };
-
-  const handleDeleteDiscount = async (discount: DiscountCodeItem) => {
-    const confirmed = window.confirm(
-      `Yakin ingin menghapus kode ${discount.code}?`
-    );
-
-    if (!confirmed) return;
-
-    try {
-      const response = await fetch("/api/discounts", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: discount.code }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Gagal menghapus kode diskon.");
-      }
-
-      setDiscounts((previous) =>
-        previous.filter((item) => item.code !== discount.code)
-      );
-
-      notify("Kode diskon berhasil dihapus.");
-    } catch (error) {
-      notify(
-        error instanceof Error
-          ? error.message
-          : "Gagal menghapus kode diskon.",
-        true
-      );
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("gadoGadoCurrentUser");
@@ -957,16 +768,16 @@ export default function AdminPage() {
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <Link href="/" className="admin-brand">
-          <span className="admin-brand-icon">🍽️</span>
+          <span className="admin-brand-icon">
+            <Salad size={27} strokeWidth={1.8} />
+          </span>
           <span>
             <strong>Gado-Gado</strong>
             <small>NUSANTARA ADMIN</small>
           </span>
         </Link>
 
-        <div className="admin-sidebar-label">
-          MENU UTAMA
-        </div>
+        <div className="admin-sidebar-label">MENU UTAMA</div>
 
         <nav className="admin-navigation">
           <button
@@ -974,7 +785,7 @@ export default function AdminPage() {
             className={activeTab === "overview" ? "active" : ""}
             onClick={() => setActiveTab("overview")}
           >
-            <span>📊</span>
+            <LayoutDashboard size={19} />
             Overview
           </button>
 
@@ -983,23 +794,9 @@ export default function AdminPage() {
             className={activeTab === "menus" ? "active" : ""}
             onClick={() => setActiveTab("menus")}
           >
-            <span>🍽️</span>
+            <Utensils size={19} />
             Kelola Menu
-            <span className="admin-nav-count">
-              {menus.length}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={activeTab === "orders" ? "active" : ""}
-            onClick={() => setActiveTab("orders")}
-          >
-            <span>🧾</span>
-            Pesanan
-            <span className="admin-nav-count">
-              {orders.length}
-            </span>
+            <span className="admin-nav-count">{menus.length}</span>
           </button>
 
           <button
@@ -1007,23 +804,9 @@ export default function AdminPage() {
             className={activeTab === "comments" ? "active" : ""}
             onClick={() => setActiveTab("comments")}
           >
-            <span>💬</span>
+            <MessageCircle size={19} />
             Customer Service
-            <span className="admin-nav-count">
-              {comments.length}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={activeTab === "discounts" ? "active" : ""}
-            onClick={() => setActiveTab("discounts")}
-          >
-            <span>🏷️</span>
-            Kode Diskon
-            <span className="admin-nav-count">
-              {discounts.length}
-            </span>
+            <span className="admin-nav-count">{comments.length}</span>
           </button>
 
           <button
@@ -1031,7 +814,7 @@ export default function AdminPage() {
             className={activeTab === "content" ? "active" : ""}
             onClick={() => setActiveTab("content")}
           >
-            <span>📝</span>
+            <FileText size={19} />
             Konten Website
           </button>
 
@@ -1040,17 +823,15 @@ export default function AdminPage() {
             className={activeTab === "faq" ? "active" : ""}
             onClick={() => setActiveTab("faq")}
           >
-            <span>❓</span>
+            <CircleHelp size={19} />
             Kelola FAQ
-            <span className="admin-nav-count">
-              {faqs.length}
-            </span>
+            <span className="admin-nav-count">{faqs.length}</span>
           </button>
         </nav>
 
         <div className="admin-sidebar-bottom">
           <Link href="/" className="admin-back-link">
-            <span>🏠</span>
+            <House size={19} />
             Lihat Website
           </Link>
 
@@ -1059,7 +840,7 @@ export default function AdminPage() {
             className="admin-logout"
             onClick={handleLogout}
           >
-            <span>🚪</span>
+            <LogOut size={19} />
             Logout
           </button>
         </div>
@@ -1075,9 +856,7 @@ export default function AdminPage() {
             <h1>
               {activeTab === "overview" && "Dashboard Overview"}
               {activeTab === "menus" && "Kelola Menu"}
-              {activeTab === "orders" && "Pesanan Masuk"}
               {activeTab === "comments" && "Customer Service"}
-              {activeTab === "discounts" && "Kode Diskon"}
               {activeTab === "content" && "Konten Website"}
               {activeTab === "faq" && "Kelola FAQ"}
             </h1>
@@ -1108,143 +887,96 @@ export default function AdminPage() {
         )}
 
         {activeTab === "overview" && (
-          <section className="admin-section">
+          <section className="admin-section admin-overview-section">
             <div className="admin-welcome">
-              <div>
-                <span className="admin-eyebrow">
-                  ADMINISTRATOR PANEL
-                </span>
-
-                <h2>
-                  Selamat datang, {adminName}!
-                </h2>
-
+              <div className="admin-welcome-copy">
+                <span className="admin-eyebrow">ADMINISTRATOR PANEL</span>
+                <h2>Selamat datang, {adminName}!</h2>
                 <p>
-                  Kelola informasi kuliner Nusantara dan
-                  konten website Gado-Gado Nusantara
-                  dengan mudah melalui dashboard ini.
+                  Pantau menu, pertanyaan pelanggan, dan informasi website
+                  Gado-Gado Nusantara dari satu tempat.
                 </p>
-
-                <button
-                  type="button"
-                  className="admin-welcome-button"
-                  onClick={openCreateForm}
-                >
-                  + Tambahkan Menu
-                </button>
+                <div className="admin-welcome-actions">
+                  <button
+                    type="button"
+                    className="admin-welcome-button"
+                    onClick={openCreateForm}
+                  >
+                    <Utensils size={16} /> Tambahkan Menu
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-customer-service-button"
+                    onClick={() => setActiveTab("comments")}
+                  >
+                    <MessageCircle size={18} />
+                    Lihat Customer Service
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
               </div>
-
-              <div className="admin-welcome-icon">
-                🥗
+              <div className="admin-welcome-icon" aria-hidden="true">
+                <Salad size={54} strokeWidth={1.35} />
               </div>
             </div>
 
-            <div className="admin-stat-grid">
-              <div className="admin-stat-card">
+            <div className="admin-stat-grid admin-stat-grid-compact">
+              <button
+                type="button"
+                className="admin-stat-card admin-stat-card-clickable"
+                onClick={() => setActiveTab("menus")}
+              >
                 <div className="admin-stat-top">
-                  <div className="admin-stat-icon menu-icon">
-                    🍽️
-                  </div>
-                  <span className="admin-stat-label">
-                    MENU
-                  </span>
+                  <div className="admin-stat-icon menu-icon"><Utensils size={20} /></div>
+                  <span className="admin-stat-label">MENU</span>
                 </div>
                 <span>Total Menu</span>
                 <strong>{menus.length}</strong>
-                <small>Menu tersedia di website</small>
-              </div>
+                <small>Lihat dan kelola menu <ArrowRight size={12} /></small>
+              </button>
 
-              <div className="admin-stat-card">
+              <button
+                type="button"
+                className="admin-stat-card admin-stat-card-clickable"
+                onClick={() => setActiveTab("faq")}
+              >
                 <div className="admin-stat-top">
-                  <div className="admin-stat-icon user-icon">
-                    👤
-                  </div>
-                  <span className="admin-stat-label">
-                    USER
-                  </span>
-                </div>
-                <span>Total Pengguna</span>
-                <strong>{users.length}</strong>
-                <small>Akun terdaftar</small>
-              </div>
-
-              <div className="admin-stat-card">
-                <div className="admin-stat-top">
-                  <div className="admin-stat-icon faq-icon">
-                    ❓
-                  </div>
-                  <span className="admin-stat-label">
-                    FAQ
-                  </span>
+                  <div className="admin-stat-icon faq-icon"><CircleHelp size={20} /></div>
+                  <span className="admin-stat-label">FAQ</span>
                 </div>
                 <span>Total FAQ</span>
                 <strong>{faqs.length}</strong>
-                <small>Pertanyaan website</small>
-              </div>
+                <small>Kelola informasi pelanggan <ArrowRight size={12} /></small>
+              </button>
 
-              <div className="admin-stat-card">
+              <button
+                type="button"
+                className="admin-stat-card admin-stat-card-clickable"
+                onClick={() => setActiveTab("comments")}
+              >
                 <div className="admin-stat-top">
-                  <div className="admin-stat-icon order-icon">
-                    🧾
-                  </div>
-                  <span className="admin-stat-label">
-                    ORDER
-                  </span>
+                  <div className="admin-stat-icon comment-icon"><MessageCircle size={20} /></div>
+                  <span className="admin-stat-label">CUSTOMER SERVICE</span>
                 </div>
-                <span>Pesanan Masuk</span>
-                <strong>{orderStats.total}</strong>
-                <small>{orderStats.baru} pesanan baru</small>
-              </div>
-
-              <div className="admin-stat-card">
-                <div className="admin-stat-top">
-                  <div className="admin-stat-icon revenue-icon">
-                    💰
-                  </div>
-                  <span className="admin-stat-label">
-                    OMZET
-                  </span>
-                </div>
-                <span>Total Nilai Pesanan</span>
-                <strong>{formatRupiah(orderStats.revenue)}</strong>
-                <small>Di luar pesanan yang dibatalkan</small>
-              </div>
-
-              <div className="admin-stat-card">
-                <div className="admin-stat-top">
-                  <div className="admin-stat-icon comment-icon">
-                    💬
-                  </div>
-                  <span className="admin-stat-label">
-                    KOMENTAR
-                  </span>
-                </div>
-                <span>Komentar Pengunjung</span>
-                <strong>{comments.length}</strong>
-                <small>
-                  {comments.filter((item) => !item.reply).length} belum dibalas
-                </small>
-              </div>
+                <span>Belum Dibalas</span>
+                <strong>{comments.filter((item) => !item.reply?.trim()).length}</strong>
+                <small>Dari {comments.length} komentar masuk <ArrowRight size={12} /></small>
+              </button>
             </div>
 
-            <div className="admin-panel">
+            <div className="admin-panel admin-overview-menu-panel">
               <div className="admin-panel-heading">
                 <div>
-                  <span className="admin-section-kicker">
-                    DATABASE
-                  </span>
-                  <h3>Menu Urut Abjad</h3>
-                  <p>
-                    Lima menu pertama sesuai urutan abjad A → Z.
-                  </p>
+                  <span className="admin-section-kicker">DATABASE MENU</span>
+                  <h3>Menu Terbaru untuk Dikelola</h3>
+                  <p>Berikut lima menu pertama berdasarkan urutan nama A–Z.</p>
                 </div>
-
                 <button
                   type="button"
                   className="admin-primary-button"
-                  onClick={openCreateForm}
+                  onClick={() => setActiveTab("menus")}
                 >
-                  + Tambah Menu
+                  Lihat Semua Menu <ArrowRight size={15} />
                 </button>
               </div>
 
@@ -1264,27 +996,21 @@ export default function AdminPage() {
                         <th>Aksi</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       {sortedMenus.slice(0, 5).map((menu) => (
                         <tr key={menu.slug}>
                           <td>
                             <div className="admin-menu-cell">
                               <img
-                                src={
-                                  menu.image ||
-                                  "/images/default-menu.jpg"
-                                }
+                                src={menu.image || "/images/default-menu.jpg"}
                                 alt={menu.name}
                               />
                               <strong>{menu.name}</strong>
                             </div>
                           </td>
-
                           <td>{menu.kategori || "-"}</td>
                           <td>{menu.region || "-"}</td>
-                          <td>{menu.price}</td>
-
+                          <td>{menu.price || "-"}</td>
                           <td>
                             <button
                               type="button"
@@ -1356,7 +1082,7 @@ export default function AdminPage() {
                       setMenuForm(emptyMenuForm);
                     }}
                   >
-                    ×
+                    Ã—
                   </button>
                 </div>
 
@@ -1632,9 +1358,34 @@ export default function AdminPage() {
                 </div>
               </div>
 
+              <div className="admin-filter-row" aria-label="Filter kategori menu">
+                <span className="admin-filter-label">Kategori:</span>
+                <div className="admin-filter-buttons">
+                  {menuFilterOptions.map((option) => {
+                    const count =
+                      option.value === "semua"
+                        ? menus.length
+                        : menus.filter((menu) => getMenuFilterCategory(menu) === option.value).length;
+
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        className={`admin-filter-button ${menuFilter === option.value ? "active" : ""}`}
+                        onClick={() => setMenuFilter(option.value)}
+                        aria-pressed={menuFilter === option.value}
+                      >
+                        {option.label}
+                        <span>{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {sortedMenus.length === 0 ? (
                 <div className="admin-empty">
-                  Tidak ada menu yang cocok dengan pencarian.
+                  Tidak ada menu yang cocok dengan filter atau pencarian.
                 </div>
               ) : (
                 <div className="admin-table-wrap">
@@ -1702,155 +1453,6 @@ export default function AdminPage() {
           </section>
         )}
 
-        {activeTab === "orders" && (
-          <section className="admin-section">
-            <div className="admin-page-heading">
-              <div>
-                <span className="admin-section-kicker">
-                  ORDER MANAGEMENT
-                </span>
-                <h2>Pesanan Masuk</h2>
-                <p>
-                  Pantau pesanan pelanggan beserta alamat pengiriman,
-                  kode diskon, dan harga total.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                className="admin-secondary-button"
-                onClick={loadDashboard}
-              >
-                ⟳ Muat Ulang
-              </button>
-            </div>
-
-            {orders.length === 0 ? (
-              <div className="admin-empty">
-                Belum ada pesanan yang masuk.
-              </div>
-            ) : (
-              <div className="admin-order-list">
-                {orders.map((order) => (
-                  <article className="admin-order-card" key={order.orderCode}>
-                    <header>
-                      <div>
-                        <strong>{order.orderCode}</strong>
-                        <small>
-                          {new Date(order.createdAt).toLocaleString("id-ID")} ·
-                          {" "}
-                          {order.username}
-                        </small>
-                      </div>
-
-                      <span
-                        className={`admin-status admin-status-${order.status}`}
-                      >
-                        {statusLabels[order.status] || order.status}
-                      </span>
-                    </header>
-
-                    <div className="admin-order-grid">
-                      <div>
-                        <span className="admin-order-label">
-                          Alamat Pengiriman
-                        </span>
-                        <strong>{order.recipient}</strong>
-                        <p>{order.phone}</p>
-                        <p>
-                          {order.address}
-                          {order.city ? `, ${order.city}` : ""}
-                          {order.postalCode ? ` ${order.postalCode}` : ""}
-                        </p>
-                        {order.note && <p><em>Catatan: {order.note}</em></p>}
-                      </div>
-
-                      <div>
-                        <span className="admin-order-label">Item Pesanan</span>
-                        <ul className="admin-order-items">
-                          {order.items.map((item) => (
-                            <li key={`${order.orderCode}-${item.slug}`}>
-                              <span>
-                                {item.quantity}× {item.name}
-                              </span>
-                              <strong>
-                                {formatRupiah(item.unitPrice * item.quantity)}
-                              </strong>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <span className="admin-order-label">Rincian Harga</span>
-                        <ul className="admin-order-items">
-                          <li>
-                            <span>Subtotal</span>
-                            <strong>{formatRupiah(order.subtotal)}</strong>
-                          </li>
-                          <li>
-                            <span>
-                              Diskon
-                              {order.discountCode
-                                ? ` (${order.discountCode})`
-                                : ""}
-                            </span>
-                            <strong>
-                              {order.discountAmount > 0
-                                ? `−${formatRupiah(order.discountAmount)}`
-                                : formatRupiah(0)}
-                            </strong>
-                          </li>
-                          <li>
-                            <span>Ongkos kirim</span>
-                            <strong>
-                              {order.shippingCost === 0
-                                ? "Gratis"
-                                : formatRupiah(order.shippingCost)}
-                            </strong>
-                          </li>
-                          <li className="admin-order-total">
-                            <span>Harga Total</span>
-                            <strong>{formatRupiah(order.total)}</strong>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <footer>
-                      <label className="admin-sort">
-                        <span>Status</span>
-                        <select
-                          value={order.status}
-                          onChange={(event) =>
-                            handleUpdateOrderStatus(
-                              order.orderCode,
-                              event.target.value as OrderStatus
-                            )
-                          }
-                        >
-                          {ORDER_STATUSES.map((status) => (
-                            <option key={status} value={status}>
-                              {statusLabels[status]}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-
-                      <button
-                        type="button"
-                        className="admin-delete-button"
-                        onClick={() => handleDeleteOrder(order.orderCode)}
-                      >
-                        🗑️ Hapus
-                      </button>
-                    </footer>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
-        )}
 
         {activeTab === "comments" && (
           <section className="admin-section">
@@ -1961,228 +1563,6 @@ export default function AdminPage() {
           </section>
         )}
 
-        {activeTab === "discounts" && (
-          <section className="admin-section">
-            <div className="admin-page-heading">
-              <div>
-                <span className="admin-section-kicker">
-                  PROMO MANAGEMENT
-                </span>
-                <h2>Kode Diskon</h2>
-                <p>
-                  Kelola kode diskon yang bisa dipakai pelanggan saat
-                  membuat pesanan.
-                </p>
-              </div>
-            </div>
-
-            <form className="admin-form" onSubmit={handleCreateDiscount}>
-              <div className="admin-form-heading">
-                <div>
-                  <h3>Tambah Kode Diskon</h3>
-                  <p>
-                    Jenis persen memakai satuan %, jenis nominal memakai
-                    rupiah, dan jenis ongkir membebaskan biaya kirim.
-                  </p>
-                </div>
-              </div>
-
-              <div className="admin-form-grid">
-                <label className="admin-field">
-                  <span>Kode *</span>
-                  <input
-                    value={discountForm.code}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        code: event.target.value.toUpperCase(),
-                      }))
-                    }
-                    placeholder="Contoh: NUSANTARA20"
-                    required
-                  />
-                </label>
-
-                <label className="admin-field">
-                  <span>Jenis Diskon</span>
-                  <select
-                    value={discountForm.type}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        type: event.target.value as DiscountType,
-                      }))
-                    }
-                  >
-                    <option value="percent">Persen (%)</option>
-                    <option value="amount">Nominal (Rp)</option>
-                    <option value="shipping">Gratis ongkir</option>
-                  </select>
-                </label>
-
-                <label className="admin-field admin-field-full">
-                  <span>Keterangan *</span>
-                  <input
-                    value={discountForm.label}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        label: event.target.value,
-                      }))
-                    }
-                    placeholder="Contoh: Diskon 20% seluruh menu"
-                    required
-                  />
-                </label>
-
-                <label className="admin-field">
-                  <span>
-                    Nilai{" "}
-                    {discountForm.type === "percent" ? "(%)" : "(Rp)"}
-                  </span>
-                  <input
-                    value={discountForm.value}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        value: event.target.value,
-                      }))
-                    }
-                    placeholder="20"
-                    inputMode="numeric"
-                    disabled={discountForm.type === "shipping"}
-                  />
-                </label>
-
-                <label className="admin-field">
-                  <span>Minimum Belanja (Rp)</span>
-                  <input
-                    value={discountForm.minSpend}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        minSpend: event.target.value,
-                      }))
-                    }
-                    placeholder="30000"
-                    inputMode="numeric"
-                  />
-                </label>
-
-                <label className="admin-field">
-                  <span>Maksimum Potongan (Rp)</span>
-                  <input
-                    value={discountForm.maxDiscount}
-                    onChange={(event) =>
-                      setDiscountForm((previous) => ({
-                        ...previous,
-                        maxDiscount: event.target.value,
-                      }))
-                    }
-                    placeholder="25000"
-                    inputMode="numeric"
-                  />
-                  <small>Isi 0 bila tidak ada batas potongan.</small>
-                </label>
-              </div>
-
-              <div className="admin-form-actions">
-                <button type="submit" className="admin-primary-button">
-                  ➕ Tambah Kode
-                </button>
-              </div>
-            </form>
-
-            <div className="admin-panel">
-              <div className="admin-panel-heading">
-                <div>
-                  <h3>Daftar Kode ({discounts.length})</h3>
-                  <p>Urut sesuai abjad kode diskon.</p>
-                </div>
-              </div>
-
-              {discounts.length === 0 ? (
-                <div className="admin-empty">
-                  Belum ada kode diskon.
-                </div>
-              ) : (
-                <div className="admin-table-wrap">
-                  <table className="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Kode</th>
-                        <th>Keterangan</th>
-                        <th>Jenis</th>
-                        <th>Nilai</th>
-                        <th>Min. Belanja</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {discounts.map((discount) => (
-                        <tr key={discount.code}>
-                          <td>
-                            <strong>{discount.code}</strong>
-                          </td>
-                          <td>{discount.label}</td>
-                          <td>
-                            {discount.type === "percent"
-                              ? "Persen"
-                              : discount.type === "amount"
-                                ? "Nominal"
-                                : "Ongkir"}
-                          </td>
-                          <td>
-                            {discount.type === "percent"
-                              ? `${discount.value}%`
-                              : discount.type === "amount"
-                                ? formatRupiah(discount.value)
-                                : "Gratis ongkir"}
-                          </td>
-                          <td>{formatRupiah(discount.minSpend)}</td>
-                          <td>
-                            <span
-                              className={`admin-status ${
-                                discount.active ?? true
-                                  ? "admin-status-selesai"
-                                  : "admin-status-batal"
-                              }`}
-                            >
-                              {discount.active ?? true ? "Aktif" : "Nonaktif"}
-                            </span>
-                          </td>
-                          <td>
-                            <div className="admin-row-actions">
-                              <button
-                                type="button"
-                                className="admin-table-action"
-                                onClick={() => handleToggleDiscount(discount)}
-                              >
-                                {discount.active ?? true
-                                  ? "Nonaktifkan"
-                                  : "Aktifkan"}
-                              </button>
-
-                              <button
-                                type="button"
-                                className="admin-delete-button"
-                                onClick={() => handleDeleteDiscount(discount)}
-                              >
-                                Hapus
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
 
         {activeTab === "content" && (
           <section className="admin-section">
@@ -2239,10 +1619,10 @@ export default function AdminPage() {
               <div className="admin-form-actions">
                 <button
                   type="button"
-                  className="admin-primary-button"
+                  className="admin-content-save-button"
                   onClick={handleSaveContent}
                 >
-                  💾 Simpan Konten
+                  <Save size={17} /> Simpan Perubahan Konten
                 </button>
               </div>
             </div>
@@ -2263,15 +1643,16 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <form
-              className="admin-form"
-              onSubmit={handleAddFaq}
-            >
+            <form className="admin-form" onSubmit={handleSaveFaq}>
               <div className="admin-form-heading">
                 <div>
-                  <h3>Tambah Pertanyaan</h3>
+                  <h3>
+                    {editingFaqId !== null ? "Edit Pertanyaan" : "Tambah Pertanyaan"}
+                  </h3>
                   <p>
-                    Buat pertanyaan baru untuk pengunjung website.
+                    {editingFaqId !== null
+                      ? "Perbarui pertanyaan dan jawaban FAQ."
+                      : "Buat pertanyaan baru untuk pengunjung website."}
                   </p>
                 </div>
               </div>
@@ -2280,9 +1661,7 @@ export default function AdminPage() {
                 <span>Pertanyaan</span>
                 <input
                   value={faqQuestion}
-                  onChange={(event) =>
-                    setFaqQuestion(event.target.value)
-                  }
+                  onChange={(event) => setFaqQuestion(event.target.value)}
                   placeholder="Masukkan pertanyaan..."
                   required
                 />
@@ -2293,20 +1672,34 @@ export default function AdminPage() {
                 <textarea
                   rows={4}
                   value={faqAnswer}
-                  onChange={(event) =>
-                    setFaqAnswer(event.target.value)
-                  }
+                  onChange={(event) => setFaqAnswer(event.target.value)}
                   placeholder="Masukkan jawaban..."
                   required
                 />
               </label>
 
               <div className="admin-form-actions">
+                {editingFaqId !== null && (
+                  <button
+                    type="button"
+                    className="admin-secondary-button"
+                    onClick={handleCancelFaqEdit}
+                    disabled={faqSaving}
+                  >
+                    Batal Edit
+                  </button>
+                )}
+
                 <button
                   type="submit"
                   className="admin-primary-button"
+                  disabled={faqSaving}
                 >
-                  ➕ Tambah FAQ
+                  {faqSaving
+                    ? "Menyimpan..."
+                    : editingFaqId !== null
+                      ? "Simpan Perubahan"
+                      : "➕ Tambah FAQ"}
                 </button>
               </div>
             </form>
@@ -2315,20 +1708,32 @@ export default function AdminPage() {
               {faqs.map((faq, index) => (
                 <div
                   className="admin-faq-item"
-                  key={`${faq.question}-${index}`}
+                  key={faq.id ?? `${faq.question}-${index}`}
                 >
-                  <div>
+                  <div className="admin-faq-content">
                     <strong>{faq.question}</strong>
                     <p>{faq.answer}</p>
                   </div>
 
-                  <button
-                    type="button"
-                    className="admin-delete-button"
-                    onClick={() => handleDeleteFaq(faq)}
-                  >
-                    🗑️ Hapus
-                  </button>
+                  <div className="admin-row-actions">
+                    <button
+                      type="button"
+                      className="admin-table-action"
+                      onClick={() => handleEditFaq(faq)}
+                      disabled={faq.id == null || faqDeletingId !== null}
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      type="button"
+                      className="admin-delete-button"
+                      onClick={() => setFaqToDelete(faq)}
+                      disabled={faq.id == null || faqDeletingId !== null}
+                    >
+                      Hapus
+                    </button>
+                  </div>
                 </div>
               ))}
 
@@ -2338,6 +1743,42 @@ export default function AdminPage() {
                 </div>
               )}
             </div>
+
+            {faqToDelete && (
+              <div className="admin-confirm-overlay">
+                <div
+                  className="admin-confirm-dialog"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="faq-confirm-title"
+                >
+                  <div className="admin-confirm-icon">!</div>
+                  <h3 id="faq-confirm-title">Konfirmasi Hapus FAQ</h3>
+                  <p>Apakah kamu yakin ingin menghapus pertanyaan ini?</p>
+                  <div className="admin-confirm-question">
+                    {faqToDelete.question}
+                  </div>
+                  <div className="admin-confirm-actions">
+                    <button
+                      type="button"
+                      className="admin-secondary-button"
+                      onClick={() => setFaqToDelete(null)}
+                      disabled={faqDeletingId !== null}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      type="button"
+                      className="admin-delete-button"
+                      onClick={handleDeleteFaq}
+                      disabled={faqDeletingId !== null}
+                    >
+                      {faqDeletingId !== null ? "Menghapus..." : "Ya, Hapus"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -2348,3 +1789,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+
