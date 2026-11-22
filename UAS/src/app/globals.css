@@ -5073,3 +5073,7 @@ body {
     color: #d9b45c;
 }
 
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
