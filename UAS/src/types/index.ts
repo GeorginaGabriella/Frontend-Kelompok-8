@@ -2,8 +2,13 @@ import React from "react";
 
 export type FilterGroup =
   | "semua"
+  | "gado-gado"
+  | "minuman-tradisional"
+  | "dessert";
+
+export type MenuGroup =
   | "Makanan"
-  | "minuman"
+  | "Minuman Tradisional"
   | "dessert"
   | "lainnya";
 
@@ -12,7 +17,7 @@ export interface MenuItem {
   name: string;
   searchName: string;
   kategori: string;
-  group: Exclude<FilterGroup, "semua">;
+  group: MenuGroup;
   regionBadge: string;
   categoryLabel: string;
   region: string;

@@ -76,21 +76,9 @@ export default function MenuCard({
             data-name={menu.name}
             onClick={() => onAddChoice(menu.name)}
           >
-            + Pilihan
+            Pilihan
           </button>
         </div>
-
-        {onAddToCart && (
-          <button
-            type="button"
-            className="cart-button"
-            data-slug={menu.slug}
-            onClick={() => onAddToCart(menu)}
-          >
-            <span aria-hidden="true">🛒</span>
-            Tambah ke Keranjang
-          </button>
-        )}
       </div>
     </article>
   );

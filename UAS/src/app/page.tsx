@@ -747,9 +747,9 @@ export default function HomePage() {
         />
 
         <PromoBanner
-          menus={menus}
-          onOpenDetail={(menu) => setSelectedMenu(menu)}
-        />
+         menus={menus}
+         onOpenDetail={(menu) => setSelectedMenu(menu)}
+         />
 
         <IntroSection />
 

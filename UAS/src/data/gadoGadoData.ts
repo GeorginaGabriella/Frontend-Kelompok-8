@@ -1,4 +1,3 @@
-
 import {
   DiscountCodeSeed,
   FaqItem,
@@ -271,8 +270,7 @@ export const initialMenus: MenuItem[] = [
     benefits:
       "Sayuran segar memberi serat; kacang dan tahu menyumbang protein nabati.",
   },
-
-  // MENU SAMPINGAN: MINUMAN DAN DESSERT
+    // MENU SAMPINGAN: MINUMAN DAN DESSERT
 
   {
     slug: "es-cendol",
@@ -281,7 +279,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "minuman-tradisional",
     group: "dessert",
     regionBadge: "NUSANTARA",
-    categoryLabel: "DESSERT",
+    categoryLabel: "MINUMAN TRADISIONAL",
     region: "JAWA BARAT",
     rating: "4.9",
     image: "/images/cendol.png",
@@ -425,7 +423,7 @@ export const initialMenus: MenuItem[] = [
     kategori: "dessert",
     group: "dessert",
     regionBadge: "SALATIGA",
-    categoryLabel: "DESSERT",
+    categoryLabel: "MINUMAN TRADISIONAL",
     region: "JAWA TENGAH",
     rating: "4.9",
     image: "/images/ronde.png",
@@ -467,7 +465,6 @@ export const initialMenus: MenuItem[] = [
       "Memberikan asupan energi tinggi dan cita rasa cokelat pekat sebagai hidangan penutup.",
   },
 ];
-
 export const defaultSiteContent: SiteContent = {
   heroDescription:
     "Temukan berbagai macam gado-gado dari berbagai daerah di Indonesia dengan cita rasa, bahan, dan keunikan yang berbeda.",
@@ -540,7 +537,6 @@ export function getSideMenus(menus: MenuItem[]): MenuItem[] {
   return menus.filter((menu) => isSideMenu(menu));
 }
 
-
 export const promoSlides: PromoSlide[] = [
   {
     id: "promo-ongkir",
@@ -587,7 +583,6 @@ export const promoSlides: PromoSlide[] = [
     accent: "ember",
   },
 ];
-
 
 export const defaultDiscountCodes: DiscountCodeSeed[] = [
   {

@@ -22,8 +22,9 @@ type SortOption = "abjad" | "abjad-desc" | "harga" | "rating";
 
 const filterOptions: Array<{ value: FilterGroup; label: string }> = [
   { value: "semua", label: "Semua" },
+  { value: "gado-gado", label: "Gado-Gado" },
+  { value: "minuman-tradisional", label: "Minuman Tradisional" },
   { value: "dessert", label: "Dessert" },
-  { value: "lainnya", label: "Lainnya" },
 ];
 
 const sortOptions: Array<{ value: SortOption; label: string }> = [
@@ -31,6 +32,18 @@ const sortOptions: Array<{ value: SortOption; label: string }> = [
   { value: "abjad-desc", label: "Nama Z → A" },
   { value: "harga", label: "Harga termurah" },
   { value: "rating", label: "Rating tertinggi" },
+];
+
+// Daftar slug minuman tradisional
+const drinkSlugs = [
+  "es-cendol",
+  "wedang-ronde",
+  "sekoteng",
+  "bajigur",
+  "bir-pletok",
+  "talua",
+  "es-cincau",
+  "wedang-uwuh",
 ];
 
 export default function MenuSection({
@@ -56,8 +69,16 @@ export default function MenuSection({
         menu.region.toLowerCase().includes(keyword) ||
         menu.categoryLabel.toLowerCase().includes(keyword);
 
+      const isDrink =
+        isSideMenu(menu) && drinkSlugs.includes(menu.slug);
+
       const matchFilter =
-        activeFilter === "semua" || menu.group === activeFilter;
+        activeFilter === "semua" ||
+        (activeFilter === "gado-gado" && !isSideMenu(menu)) ||
+        (activeFilter === "minuman-tradisional" && isDrink) ||
+        (activeFilter === "dessert" &&
+          isSideMenu(menu) &&
+          !drinkSlugs.includes(menu.slug));
 
       return matchSearch && matchFilter;
     });
@@ -82,8 +103,24 @@ export default function MenuSection({
     });
   }, [menus, searchQuery, activeFilter, sortBy]);
 
-  const mainMenus = filteredMenus.filter((menu) => !isSideMenu(menu));
-  const sideMenus = filteredMenus.filter((menu) => isSideMenu(menu));
+  // Pisahkan menu utama dan menu sampingan
+  const mainMenus = filteredMenus.filter(
+    (menu) => !isSideMenu(menu)
+  );
+
+  const sideMenus = filteredMenus.filter(
+    (menu) => isSideMenu(menu)
+  );
+
+  // Minuman Tradisional Nusantara
+  const drinkMenus = sideMenus.filter((menu) =>
+    drinkSlugs.includes(menu.slug)
+  );
+
+  // Menu lainnya tetap masuk Dessert
+  const dessertMenus = sideMenus.filter(
+    (menu) => !drinkSlugs.includes(menu.slug)
+  );
 
   const renderCards = (items: MenuItem[]) =>
     items.map((menu) => (
@@ -104,12 +141,13 @@ export default function MenuSection({
         label="PILIHAN NUSANTARA"
         title="Menu Gado-Gado"
         highlight="& Menu Sampingan"
-        description="Jelajahi pilihan gado-gado, dessert, dan hidangan favorit khas Nusantara."
+        description="Jelajahi pilihan gado-gado, minuman tradisional, dessert, dan hidangan favorit khas Nusantara."
       />
 
       <div className="search-filter">
         <div className="search-box">
           <span>⌕</span>
+
           <input
             type="text"
             id="cariMenu"
@@ -171,6 +209,7 @@ export default function MenuSection({
 
       {children}
 
+      {/* MENU UTAMA: GADO-GADO */}
       {mainMenus.length > 0 && (
         <>
           <div className="menu-group-heading">
@@ -188,23 +227,45 @@ export default function MenuSection({
         </>
       )}
 
-      {sideMenus.length > 0 && (
+      {/* MINUMAN TRADISIONAL */}
+      {drinkMenus.length > 0 && (
         <>
           <div className="menu-group-heading side">
             <div>
-              <span className="menu-group-kicker">MENU SAMPINGAN</span>
-              <h3>Minuman Tradisional, Kue &amp; Camilan</h3>
+              <span className="menu-group-kicker">
+                MINUMAN NUSANTARA
+              </span>
+              <h3>Minuman Tradisional</h3>
             </div>
 
-            <small>{sideMenus.length} menu</small>
+            <small>{drinkMenus.length} menu</small>
           </div>
 
-          <div className="menu-container" id="sideMenuContainer">
-            {renderCards(sideMenus)}
+          <div className="menu-container" id="drinkMenuContainer">
+            {renderCards(drinkMenus)}
           </div>
         </>
       )}
 
+      {/* DESSERT */}
+      {dessertMenus.length > 0 && (
+        <>
+          <div className="menu-group-heading side">
+            <div>
+              <span className="menu-group-kicker">DESSERT</span>
+              <h3>Dessert</h3>
+            </div>
+
+            <small>{dessertMenus.length} menu</small>
+          </div>
+
+          <div className="menu-container" id="dessertMenuContainer">
+            {renderCards(dessertMenus)}
+          </div>
+        </>
+      )}
+
+      {/* MENU KOSONG */}
       <div
         className="empty-search"
         id="emptySearch"
