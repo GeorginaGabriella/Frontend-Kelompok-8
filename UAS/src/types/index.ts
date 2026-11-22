@@ -6,9 +6,11 @@ export type FilterGroup =
   | "minuman-tradisional"
   | "dessert";
 
+
 export type MenuGroup =
   | "Makanan"
   | "Minuman Tradisional"
+  | "minuman"
   | "dessert"
   | "lainnya";
 
@@ -35,6 +37,7 @@ export interface MenuItem {
 }
 
 export interface FaqItem {
+  id?: number;
   question: string;
   answer: string;
 }
@@ -112,7 +115,6 @@ export interface MenuCardProps {
   onToggleFavorite: (name: string) => void;
   onOpenDetail: (menu: MenuItem) => void;
   onAddChoice: (name: string) => void;
-  onAddToCart?: (menu: MenuItem) => void;
   children?: React.ReactNode;
 }
 
