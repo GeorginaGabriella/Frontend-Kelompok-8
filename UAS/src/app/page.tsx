@@ -7,7 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import PromoBanner from "@/components/PromoBanner";
 import IntroSection from "@/components/IntroSection";
 import MenuSection from "@/components/MenuSection";
-import ChoiceSection from "@/components/ChoiceSection";
+import HistorySection from "@/components/HistorySection";
 import FavoriteSection from "@/components/FavoriteSection";
 import AboutSection from "@/components/AboutSection";
 import FaqSection from "@/components/FaqSection";
@@ -424,11 +424,8 @@ export default function HomePage() {
         <HeroSection
           heroDescription={siteContent.heroDescription}
         />
-
-        <PromoBanner
-         menus={menus}
-         onOpenDetail={(menu) => setSelectedMenu(menu)}
-         />
+        
+      <HistorySection />
 
         <IntroSection />
 
@@ -440,10 +437,10 @@ export default function HomePage() {
           onAddChoice={handleAddChoice}
         />
 
-        <ChoiceSection
-          choices={choices}
-          onRemoveChoice={handleRemoveChoice}
-        />
+        <PromoBanner
+         menus={menus}
+         onOpenDetail={(menu) => setSelectedMenu(menu)}
+         />
 
         <FavoriteSection
           favorites={favorites}
