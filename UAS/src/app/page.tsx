@@ -38,7 +38,6 @@ export default function HomePage() {
   const [faqs, setFaqs] = useState<FaqItem[]>(defaultFaqs);
 
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [choices, setChoices] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<UserAccount[]>([]);
   const [currentUser, setCurrentUser] =
     useState<UserAccount | null>(null);
@@ -61,27 +60,19 @@ export default function HomePage() {
   const loadPersonalData = useCallback(
     async (username: string) => {
       try {
-        const [favResponse, choiceResponse] = await Promise.all([
-          fetch(
-            `/api/favorites?username=${encodeURIComponent(username)}`
-          ),
-          fetch(
-            `/api/choices?username=${encodeURIComponent(username)}`
-          ),
-        ]);
+        const response = await fetch(
+          `/api/favorites?username=${encodeURIComponent(username)}`
+        );
 
-        if (!favResponse.ok || !choiceResponse.ok) {
-          throw new Error("Gagal mengambil data personal.");
+        if (!response.ok) {
+          throw new Error("Gagal mengambil data favorit.");
         }
 
-        const favData = await favResponse.json();
-        const choiceData = await choiceResponse.json();
-
-        setFavorites(favData.favorites || []);
-        setChoices(choiceData.choices || []);
+        const data = await response.json();
+        setFavorites(data.favorites || []);
       } catch (error) {
         console.error(error);
-        showToast("Gagal memuat data favorit dan pilihan.");
+        showToast("Gagal memuat data favorit.");
       }
     },
     [showToast]
@@ -128,12 +119,11 @@ export default function HomePage() {
       );
 
       setAccounts(authData.users || []);
-
     } catch (error) {
       console.error(error);
       showToast("Gagal menghubungkan ke database.");
     }
-  }, [loadPersonalData, showToast]);
+  }, [showToast]);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("gadoGadoCurrentUser");
@@ -212,6 +202,7 @@ export default function HomePage() {
       Boolean(selectedMenu) ||
       authModalOpen ||
       profileModalOpen;
+
     document.body.style.overflow = anyModalOpen ? "hidden" : "";
 
     return () => {
@@ -252,6 +243,36 @@ export default function HomePage() {
     }
   };
 
+  const handleAddFavorite = async (name: string) => {
+    if (favorites.includes(name)) {
+      showToast(`${name} sudah ada di favorit.`);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: currentUser?.username || "guest",
+          menu_name: name,
+        }),
+      });
+
+      if (!response.ok) throw new Error();
+
+      setFavorites((previous) =>
+        previous.includes(name) ? previous : [...previous, name]
+      );
+
+      showToast(`${name} berhasil ditambahkan ke favorit.`);
+    } catch {
+      showToast("Gagal menambahkan favorit.");
+    }
+  };
+
   const handleRemoveFavorite = async (name: string) => {
     try {
       const response = await fetch("/api/favorites", {
@@ -274,62 +295,6 @@ export default function HomePage() {
       showToast(`${name} dihapus dari favorit.`);
     } catch {
       showToast("Gagal menghapus favorit.");
-    }
-  };
-
-  const handleAddChoice = async (name: string) => {
-    if (choices.includes(name)) {
-      showToast(`${name} sudah ada di Pilihan Saya.`);
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/choices", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: currentUser?.username || "guest",
-          menu_name: name,
-        }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setChoices((previous) => [...previous, name]);
-      showToast(`${name} ditambahkan ke Pilihan Saya.`);
-
-      document.getElementById("pilihan")?.scrollIntoView({
-        behavior: "smooth",
-      });
-    } catch {
-      showToast("Gagal menambahkan pilihan.");
-    }
-  };
-
-  const handleRemoveChoice = async (name: string) => {
-    try {
-      const response = await fetch("/api/choices", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: currentUser?.username || "guest",
-          menu_name: name,
-        }),
-      });
-
-      if (!response.ok) throw new Error();
-
-      setChoices((previous) =>
-        previous.filter((item) => item !== name)
-      );
-
-      showToast(`${name} berhasil dihapus.`);
-    } catch {
-      showToast("Gagal menghapus pilihan.");
     }
   };
 
@@ -403,7 +368,6 @@ export default function HomePage() {
 
     setCurrentUser(null);
     setFavorites([]);
-    setChoices([]);
     setProfileModalOpen(false);
 
     await loadPersonalData("guest");
@@ -424,8 +388,8 @@ export default function HomePage() {
         <HeroSection
           heroDescription={siteContent.heroDescription}
         />
-        
-      <HistorySection />
+
+        <HistorySection />
 
         <IntroSection />
 
@@ -434,13 +398,13 @@ export default function HomePage() {
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
           onOpenDetail={(menu) => setSelectedMenu(menu)}
-          onAddChoice={handleAddChoice}
+          onAddFavorite={handleAddFavorite}
         />
 
         <PromoBanner
-         menus={menus}
-         onOpenDetail={(menu) => setSelectedMenu(menu)}
-         />
+          menus={menus}
+          onOpenDetail={(menu) => setSelectedMenu(menu)}
+        />
 
         <FavoriteSection
           favorites={favorites}
@@ -462,7 +426,12 @@ export default function HomePage() {
       <DetailModal
         menu={selectedMenu}
         onClose={() => setSelectedMenu(null)}
-        onAddChoice={handleAddChoice}
+        onAddFavorite={handleAddFavorite}
+        isFavorite={
+          selectedMenu
+            ? favorites.includes(selectedMenu.name)
+            : false
+        }
       />
 
       <AuthModal
@@ -479,7 +448,6 @@ export default function HomePage() {
         onClose={() => setProfileModalOpen(false)}
         user={currentUser}
         favoriteCount={favorites.length}
-        choiceCount={choices.length}
         onLogout={handleLogout}
       />
 
@@ -490,4 +458,3 @@ export default function HomePage() {
     </>
   );
 }
-
