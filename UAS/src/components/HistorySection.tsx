@@ -37,25 +37,26 @@ export default function HistorySection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    historySlides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+
     const timer = setInterval(() => {
-      setActiveIndex((current) =>
-        (current + 1) % historySlides.length
-      );
+      setActiveIndex((current) => (current + 1) % historySlides.length);
     }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   const previousSlide = () => {
-    setActiveIndex((current) =>
-      (current - 1 + historySlides.length) % historySlides.length
+    setActiveIndex(
+      (current) => (current - 1 + historySlides.length) % historySlides.length
     );
   };
 
   const nextSlide = () => {
-    setActiveIndex((current) =>
-      (current + 1) % historySlides.length
-    );
+    setActiveIndex((current) => (current + 1) % historySlides.length);
   };
 
   const activeSlide = historySlides[activeIndex];
@@ -63,7 +64,6 @@ export default function HistorySection() {
   return (
     <section className="history-hero">
       <div className="history-hero-inner">
-
         <div className="history-hero-content">
           <span className="history-hero-label">
             ✦ MENGENAL WARISAN KULINER
@@ -122,7 +122,6 @@ export default function HistorySection() {
             </span>
           </div>
         </div>
-
       </div>
     </section>
   );
