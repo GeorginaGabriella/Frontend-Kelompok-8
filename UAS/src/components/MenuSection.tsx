@@ -12,7 +12,7 @@ interface MenuSectionProps {
   favorites: string[];
   onToggleFavorite: (name: string) => void;
   onOpenDetail: (menu: MenuItem) => void;
-  onAddChoice: (name: string) => void;
+  onAddFavorite: (name: string) => void;
   children?: React.ReactNode;
 }
 
@@ -37,7 +37,7 @@ export default function MenuSection({
   favorites,
   onToggleFavorite,
   onOpenDetail,
-  onAddChoice,
+  onAddFavorite,
   children,
 }: MenuSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -107,7 +107,7 @@ export default function MenuSection({
         isFavorite={favorites.includes(menu.name)}
         onToggleFavorite={onToggleFavorite}
         onOpenDetail={onOpenDetail}
-        onAddChoice={onAddChoice}
+        onAddFavorite={onAddFavorite}
       />
     ));
 
