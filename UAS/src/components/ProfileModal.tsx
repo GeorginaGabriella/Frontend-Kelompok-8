@@ -7,13 +7,13 @@ import { UserAccount } from "@/types";
 import {
   UserRound,
   Heart,
-  BookmarkCheck,
   LayoutDashboard,
   ArrowRight,
   Utensils,
   LogOut,
   ShieldCheck,
   X,
+  BadgeCheck,
 } from "lucide-react";
 
 interface ProfileModalProps {
@@ -21,7 +21,6 @@ interface ProfileModalProps {
   onClose: () => void;
   user: UserAccount | null;
   favoriteCount: number;
-  choiceCount: number;
   onLogout: () => void;
   children?: React.ReactNode;
 }
@@ -31,7 +30,6 @@ export default function ProfileModal({
   onClose,
   user,
   favoriteCount,
-  choiceCount,
   onLogout,
   children,
 }: ProfileModalProps) {
@@ -65,22 +63,15 @@ export default function ProfileModal({
 
         <div className="profile-heading">
           <span className="profile-eyebrow">AKUN SAYA</span>
-
-          <h2 id="profileName">
-            {user.name || user.username}
-          </h2>
-
+          <h2 id="profileName">{user.name || user.username}</h2>
           <p id="profileUsername">@{user.username}</p>
-
           <span
-            className={`profile-role ${isAdmin ? "profile-role-admin" : "profile-role-user"}`}
+            className={`profile-role ${
+              isAdmin ? "profile-role-admin" : "profile-role-user"
+            }`}
             id="profileRole"
           >
-            {isAdmin ? (
-              <ShieldCheck size={14} />
-            ) : (
-              <UserRound size={14} />
-            )}
+            {isAdmin ? <ShieldCheck size={14} /> : <UserRound size={14} />}
             {isAdmin ? "ADMINISTRATOR" : "MEMBER"}
           </span>
         </div>
@@ -98,17 +89,29 @@ export default function ProfileModal({
 
           <div className="profile-stat-card">
             <div className="profile-stat-icon">
-              <BookmarkCheck size={20} />
+              {isAdmin ? <ShieldCheck size={20} /> : <BadgeCheck size={20} />}
             </div>
-            <strong id="profileChoice">{choiceCount}</strong>
-            <span>Menu Pilihan</span>
+            <strong>{isAdmin ? "Admin" : "Member"}</strong>
+            <span>Jenis Akun</span>
+          </div>
+        </div>
+
+        <div className="profile-welcome-card">
+          <div className="profile-welcome-icon">
+            <Utensils size={19} />
+          </div>
+          <div>
+            <strong>Selamat datang di Gado-Gado Nusantara</strong>
+            <p>
+              {isAdmin
+                ? "Kelola website dan jelajahi koleksi kuliner Nusantara melalui akun administrator."
+                : "Jelajahi ragam kuliner Nusantara dan simpan menu favoritmu di sini."}
+            </p>
           </div>
         </div>
 
         {children && (
-          <div className="profile-extra-content">
-            {children}
-          </div>
+          <div className="profile-extra-content">{children}</div>
         )}
 
         <div className="profile-actions">
