@@ -42,9 +42,19 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface HistorySlide {
+  title: string;
+  description: string;
+  image: string;
+  caption: string;
+}
+
 export interface SiteContent {
   heroDescription: string;
   aboutDescription: string;
+  historyLabel?: string;
+  historyTitle?: string;
+  historySlides?: HistorySlide[];
 }
 
 export interface UserAccount {
