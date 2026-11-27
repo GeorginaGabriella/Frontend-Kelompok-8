@@ -7,7 +7,7 @@ export default function MenuCard({
   isFavorite,
   onToggleFavorite,
   onOpenDetail,
-  onAddChoice,
+  onAddFavorite,
   children,
 }: MenuCardProps) {
   const displayedIngredients = menu.cardIngredients?.length
@@ -77,9 +77,10 @@ export default function MenuCard({
             type="button"
             className="add-button"
             data-name={menu.name}
-            onClick={() => onAddChoice(menu.name)}
+            onClick={() => onAddFavorite(menu.name)}
+            disabled={isFavorite}
           >
-            Pilihan
+            {isFavorite ? "♥ Sudah Favorit" : "+ Tambah Favorit"}
           </button>
         </div>
       </div>
