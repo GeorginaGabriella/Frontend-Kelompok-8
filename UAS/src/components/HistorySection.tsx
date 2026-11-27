@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { HistorySlide } from "@/types";
 
-const historySlides = [
+interface HistorySectionProps {
+  historyLabel?: string;
+  historyTitle?: string;
+  slides?: HistorySlide[];
+}
+
+const defaultSlides: HistorySlide[] = [
   {
     title: "Asal-usul",
     description:
@@ -33,7 +40,14 @@ const historySlides = [
   },
 ];
 
-export default function HistorySection() {
+export default function HistorySection({
+  historyLabel = "✦ MENGENAL WARISAN KULINER",
+  historyTitle = "Jejak Sejarah Gado-Gado",
+  slides,
+}: HistorySectionProps) {
+  const historySlides =
+    slides && slides.length > 0 ? slides : defaultSlides;
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -47,16 +61,23 @@ export default function HistorySection() {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [historySlides]);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [historySlides]);
 
   const previousSlide = () => {
     setActiveIndex(
-      (current) => (current - 1 + historySlides.length) % historySlides.length
+      (current) =>
+        (current - 1 + historySlides.length) % historySlides.length
     );
   };
 
   const nextSlide = () => {
-    setActiveIndex((current) => (current + 1) % historySlides.length);
+    setActiveIndex(
+      (current) => (current + 1) % historySlides.length
+    );
   };
 
   const activeSlide = historySlides[activeIndex];
@@ -66,11 +87,11 @@ export default function HistorySection() {
       <div className="history-hero-inner">
         <div className="history-hero-content">
           <span className="history-hero-label">
-            ✦ MENGENAL WARISAN KULINER
+            {historyLabel}
           </span>
 
           <h2 className="history-hero-title">
-            Jejak Sejarah <span>Gado-Gado</span>
+            {historyTitle}
           </h2>
 
           <div className="history-hero-detail">
@@ -90,7 +111,7 @@ export default function HistorySection() {
             <div className="history-hero-dots">
               {historySlides.map((slide, index) => (
                 <button
-                  key={slide.title}
+                  key={`${slide.title}-${index}`}
                   type="button"
                   aria-label={`Pilih cerita ${index + 1}`}
                   className={activeIndex === index ? "active" : ""}
