@@ -114,11 +114,9 @@ export interface MenuCardProps {
   isFavorite: boolean;
   onToggleFavorite: (name: string) => void;
   onOpenDetail: (menu: MenuItem) => void;
-  onAddChoice: (name: string) => void;
+  onAddFavorite: (name: string) => void;
   children?: React.ReactNode;
 }
-
-// ═══════════════════════════ SLIDING BANNER (PROMO) ═══════════════════════════
 
 export type PromoAccent = "emerald" | "gold" | "clove" | "ember";
 
@@ -139,8 +137,6 @@ export interface PromoBannerProps {
   onUseCode?: (code: string) => void;
   children?: React.ReactNode;
 }
-
-// ═══════════════════════════════ CART & ORDER ════════════════════════════════
 
 export interface CartItem {
   slug: string;
@@ -245,8 +241,6 @@ export interface CartDrawerProps {
   onDismissLastOrder: () => void;
   children?: React.ReactNode;
 }
-
-// ═══════════════════════ CUSTOMER SERVICE (KOMENTAR) ════════════════════════
 
 export interface CommentItem {
   id: number;
