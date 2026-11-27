@@ -10,14 +10,16 @@ import { MenuItem } from "@/types";
 interface DetailModalProps {
   menu: MenuItem | null;
   onClose: () => void;
-  onAddChoice: (name: string) => void;
+  onAddFavorite: (name: string) => void;
+  isFavorite: boolean;
   children?: React.ReactNode;
 }
 
 export default function DetailModal({
   menu,
   onClose,
-  onAddChoice,
+  onAddFavorite,
+  isFavorite,
   children,
 }: DetailModalProps) {
   const googleMapsUrl = menu
@@ -100,7 +102,7 @@ export default function DetailModal({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Cari di Google Maps ↗
+                  Cari di Google Maps →
                 </a>
               </div>
             </div>
@@ -108,15 +110,16 @@ export default function DetailModal({
             {children}
 
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-<Button
+              <Button
                 variant="secondary"
                 className="modal-add"
                 onClick={() => {
-                  onAddChoice(menu.name);
-                  onClose();
+                  if (!isFavorite) {
+                    onAddFavorite(menu.name);
+                  }
                 }}
               >
-                + Tambahkan ke Pilihan
+                {isFavorite ? "♥ Sudah di Favorit" : "+ Tambahkan ke Favorit"}
               </Button>
 
               <Link
@@ -128,7 +131,6 @@ export default function DetailModal({
               </Link>
             </div>
 
-            {/* KOMENTAR KHUSUS SETIAP MENU */}
             <MenuComments
               key={menu.slug}
               menuSlug={menu.slug}
