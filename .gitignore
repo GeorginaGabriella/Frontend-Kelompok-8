@@ -1,20 +1,29 @@
 # Environment variables
-UAS/.env
-UAS/.env.*
-!UAS/.env.example
+.env
+.env.*
+!.env.example
 
-# SQLite database
-UAS/*.db
-UAS/*.db-journal
+# Dependencies
+node_modules/
 
-# Local SQLite backups
-UAS/prisma.config.sqlite.backup.ts
-UAS/prisma/schema.sqlite.backup.prisma
-UAS/src/lib/prisma.sqlite.backup.ts
+# Next.js build
+.next/
+out/
+
+# SQLite databases
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
 
 # Generated Prisma Client
-UAS/src/generated/prisma/
+src/generated/prisma/
 
-# Dependencies and build
-UAS/node_modules/
-UAS/.next/
+# Local backups
+*.backup
+*.backup.*
+*.bak
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
